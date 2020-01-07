@@ -212,8 +212,6 @@ namespace EventBus.RabbitMQ
             where T : IntegrationEvent
             where TH : IIntegrationEventHandler<T>
         {
-            var eventName = _subsManager.GetEventKey<T>();
-
             _subsManager.RemoveSubscription<T, TH>();
         }
 
@@ -262,16 +260,16 @@ namespace EventBus.RabbitMQ
 
                     if (subscription.IsDynamic)
                     {
-                        await ProcessDynamicSubscription(handler, subscription, message);
+                        await ProcessDynamicSubscription(handler, message);
                     }
                     else
                     {
-                        await ProcessStaticSubscription(handler, subscription, eventName, message);
+                        await ProcessStaticSubscription(handler, eventName, message);
                     }
                 }
             }
         }
-        private async Task ProcessDynamicSubscription(object handler, SubscriptionInfo subscription, string message)
+        private async Task ProcessDynamicSubscription(object handler, string message)
         {
             dynamic eventData = JObject.Parse(message);
 
@@ -279,7 +277,7 @@ namespace EventBus.RabbitMQ
             await (handler as IDynamicIntegrationEventHandler).Handle(eventData);
         }
 
-        private async Task ProcessStaticSubscription(object handler, SubscriptionInfo subscription, string eventName, string message)
+        private async Task ProcessStaticSubscription(object handler, string eventName, string message)
         {
             Type eventType = _subsManager.GetEventTypeByName(eventName);
             object integrationEvent = JsonConvert.DeserializeObject(message, eventType);

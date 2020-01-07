@@ -6,7 +6,7 @@ namespace EventBus.Extensions.Microsoft.DependencyInjection.Configurations
 {
     public class RabbitMqConfiguration
     {
-        private RabbitMqSettings _rabbitMqSettings;
+        private readonly RabbitMqSettings _rabbitMqSettings;
 
         public RabbitMqConfiguration()
         {

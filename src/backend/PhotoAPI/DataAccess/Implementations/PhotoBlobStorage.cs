@@ -8,7 +8,7 @@ namespace DataAccess.Implementations
     public class PhotoBlobStorage : Interfaces.IPhotoBlobStorage
     {
         // FIELDS
-        private CloudBlobContainer _cloudBlobContainerPhotos;
+        private readonly CloudBlobContainer _cloudBlobContainerPhotos;
 
         // CONSTRUCTORS
         public PhotoBlobStorage(BlobStorageSettings settings)

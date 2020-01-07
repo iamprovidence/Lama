@@ -19,7 +19,7 @@ namespace EventBus.RabbitMQ
         private readonly int _retryCount;
 
         private bool _disposed;
-        private object syncRoot = new object();
+        private readonly object syncRoot = new object();
 
         // CONSTRUCTORS
         public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, int retryCount = 5)

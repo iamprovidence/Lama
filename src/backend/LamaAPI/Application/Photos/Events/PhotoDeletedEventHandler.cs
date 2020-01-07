@@ -10,7 +10,7 @@ namespace Application.Photos.Events
 {
     public class PhotoDeletedEventHandler : IIntegrationEventHandler<PhotoDeletedEvent>
     {
-        IApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         public PhotoDeletedEventHandler(IApplicationDbContext context)
         {

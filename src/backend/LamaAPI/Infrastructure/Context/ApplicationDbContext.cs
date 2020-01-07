@@ -5,7 +5,7 @@ namespace Infrastructure.Context
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        Interfaces.IDbInitializer _dbInitializer;
+        private readonly Interfaces.IDbInitializer _dbInitializer;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Interfaces.IDbInitializer dbInitializer)
                : base(options)

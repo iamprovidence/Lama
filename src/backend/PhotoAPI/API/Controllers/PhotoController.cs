@@ -8,7 +8,7 @@ namespace API.Controllers
     [ApiController]
     public class PhotoController : ControllerBase
     {
-        IEventBus _eventBus;
+        private readonly IEventBus _eventBus;
 
         public PhotoController(IEventBus eventBus)
         {
