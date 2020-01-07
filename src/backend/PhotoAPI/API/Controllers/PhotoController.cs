@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using EventBus.Abstraction.Interfaces;
+﻿using EventBus.Abstraction.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
