@@ -19,7 +19,7 @@ namespace EventBus.Extensions.Microsoft.DependencyInjection.Configurations
         }
 
         public RabbitMqConfiguration Using<TFactory>(TFactory factory)
-            where TFactory : IConnectionFactory
+            where TFactory : ConnectionFactory
         {
             _rabbitMqSettings.ConnectionFactory = factory;
             return this;
@@ -34,6 +34,12 @@ namespace EventBus.Extensions.Microsoft.DependencyInjection.Configurations
         public RabbitMqConfiguration WithName(string subscriptionName)
         {
             _rabbitMqSettings.SubscriptionName = subscriptionName;
+            return this;
+        }
+
+        public RabbitMqConfiguration WithHost(string hostName)
+        {
+            _rabbitMqSettings.ConnectionFactory.HostName = hostName;
             return this;
         }
 

@@ -6,6 +6,6 @@ namespace EventBus.Extensions.Microsoft.DependencyInjection.Models
     {
         public int RetryCount { get; set; }
         public string SubscriptionName { get; set; }
-        public IConnectionFactory ConnectionFactory { get; set; }
+        public ConnectionFactory ConnectionFactory { get; set; }
     }
 }

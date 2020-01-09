@@ -21,6 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Extensions.Microso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.RabbitMQ", "..\Shared\EventBus\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj", "{7378FDD3-9C63-4B2E-B6FC-18012C822CE6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F17B6887-16F5-460E-B4CC-1AACCD80524D}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		appveyor.yml = appveyor.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

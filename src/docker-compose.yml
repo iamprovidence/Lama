@@ -1,0 +1,92 @@
+version: '3.3'
+
+# docker-machine ip
+# windows: http://192.168.99.100
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    container_name: 'elasticsearch'
+    restart: always
+    environment:
+      discovery.type: single-node
+    expose:
+      - '9200'
+    ports:
+      - '9200:9200' # remove?
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    container_name: 'kibana'
+    restart: always
+    ports:
+      - '5601:5601' # remove?
+    depends_on:
+      - elasticsearch
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+
+  lama-api:
+    build:
+      context: ./backend
+      dockerfile: ./LamaAPI/Dockerfile
+    container_name: 'lama-api'
+    restart: on-failure
+    expose:
+      - '2700'
+      - '2701'
+    ports:
+      - "2700:2700" # remove?
+    environment:
+      ASPNETCORE_URLS: http://+:2700
+      RabbitMq:HostName: ${RABBIT_MQ_HOST}
+    depends_on:
+      - 'rabbitmq'
+
+  photo-api:
+    build:
+      context: ./backend
+      dockerfile: ./PhotoAPI/Dockerfile
+    container_name: 'photo-api'
+    restart: on-failure
+    expose:
+      - '2710'
+      - '2711'
+    ports:
+      - "2710:2710" # remove?
+    environment:
+      ASPNETCORE_URLS: http://+:2710
+      RabbitMq:HostName: ${RABBIT_MQ_HOST}
+    depends_on:
+      - rabbitmq
+      - elasticsearch
+
+  api-gateway:
+    build:
+      context: ./backend/APIGateway
+      dockerfile: ./Dockerfile
+    container_name: 'api-gateway'
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_URLS: http://+:5000
+      ASPNETCORE_ENVIRONMENT: dev-windows-docker
+    depends_on:
+      - 'lama-api'
+      - 'photo-api'
+
+  angular:
+    build: ./frontend/Angular
+    container_name: 'angular'
+    ports:
+      - "4200:80"
+    depends_on:
+      - 'api-gateway'  

@@ -11,7 +11,9 @@ namespace API.ServicesConfiguration
     {
         public static void AddEventBus(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddRabbitMqEventBus(Assembly.GetExecutingAssembly(), c => c.WithName("photo_api"));
+            string hostName = configuration["RabbitMq:HostName"];
+            services.AddRabbitMqEventBus(Assembly.GetExecutingAssembly(), 
+                c => c.WithName("photo_api").WithHost(hostName));
         }
     }
 }

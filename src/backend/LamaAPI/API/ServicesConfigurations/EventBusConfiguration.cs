@@ -15,7 +15,9 @@ namespace API.ServicesConfigurations
     {
         public static void AddEventBus(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddRabbitMqEventBus(typeof(Application.Common.Interfaces.IApplicationDbContext).Assembly, c => c.WithName("lama_api"));
+            string hostName = configuration["RabbitMq:HostName"];
+            services.AddRabbitMqEventBus(typeof(Application.Common.Interfaces.IApplicationDbContext).Assembly, 
+                c => c.WithName("lama_api").WithHost(hostName));
         }
 
         public static void ConfigureEventBus(this IApplicationBuilder app)

@@ -12,9 +12,9 @@ namespace API
     {
         public IConfiguration Configuration { get; private set; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
+            Configuration = EnvironmentConfiguration.BuildConfiguration(hostingEnvironment);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -40,7 +40,6 @@ namespace API
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSwagger();
-            app.UseHttpsRedirection();
             app.UseMvc();
             app.ConfigureEventBus();
         }
