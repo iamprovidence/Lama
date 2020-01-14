@@ -1,0 +1,13 @@
+<div class="image-item">
+  <div class="uploaded-image">
+    <img src="{{ photo.imageUrl }}" />
+    <div class="overlay" (mouseenter)="mouseEnterOverlayHandler()" (mouseleave)="mouseLeftOverlayHandler()">
+      <span class="icon remove-button" (click)="removePhoto()">
+        <i class="fas fa-times"></i>
+      </span>
+    </div>
+  </div>
+
+  <!--<textarea class="textarea"  rows="2" placeholder="Description" id="{{ i }}" [(ngModel)]="desc[i]"></textarea>-->
+  <textarea class="textarea is-primary" rows="2" placeholder="Description"></textarea>
+</div>

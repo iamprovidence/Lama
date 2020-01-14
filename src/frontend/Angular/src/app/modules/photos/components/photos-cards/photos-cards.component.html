@@ -1,0 +1,9 @@
+<!--photos-->
+<div class="is-items-container-centered">
+  <!--photos list-->
+  <div *ngFor="let photo of photos">
+    <div class="photo">
+      <img src="{{ photo.photoUrl256 }}" onerror="this.src='https://i.picsum.photos/id/358/536/354.jpg'" />
+    </div>
+  </div>
+</div>

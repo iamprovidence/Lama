@@ -1,0 +1,46 @@
+<div class="modal upload" id="upload-modal" [class.is-active]="isActive">
+  <!--background-->
+  <div class="modal-background" (click)="toggleModal()"></div>
+  <!--card-->
+  <div class="modal-card">
+    <!--header-->
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-white has-text-centered is-marginless">Upload photo</p>
+      <button (click)="toggleModal()" class="delete" aria-label="close"></button>
+    </header>
+    <!--body-->
+    <section class="modal-card-body">
+      <figure class="images" fileDrop (fileDropped)="onFileDropped($event)">
+        <!--image plug-->
+        <img *ngIf="photos.length === 0" src="assets/pictograms/your_photo_here.png" />
+
+        <!--images-->
+        <div class="images">
+          <app-uploaded-photo-item
+            *ngFor="let photo of photos; let i = index"
+            [photo]="photo"
+          ></app-uploaded-photo-item>
+        </div>
+      </figure>
+
+      <!--upload photo button-->
+      <div class="file is-centered">
+        <label class="file-label">
+          <input (change)="onFileSelected($event)" class="file-input" type="file" accept="image/*" multiple />
+          <span class="file-cta">
+            <span class="file-label">
+              Choose a photo…
+            </span>
+          </span>
+        </label>
+      </div>
+    </section>
+    <!--footer-->
+    <footer class="modal-card-foot buttons is-right">
+      <button class="button is-primary" [class.is-loading]="isLoading" (click)="saveChanges()">
+        Save changes
+      </button>
+      <button class="button" (click)="toggleModal()">Cancel</button>
+    </footer>
+  </div>
+</div>
