@@ -1,0 +1,24 @@
+<!--remove me!-->
+<app-upload-photos></app-upload-photos>
+
+<!--switch type-->
+<div class="buttons has-addons is-view-switch">
+  <button class="button" [class.is-primary]="viewType === 1" (click)="changeView(1)">
+    <span class="icon is-small"><i class="fas fa-th-large"></i> </span>
+  </button>
+  <button class="button" [class.is-primary]="viewType === 2" (click)="changeView(2)">
+    <span class="icon is-small"><i class="fas fa-stream"></i> </span>
+  </button>
+</div>
+
+<!--photos-->
+<div id="container1">
+  <div [ngSwitch]="viewType" id="container2">
+    <ng-template ngSwitchCase="1" ngSwitchDefault>
+      <app-photos-cards [photos]="photos"></app-photos-cards>
+    </ng-template>
+    <ng-template ngSwitchCase="2">
+      <app-photos-list [photos]="photos"></app-photos-list>
+    </ng-template>
+  </div>
+</div>
