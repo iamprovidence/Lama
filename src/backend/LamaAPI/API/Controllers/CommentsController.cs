@@ -3,9 +3,9 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using Application.Comments.Queries;
 using Application.Comments.Commands.AddComment;
 using Application.Comments.Commands.DeleteComment;
+using Application.Comments.Queries.GetPhotoComments;
 
 namespace API.Controllers
 {

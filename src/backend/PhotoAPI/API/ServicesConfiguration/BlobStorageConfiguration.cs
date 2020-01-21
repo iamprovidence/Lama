@@ -13,7 +13,7 @@ namespace API.ServicesConfiguration
     {
         public static void AddBlobStorage(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<BlobStorageSettings>(configuration);
+            services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
 
             services.AddScoped<IPhotoBlobStorage>(servicesProvider =>
             {

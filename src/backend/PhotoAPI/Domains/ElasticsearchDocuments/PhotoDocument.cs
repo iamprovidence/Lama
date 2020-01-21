@@ -5,6 +5,7 @@ namespace Domains.ElasticsearchDocuments
     public class PhotoDocument
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+        public string Name { get; set; }
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;

@@ -20,12 +20,13 @@
     </div>
 
     <!--upload-->
+    <app-upload-photos></app-upload-photos>
     <div class="level-item field">
-      <a class="button is-medium is-primary is-outlined is-rounded is-rounded-button">
+      <div class="button is-medium is-primary is-outlined is-rounded is-rounded-button" (click)="setIsModalOpen(true)">
         <span class="icon">
           <i class="fas fa-plus"></i>
         </span>
-      </a>
+      </div>
     </div>
   </div>
 
