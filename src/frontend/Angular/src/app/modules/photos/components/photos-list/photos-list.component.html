@@ -1,16 +1,15 @@
 <div class="media photo is-marginless-top" *ngFor="let photo of photos">
-  <figure class="media-left is-marginless-bottom">
+  <figure class="media-left is-marginless-bottom is-clipped">
     <p class="image is-64x64">
-      <img src="{{ photo.photoUrl256 }}" alt="" />
+      <img src="{{ photo.photoUrl64 }}" alt="" />
     </p>
   </figure>
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>John Smith</strong>
+        <strong>{{ photo.name }}</strong>
         <br />
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-        vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+        {{ photo.description }}
       </p>
     </div>
   </div>

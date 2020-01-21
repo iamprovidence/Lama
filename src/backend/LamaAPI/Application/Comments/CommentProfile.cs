@@ -7,7 +7,7 @@ namespace Application.Comments
     {
         public CommentProfile()
         {
-            CreateMap<Comment, Queries.PhotoCommentsList>();
+            CreateMap<Comment, Queries.GetPhotoComments.PhotoCommentsList>();
 
             CreateMap<Commands.AddComment.AddCommentCommand, Comment>()
                 .ForMember(

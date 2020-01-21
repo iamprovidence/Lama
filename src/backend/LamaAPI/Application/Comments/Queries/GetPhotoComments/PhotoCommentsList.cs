@@ -1,4 +1,4 @@
-﻿namespace Application.Comments.Queries
+﻿namespace Application.Comments.Queries.GetPhotoComments
 {
     public class PhotoCommentsList
     {

@@ -1,32 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from '../../store/state';
+import * as Selectors from '../../store/selectors';
+import * as Actions from '../../store/actions';
+
+import { Observable } from 'rxjs';
 
 import { PhotoListDTO } from 'src/app/core/models';
+import { PhotoViewType } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.less']
 })
-export class PhotosComponent implements OnInit {
-  public photos: PhotoListDTO[];
+export class PhotosComponent implements OnInit, OnDestroy {
+  public photos$: Observable<PhotoListDTO[]>;
+  public viewType$: Observable<PhotoViewType>;
 
-  public viewType = 1;
-
-  constructor() {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
-    const photos = [];
-    for (let i = 100; i < 256; i++) {
-      photos.push({
-        photoUrl256: `https://i.picsum.photos/id/${i}/256/256.jpg`,
-        photoUrl32: `https://i.picsum.photos/id/${i}/32/32.jpg`
-      });
-    }
+    this.photos$ = this.store.select(Selectors.getPhotos);
+    this.viewType$ = this.store.select(Selectors.getViewType);
 
-    this.photos = photos;
+    this.store.dispatch(new Actions.LoadPhotos());
   }
 
-  public changeView(viewType: number): void {
-    this.viewType = viewType;
+  ngOnDestroy() {
+    this.store.dispatch(new Actions.ClearPhotos());
+  }
+
+  public changeView(viewType: PhotoViewType): void {
+    this.store.dispatch(new Actions.SetViewType(viewType));
   }
 }
