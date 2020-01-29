@@ -42,18 +42,18 @@
 
         <!--user settings-->
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="button is-primary is-outlined is-rounded is-rounded-button">
+          <a routerLink="/profile" class="button is-primary is-outlined is-rounded is-rounded-button">
             <span class="icon">
               <i class="far fa-user"></i>
             </span>
           </a>
 
           <div class="navbar-dropdown is-right">
-            <a class="navbar-item is-size-6">
+            <a routerLink="/profile" class="navbar-item is-size-6">
               Profile
             </a>
             <hr class="navbar-divider" />
-            <a class="navbar-item is-size-6 has-text-danger has-text-weight-bold">
+            <a class="navbar-item is-size-6 has-text-danger has-text-weight-bold" (click)="logout()">
               Exit
             </a>
           </div>

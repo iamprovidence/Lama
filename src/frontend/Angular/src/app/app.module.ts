@@ -11,24 +11,26 @@ import { AppComponent } from './app.component';
 import { RoutingModule } from './routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     RoutingModule,
-    SharedModule,
     CoreModule,
+    SharedModule,
     BrowserModule,
+    AuthenticationModule,
 
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+
     StoreDevtoolsModule.instrument({
       name: 'Lama',
       maxAge: 25,
       logOnly: environment.production
     })
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

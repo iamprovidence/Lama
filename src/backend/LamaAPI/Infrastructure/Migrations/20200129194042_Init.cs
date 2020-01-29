@@ -12,12 +12,10 @@ namespace Infrastructure.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    Id = table.Column<string>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    AvatarUrl = table.Column<string>(nullable: true)
+                    PhotoURL = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,8 +29,8 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getdate()"),
+                    UserId = table.Column<string>(nullable: true),
                     PhotoId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

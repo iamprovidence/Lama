@@ -4,7 +4,7 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import { Observable } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { PhotosService } from '../photos.service';
 import * as PhotosActions from '../store/actions';

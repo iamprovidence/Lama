@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.DependencyInjection;
 
+using APIGateway.Configuration;
+
 namespace APIGateway
 {
     public class Startup
@@ -22,18 +24,17 @@ namespace APIGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCORS(Configuration);
             services.AddOcelot(Configuration);
-            services.AddSwaggerForOcelot(Configuration);
+            services.AddSwagger(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMvc();
-            app.UseSwaggerForOcelotUI(Configuration, opt =>
-            {
-                opt.PathToSwaggerGenerator = "/swagger/docs";
-            });
+            app.UseCORS();
+            app.UseSwagger(Configuration);
 
             await app.UseOcelot();
         }

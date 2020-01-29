@@ -14,6 +14,14 @@ const childRoutes: Routes = [
   {
     path: 'photos',
     loadChildren: 'src/app/modules/photos/photos.module#PhotosModule'
+  },
+  {
+    path: 'profile',
+    loadChildren: 'src/app/modules/profile/profile.module#ProfileModule'
+  },
+  {
+    path: 'bin',
+    loadChildren: 'src/app/modules/photos/photos.module#PhotosModule'
   }
 ];
 

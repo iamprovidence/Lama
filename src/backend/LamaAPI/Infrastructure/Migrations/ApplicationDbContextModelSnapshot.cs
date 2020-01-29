@@ -25,13 +25,15 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedAt");
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<Guid>("PhotoId");
 
                     b.Property<string>("Text");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -42,17 +44,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domains.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id");
 
-                    b.Property<string>("AvatarUrl");
+                    b.Property<string>("DisplayName");
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
+                    b.Property<string>("PhotoURL");
 
                     b.HasKey("Id");
 

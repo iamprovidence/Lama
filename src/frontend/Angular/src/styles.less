@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
+
 :root {
   --primary-color: hsl(171, 100%, 41%);
+  --danger-color: #cc0f35;
+
+  --danger-light-color: #feecf0;
 }
 
 .is-justify-centered {
@@ -27,4 +32,9 @@
 
 .is-marginless-bottom {
   margin-bottom: 0 !important;
+}
+
+.is-danger.is-light {
+  background-color: var(--danger-light-color);
+  color: var(--danger-color);
 }

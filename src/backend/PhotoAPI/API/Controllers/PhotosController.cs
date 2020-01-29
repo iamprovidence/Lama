@@ -3,6 +3,7 @@
 using EventBus.Abstraction.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -11,8 +12,9 @@ using BusinessLogic.Interfaces;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class PhotosController : ControllerBase
     {
         private readonly IPhotoService _photoService;

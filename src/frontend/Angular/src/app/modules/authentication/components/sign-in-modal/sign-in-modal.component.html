@@ -1,0 +1,129 @@
+<div class="modal" [class.is-active]="isOpen">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-card">
+    <!--header-->
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-white ">Login</p>
+      <button class="delete" aria-label="close" (click)="closeModal()"></button>
+    </header>
+
+    <!--content-->
+    <section class="modal-card-body">
+      <!--error message-->
+      <div class="notification is-danger is-light" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="columns">
+        <!--social media-->
+        <div class="column">
+          <div class="field">
+            <button class="button is-danger is-width-100" (click)="signInWithGoogle()">
+              <span class="icon">
+                <i class="fab fa-google"></i>
+              </span>
+              <span>Login with Google</span>
+            </button>
+          </div>
+
+          <div class="field">
+            <button class="button is-link is-width-100" (click)="signInWithFacebook()">
+              <span class="icon">
+                <i class="fab fa-facebook"></i>
+              </span>
+              <span>Login with Facebook</span>
+            </button>
+          </div>
+
+          <div class="field">
+            <button class="button is-info is-width-100" (click)="signInWithTwitter()">
+              <span class="icon">
+                <i class="fab fa-twitter"></i>
+              </span>
+              <span>Login with Twitter</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="is-divider-vertical" data-content="OR"></div>
+
+        <!--manual-->
+        <div class="column">
+          <form [formGroup]="formGroup">
+            <!--email-->
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input
+                  class="input"
+                  [class.is-primary]="!formGroup.controls['email'].invalid"
+                  [class.is-danger]="formGroup.controls['email'].invalid && formGroup.controls['email'].dirty"
+                  name="email"
+                  type="email"
+                  formControlName="email"
+                  placeholder="Email"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+
+                <!--validation icon-->
+                <span
+                  class="icon is-small is-right"
+                  *ngIf="!formGroup.controls['email'].invalid && formGroup.controls['email'].dirty"
+                >
+                  <i class="fas fa-check"></i>
+                </span>
+
+                <span
+                  class="icon is-small is-right"
+                  *ngIf="formGroup.controls['email'].invalid && formGroup.controls['email'].dirty"
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </p>
+            </div>
+            <!--password-->
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input
+                  class="input"
+                  [class.is-primary]="!formGroup.controls['password'].invalid"
+                  [class.is-danger]="formGroup.controls['password'].invalid && formGroup.controls['password'].dirty"
+                  name="password"
+                  type="password"
+                  formControlName="password"
+                  placeholder="Password"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+
+                <!--validation icon-->
+                <span
+                  class="icon is-small is-right"
+                  *ngIf="!formGroup.controls['password'].invalid && formGroup.controls['password'].dirty"
+                >
+                  <i class="fas fa-check"></i>
+                </span>
+
+                <span
+                  class="icon is-small is-right"
+                  *ngIf="formGroup.controls['password'].invalid && formGroup.controls['password'].dirty"
+                >
+                  <i class="fas fa-times"></i>
+                </span>
+              </p>
+            </div>
+            <!--submit-->
+            <button class="button is-primary is-width-100" (click)="onLogIn()">Login</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!--footer-->
+    <footer class="modal-card-foot">
+      <button class="button is-outlined is-primary is-width-100" (click)="onSignUp()">Sign up</button>
+      <button class="button is-outlined is-width-100 tooltip" data-tooltip="what a douchebag">Forgot password?</button>
+    </footer>
+  </div>
+</div>

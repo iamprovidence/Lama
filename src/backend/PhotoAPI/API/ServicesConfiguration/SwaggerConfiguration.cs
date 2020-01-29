@@ -3,6 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+using System.Linq;
+using System.Collections.Generic;
 
 namespace API.ServicesConfiguration
 {
@@ -12,7 +16,28 @@ namespace API.ServicesConfiguration
         {
             services.AddSwaggerGen(conf =>
             {
-                conf.SwaggerDoc(name: "v1", info: new Info() { Title = "Photo API", Version = "v1" });
+                conf.SwaggerDoc(name: "v1", info: new Info()
+                {
+                    Title = "Photo API",
+                    Version = "v1"
+                });
+                conf.AddAuthorization();
+            });
+        }
+
+        private static void AddAuthorization(this SwaggerGenOptions configuration)
+        {
+            configuration.AddSecurityDefinition("Bearer", new ApiKeyScheme
+            {
+                In = "Header",
+                Description = "Bearer {token}",
+                Name = "Authorization",
+                Type = "apiKey",
+            });
+
+            configuration.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+            {
+                ["Bearer"] = Enumerable.Empty<string>()
             });
         }
 

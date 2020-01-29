@@ -27,6 +27,8 @@ namespace API
 
             services.ConfigureValidation(Configuration);
 
+            services.AddCORS(Configuration);
+            services.AddAuthentication(Configuration);
             services.AddMapper();
             services.AddMediator();
             services.AddSwagger(Configuration);
@@ -39,6 +41,8 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCORS();
+            app.UseAuthentication(Configuration);
             app.UseSwagger();
             app.UseMvc();
             app.ConfigureEventBus();
