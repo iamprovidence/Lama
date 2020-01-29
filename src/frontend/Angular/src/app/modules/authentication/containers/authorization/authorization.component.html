@@ -1,0 +1,10 @@
+<app-sign-in-modal
+  [isOpen]="isModalOpen$ | async"
+  [error]="error$ | async"
+  (closeModalEvent)="closeModal()"
+  (signInWithGoogleEvent)="onSignInWithGoogle()"
+  (signInWithFacabookEvent)="onSignInWithFacebook()"
+  (signInWithTwitterEvent)="onSignInWithTwitter()"
+  (signInManuallyEvent)="onSignInManually($event)"
+  (signUpEvent)="onSignUp($event)"
+></app-sign-in-modal>

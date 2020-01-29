@@ -11,6 +11,16 @@ namespace Infrastructure.Configurations
         {
             builder
                 .HasKey(u => u.Id);
+
+            builder
+                .Property(u => u.Id)
+                .ValueGeneratedNever();
+
+            builder
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

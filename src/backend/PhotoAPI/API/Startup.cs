@@ -22,6 +22,7 @@ namespace API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddAuthentication(Configuration);
             services.AddSwagger(Configuration);
             services.AddMapper(Configuration);
             services.AddDataAccessServices(Configuration);
@@ -37,6 +38,7 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
             app.UseCORS();
             app.UseSwagger();
             app.UseMvc();

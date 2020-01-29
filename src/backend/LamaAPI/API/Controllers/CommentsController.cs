@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Application.Comments.Queries.GetPhotoComments;
 
 namespace API.Controllers
 {
+	[Authorize]
     [ApiController]
     public class CommentsController : ApiController
     {

@@ -3,7 +3,7 @@ using Domains.Entities;
 
 namespace Application.Comments
 {
-    internal class CommentProfile : Profile
+    internal sealed class CommentProfile : Profile
     {
         public CommentProfile()
         {

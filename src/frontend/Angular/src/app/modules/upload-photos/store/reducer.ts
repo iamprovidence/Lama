@@ -1,4 +1,4 @@
-import { Actions, ActionTypes, UpdatePhoto } from './actions';
+import { Actions, ActionTypes } from './actions';
 import { InitialState, State } from './state';
 
 export function reducer(state: State = InitialState, action: Actions): State {

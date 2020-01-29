@@ -5,8 +5,8 @@
   "ReRoutes": [
     {
       "SwaggerKey": "photo",
-      "UpstreamPathTemplate": "/api/photo",
-      "DownstreamPathTemplate": "/api/photo",
+      "UpstreamPathTemplate": "/api/photos",
+      "DownstreamPathTemplate": "/api/photos",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
