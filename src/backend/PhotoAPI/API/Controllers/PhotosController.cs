@@ -1,7 +1,5 @@
 ﻿using Domains.DataTransferObjects;
 
-using EventBus.Abstraction.Interfaces;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -17,19 +15,19 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class PhotosController : ControllerBase
     {
+        private readonly IAuthService _authService;
         private readonly IPhotoService _photoService;
-        private readonly IEventBus _eventBus;
 
-        public PhotosController(IPhotoService photoService, IEventBus eventBus)
+        public PhotosController(IAuthService authService, IPhotoService photoService)
         {
+            _authService = authService;
             _photoService = photoService;
-            _eventBus = eventBus;
         }
 
         [HttpGet]
         public Task<IEnumerable<PhotoListDTO>> GetCurrentUserPhotos()
         {
-            int userId = 1;
+            string userId = _authService.GetCurrentUserId();
             return _photoService.GetPhotosAsync(userId);
         }
 
@@ -40,9 +38,10 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        public void Delete()
+        public Task MarkPhotosAsDeleted([FromBody]IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
         {
-            _eventBus.Publish(new Events.Photo.PhotoDeletedEvent(System.Guid.NewGuid()));
+            return _photoService.MarkPhotosAsDeletedAsync(photosToDelete);
         }
+
     }
 }

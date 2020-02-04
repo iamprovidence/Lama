@@ -1,0 +1,18 @@
+<div *ngIf="isLoading$ | async as loadedContent">
+  <app-deleted-photos-buttons
+    *ngIf="loadedContent === 2"
+    [selectedPhotosAmount]="selectedPhotosAmount$ | async"
+    (deleteSelectedPhotosEvent)="deleteSelectedPhotos()"
+    (restoreSelectedPhotosEvent)="restoreSelectedPhotos()"
+  ></app-deleted-photos-buttons>
+</div>
+
+<br />
+
+<div *appIsLoading="isLoading$ | async">
+  <app-deleted-photos-grid
+    [deletedPhotos]="deletedPhotos$ | async"
+    [selectedPhotosIds]="selectedPhotosIds$ | async"
+    (selectPhotoEvent)="selectPhoto($event)"
+  ></app-deleted-photos-grid>
+</div>

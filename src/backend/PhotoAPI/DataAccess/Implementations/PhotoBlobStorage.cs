@@ -58,5 +58,12 @@ namespace DataAccess.Implementations
         {
             return block.Uri.AbsoluteUri;
         }
+
+        public Task<bool> DeleteFileIfExistsAsync(string blobName)
+        {
+            CloudBlockBlob blob = _cloudBlobContainerPhotos.GetBlockBlobReference(blobName);
+            return blob.DeleteIfExistsAsync();
+        }
+        
     }
 }

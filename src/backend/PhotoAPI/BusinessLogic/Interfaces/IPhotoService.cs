@@ -8,6 +8,7 @@ namespace BusinessLogic.Interfaces
     public interface IPhotoService
     {
         Task<IEnumerable<PhotoListDTO>> UploadPhotosAsync(IEnumerable<PhotoToUploadDTO> photosToUploadDTO);
-        Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(int userId);
+        Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(string userId);
+        Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
     }
 }

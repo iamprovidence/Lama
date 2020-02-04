@@ -1,0 +1,41 @@
+<div class="columns">
+  <!--dropdown-->
+  <div class="column">
+    <div class="dropdown">
+      <div class="dropdown is-hoverable">
+        <div class="dropdown-trigger">
+          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+            <span>Options</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+          <div class="dropdown-content">
+            <span class="dropdown-item">
+              Download
+            </span>
+            <hr class="dropdown-divider" />
+            <span class="dropdown-item is-size-6 has-text-danger has-text-weight-bold" (click)="deleteSelected()">
+              Delete
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--switch type-->
+  <div class="column">
+    <div class="buttons has-addons is-right">
+      <button class="button" [class.is-primary]="viewType === 0" (click)="changeView(0)">
+        <span class="icon is-small"><i class="fas fa-th-large"></i> </span>
+      </button>
+      <button class="button" [class.is-primary]="viewType === 1" (click)="changeView(1)">
+        <span class="icon is-small"><i class="fas fa-stream"></i> </span>
+      </button>
+    </div>
+  </div>
+</div>

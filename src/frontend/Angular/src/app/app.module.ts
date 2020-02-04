@@ -8,7 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
-import { RoutingModule } from './routing.module';
+import { RoutingModule } from './app.routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';

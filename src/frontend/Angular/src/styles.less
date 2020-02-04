@@ -3,9 +3,13 @@
 
 :root {
   --primary-color: hsl(171, 100%, 41%);
-  --danger-color: #cc0f35;
+  --primary-color-with-opacity: hsla(171, 100%, 41%, 40%);
+  --primary-color-text: hsl(171, 73%, 93%);
 
+  --danger-color: #cc0f35;
   --danger-light-color: #feecf0;
+
+  --grey-light-color: hsl(0, 0%, 96%);
 }
 
 .is-justify-centered {
@@ -37,4 +41,8 @@
 .is-danger.is-light {
   background-color: var(--danger-light-color);
   color: var(--danger-color);
+}
+
+.has-rounded-corners {
+  border-radius: 10px;
 }

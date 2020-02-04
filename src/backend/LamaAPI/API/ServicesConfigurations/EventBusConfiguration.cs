@@ -24,7 +24,7 @@ namespace API.ServicesConfigurations
         {
             IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<PhotoDeletedEvent, PhotoDeletedEventHandler>();
+            eventBus.Subscribe<PhotosDeletedEvent, PhotosDeletedEventHandler>();
         }
     }
 }

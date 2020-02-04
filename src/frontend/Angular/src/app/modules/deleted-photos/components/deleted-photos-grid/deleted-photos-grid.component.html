@@ -1,0 +1,9 @@
+<!--photos-->
+<div class="is-items-container-centered">
+  <!--photos list-->
+  <div *ngFor="let photo of deletedPhotos">
+    <div class="photo" [class.is-selected]="isSelected(photo)" (click)="selectPhoto(photo)">
+      <img src="{{ photo.photoUrl256 }}" appPrettyImage />
+    </div>
+  </div>
+</div>

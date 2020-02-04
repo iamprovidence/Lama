@@ -6,9 +6,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { SLICE_NAME } from './store/state';
 import { reducer } from './store/reducer';
-import { PhotosEffects } from './store/effects';
+import { PhotosEffects as Effects } from './store/effects';
 
 import { PhotosService } from './photos.service';
+import { DeletedPhotosService } from 'src/app/modules/deleted-photos/deleted-photos.service';
 
 @NgModule({
   declarations: [RoutingModule.components],
@@ -16,8 +17,8 @@ import { PhotosService } from './photos.service';
     RoutingModule,
     SharedModule,
     StoreModule.forFeature(SLICE_NAME, reducer),
-    EffectsModule.forFeature([PhotosEffects])
+    EffectsModule.forFeature([Effects])
   ],
-  providers: [PhotosService]
+  providers: [PhotosService, DeletedPhotosService]
 })
 export class PhotosModule {}
