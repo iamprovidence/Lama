@@ -8,25 +8,33 @@ import {
   ComponentFactoryResolver
 } from '@angular/core';
 import { DataState } from 'src/app/core/enums';
-import { LoadingComponent } from '../components';
+import { LoadingComponent, FailedComponent, NoContentComponent } from '../components';
 
 @Directive({
-  selector: '[isLoading]'
+  selector: '[appIsLoading]'
 })
 export class LoadingDirective {
   loadingFactory: ComponentFactory<LoadingComponent>;
   loadingComponent: ComponentRef<LoadingComponent>;
 
   @Input()
-  set isLoading(loading: DataState) {
+  set appIsLoading(loading: DataState) {
     this.vcRef.clear();
 
-    if (loading === DataState.Loading) {
-      // create and embed an instance of the loading component
-      this.loadingComponent = this.vcRef.createComponent(this.loadingFactory);
-    } else {
-      // embed the contents of the host template
-      this.vcRef.createEmbeddedView(this.templateRef);
+    switch (loading) {
+      case DataState.Loading:
+        this.showLoadingScreen();
+        break;
+      case DataState.DisplayContent:
+        this.showContentScreen();
+        break;
+      case DataState.Failed:
+        this.showErrorScreen();
+        break;
+      case DataState.NoContent:
+      default:
+        this.showNoContentScreen();
+        break;
     }
   }
 
@@ -34,8 +42,27 @@ export class LoadingDirective {
     private templateRef: TemplateRef<any>,
     private vcRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) {
-    // Create resolver for loading component
-    this.loadingFactory = this.componentFactoryResolver.resolveComponentFactory(LoadingComponent);
+  ) {}
+
+  private showLoadingScreen(): void {
+    const viewFactory = this.componentFactoryResolver.resolveComponentFactory(LoadingComponent);
+
+    this.vcRef.createComponent(viewFactory);
+  }
+
+  private showNoContentScreen(): void {
+    const viewFactory = this.componentFactoryResolver.resolveComponentFactory(NoContentComponent);
+
+    this.vcRef.createComponent(viewFactory);
+  }
+
+  private showErrorScreen(): void {
+    const viewFactory = this.componentFactoryResolver.resolveComponentFactory(FailedComponent);
+
+    this.vcRef.createComponent(viewFactory);
+  }
+
+  private showContentScreen(): void {
+    this.vcRef.createEmbeddedView(this.templateRef);
   }
 }

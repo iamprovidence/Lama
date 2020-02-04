@@ -9,32 +9,25 @@ using AutoMapper;
 
 using DataAccess.Interfaces;
 
+using BusinessLogic.Interfaces;
+
 namespace BusinessLogic.Services
 {
-    public class PhotoService : Interfaces.IPhotoService
+    public class PhotoService : Abstract.PhotoServiceBase, IPhotoService
     {
-        private readonly IMapper _mapper;
-        private readonly IElasticService _elasticService;
-        private readonly IPhotoBlobStorage _blobStorage;
-        private readonly IImageService _imageService;
-
         public PhotoService(
             IMapper mapper, 
+            IAuthService authService,
             IElasticService elasticService, 
             IPhotoBlobStorage blobStorage, 
-            IImageService imageService)
-        {
-            _mapper = mapper;
-            _elasticService = elasticService;
-            _blobStorage = blobStorage;
-            _imageService = imageService;
-        }
+            IImageService imageService) 
+            : base(mapper, authService, elasticService, blobStorage, imageService) { }
 
-        public async Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(int userId)
+        public async Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(string userId)
         {
             IEnumerable<PhotoDocument> userPhotos = await _elasticService.GetPhotosAsync(userId);
 
-            return userPhotos.Select(_mapper.Map<PhotoListDTO>);
+            return userPhotos.OrderByDescending(p => p.UploadDate).Select(_mapper.Map<PhotoListDTO>);
         }
 
         public async Task<IEnumerable<PhotoListDTO>> UploadPhotosAsync(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
@@ -63,12 +56,18 @@ namespace BusinessLogic.Services
         // TODO: remove this
         private void SetPhotoValues(PhotoDocument photoDocument, string blobName)
         {
-            photoDocument.UserId = 1;
+            photoDocument.UserId = _authService.GetCurrentUserId();
 
             photoDocument.OriginalBlobName = blobName;
             photoDocument.BlobName = blobName;
             photoDocument.Blob64Name = blobName;
             photoDocument.Blob256Name = blobName;
         }
+
+        public Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+        {
+            return _elasticService.MarkPhotosAsDeletedAsync(photosToDelete);
+        }
+
     }
 }

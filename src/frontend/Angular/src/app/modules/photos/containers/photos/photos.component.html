@@ -1,21 +1,31 @@
-<!--switch type-->
-<div class="buttons has-addons is-view-switch">
-  <button class="button" [class.is-primary]="(viewType$ | async) === 0" (click)="changeView(0)">
-    <span class="icon is-small"><i class="fas fa-th-large"></i> </span>
-  </button>
-  <button class="button" [class.is-primary]="(viewType$ | async) === 1" (click)="changeView(1)">
-    <span class="icon is-small"><i class="fas fa-stream"></i> </span>
-  </button>
-</div>
+<div *appIsLoading="isLoading$ | async">
+  <!--buttons-->
+  <div class="has-left-padding">
+    <app-photos-buttons
+      [viewType]="viewType$ | async"
+      (changeViewTypeEvent)="changeView($event)"
+      (deleteSelectedPhotosEvent)="deleteSelectedPhotos()"
+    >
+    </app-photos-buttons>
+  </div>
 
-<!--photos-->
-<div id="container1">
-  <div [ngSwitch]="viewType$ | async" id="container2">
-    <ng-template ngSwitchCase="0" ngSwitchDefault>
-      <app-photos-cards [photos]="photos$ | async"></app-photos-cards>
-    </ng-template>
-    <ng-template ngSwitchCase="1">
-      <app-photos-list [photos]="photos$ | async"></app-photos-list>
-    </ng-template>
+  <!--photos-->
+  <div id="container1">
+    <div [ngSwitch]="viewType$ | async" id="container2">
+      <ng-template ngSwitchCase="0" ngSwitchDefault>
+        <app-photos-cards
+          [photos]="photos$ | async"
+          [selected]="selected$ | async"
+          (selectPhotoEvent)="selectPhoto($event)"
+        ></app-photos-cards>
+      </ng-template>
+      <ng-template ngSwitchCase="1">
+        <app-photos-list
+          [photos]="photos$ | async"
+          [selected]="selected$ | async"
+          (selectPhotoEvent)="selectPhoto($event)"
+        ></app-photos-list>
+      </ng-template>
+    </div>
   </div>
 </div>

@@ -21,7 +21,7 @@ const childRoutes: Routes = [
   },
   {
     path: 'bin',
-    loadChildren: 'src/app/modules/photos/photos.module#PhotosModule'
+    loadChildren: 'src/app/modules/deleted-photos/deleted-photos.module#DeletedPhotosModule'
   }
 ];
 

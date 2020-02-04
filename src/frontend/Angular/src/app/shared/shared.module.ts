@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { LoadingComponent } from './components';
+import { LoadingComponent, NoContentComponent, FailedComponent } from './components';
 
-import { LoadingDirective } from './directives';
+import { LoadingDirective, PrettyImageDirective } from './directives';
 
 const modules = [CommonModule, RouterModule, FormsModule, ReactiveFormsModule];
 
-const components = [LoadingComponent];
-const dynamicComponents = [LoadingComponent];
+const components = [LoadingComponent, NoContentComponent, FailedComponent];
+const dynamicComponents = [LoadingComponent, NoContentComponent, FailedComponent];
 
-const directives = [LoadingDirective];
+const directives = [LoadingDirective, PrettyImageDirective];
 
 @NgModule({
   imports: [...modules],

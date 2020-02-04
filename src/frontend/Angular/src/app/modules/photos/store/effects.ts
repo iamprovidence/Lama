@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { State } from 'src/app/app.state';
+import * as Selectors from '../store/selectors';
 
 import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 import { PhotosService } from '../photos.service';
 import * as PhotosActions from '../store/actions';
 import * as UploadPhotosActions from '../../upload-photos/store/actions';
 
-import { PhotoToUploadDTO } from 'src/app/core/models';
+import { PhotoToUploadDTO, PhotoToDeleteRestoreDTO } from 'src/app/core/models';
 
 @Injectable()
 export class PhotosEffects {
-  constructor(private actions$: Actions, private photosService: PhotosService) {}
+  constructor(private actions$: Actions, private store$: Store<State>, private photosService: PhotosService) {}
 
   @Effect()
   loadPhotos$: Observable<Action> = this.actions$.pipe(
@@ -37,6 +39,23 @@ export class PhotosEffects {
             new PhotosActions.AddPhotos(createdPhotos)
           ])
         )
+    )
+  );
+
+  @Effect()
+  deletePhotos$: Observable<Action> = this.actions$.pipe(
+    ofType(PhotosActions.ActionTypes.DeleteSelectedPhotos),
+    withLatestFrom(this.store$.select(Selectors.getSelectedPhotos)),
+    map(([action, selectedPhotos]) =>
+      [...selectedPhotos].map(
+        v =>
+          ({
+            id: v
+          } as PhotoToDeleteRestoreDTO)
+      )
+    ),
+    mergeMap((photos: PhotoToDeleteRestoreDTO[]) =>
+      this.photosService.markPhotosAsDeleted(photos).pipe(map(() => new PhotosActions.DeleteSelectedPhotosSucceed()))
     )
   );
 }

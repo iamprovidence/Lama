@@ -3,7 +3,23 @@
   <!--photos list-->
   <div *ngFor="let photo of photos">
     <div class="photo">
-      <img src="{{ photo.photoUrl256 }}" onerror="this.src='https://i.picsum.photos/id/358/536/354.jpg'" />
+      <!--image-->
+      <img src="{{ photo.photoUrl256 }}" appPrettyImage />
+
+      <!--selected-->
+      <div (click)="select(photo)" *ngIf="isSelected(photo)" class="selected">
+        <i class="fas fa-check-circle is-select-photo-checked"></i>
+      </div>
+
+      <div class="overlay">
+        <div (click)="select(photo)" *ngIf="!isSelected(photo)">
+          <i class="far fa-check-circle is-select-photo-check"></i>
+        </div>
+
+        <div class="name">
+          {{ photo.name }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

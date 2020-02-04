@@ -10,7 +10,7 @@ namespace Domains.ElasticsearchDocuments
         public bool IsDeleted { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public string BlobName { get; set; }
         public string Blob64Name { get; set; }

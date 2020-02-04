@@ -1,16 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PhotoListDTO } from 'src/app/core/models';
+import { Component, OnInit } from '@angular/core';
+import { PhotosViewBaseComponent } from '../photos-view-base/photos-view-base.components';
 
 @Component({
   selector: 'app-photos-list',
   templateUrl: './photos-list.component.html',
   styleUrls: ['./photos-list.component.less']
 })
-export class PhotosListComponent implements OnInit {
-  @Input()
-  public photos: PhotoListDTO[] = [];
-
-  constructor() {}
+export class PhotosListComponent extends PhotosViewBaseComponent implements OnInit {
+  constructor() {
+    super();
+  }
 
   ngOnInit() {}
 }

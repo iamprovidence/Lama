@@ -19,7 +19,7 @@ export function reducer(state: State = InitialState, action: Actions): State {
         ...state,
         error: null,
         user: action.payload,
-        isLoading: DataState.DisplayData
+        isLoading: DataState.DisplayContent
       };
     case ActionTypes.LoginFailed:
       return {
