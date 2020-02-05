@@ -31,6 +31,15 @@ namespace API.Controllers
             return _photoService.GetPhotosAsync(userId);
         }
 
+        [HttpGet("{photoId}")]
+        public async Task<ActionResult<PhotoViewDTO>> GetCurrentUserPhoto(System.Guid photoId)
+        {
+            PhotoViewDTO photo = await _photoService.GetPhotoOrDefaultAsync(photoId);
+
+            if (photo == null) return NotFound();
+            return photo;
+        }
+
         [HttpPost]
         public Task<IEnumerable<PhotoListDTO>> Upload(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
         {

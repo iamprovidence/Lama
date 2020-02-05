@@ -6,13 +6,15 @@
 >
   <figure class="media-left is-marginless-bottom is-clipped">
     <p class="image is-64x64">
-      <img src="{{ photo.photoUrl64 }}" alt="" />
+      <img src="{{ photo.photoUrl64 }}" alt="{{ photo.name }}" appPrettyImage />
     </p>
   </figure>
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>{{ photo.name }}</strong>
+        <strong>
+          <a [routerLink]="['id', photo.id]" (click)="$event.stopPropagation()">{{ photo.name }} </a>
+        </strong>
         <br />
         {{ photo.description }}
       </p>

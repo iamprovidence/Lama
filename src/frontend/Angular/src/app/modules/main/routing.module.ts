@@ -32,8 +32,12 @@ const routes: Routes = [
     children: childRoutes
   },
   {
-    path: '**',
+    path: 'not-found',
     component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
   }
 ];
 

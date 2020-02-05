@@ -1,5 +1,6 @@
 ﻿using Nest;
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -53,6 +54,13 @@ namespace DataAccess.Implementations
             ISearchResponse<PhotoDocument> foundPhotos = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
 
             return foundPhotos.Documents;
+        }
+
+        public async Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId)
+        {
+            GetResponse<PhotoDocument> response = await _elasticClient.GetAsync<PhotoDocument>(photoId);
+
+            return response.Source;
         }
 
         #region Delete

@@ -16,6 +16,12 @@ namespace Domains.MappingProfiles
                 .ForMember(
                     dest => dest.PhotoUrl256,
                     opts => opts.MapFrom(src => src.Blob256Name));
+
+            CreateMap<PhotoDocument, PhotoViewDTO>()
+                .ForMember(
+                    dest => dest.PhotoUrl,
+                    opts => opts.MapFrom(src => src.BlobName));
+
             CreateMap<PhotoToUploadDTO, PhotoDocument>();
 
             CreateMap<PhotoDocument, DeletedPhotosListDTO>()

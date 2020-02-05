@@ -13,44 +13,6 @@ export class PhotosService {
   constructor(private httpClient: HttpClient) {}
 
   public getCurrentUserPhotos(): Observable<PhotoListDTO[]> {
-    /*
-    const mock: PhotoListDTO[] = [
-      {
-        id: 'asd',
-        photoUrl64: 'https://i.picsum.photos/id/367/64/64.jpg',
-        photoUrl256: 'https://i.picsum.photos/id/367/256/256.jpg',
-        name: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        description: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        uploadDate: 'asd'
-      },
-      {
-        id: 'asds',
-        photoUrl64: 'https://i.picsum.photos/id/366/64/64.jpg',
-        photoUrl256: 'https://i.picsum.photos/id/366/256/256.jpg',
-        name: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        description: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        uploadDate: 'asd'
-      },
-      {
-        id: 'asds1',
-        photoUrl64: 'https://i.picsum.photos/id/365/64/64.jpg',
-        photoUrl256: 'https://i.picsum.photos/id/365/256/256.jpg',
-        name: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        description: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        uploadDate: 'asd'
-      },
-      {
-        id: 'asds2',
-        photoUrl64: 'https://i.picsum.photos/id/364/64/64.jpg',
-        photoUrl256: 'https://i.picsum.photos/id/364/256/256.jpg',
-        name: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        description: 'Lorem picsum iler sit amet doler amit onus romeno irito',
-        uploadDate: 'asd'
-      }
-    ];
-
-    return of(mock);
-*/
     return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/`);
   }
 
