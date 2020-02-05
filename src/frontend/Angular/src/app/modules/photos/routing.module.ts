@@ -9,7 +9,13 @@ import { PhotosButtonsComponent } from './components/photos-buttons/photos-butto
 const routes: Routes = [
   {
     path: '',
-    component: PhotosComponent
+    component: PhotosComponent,
+    children: [
+      {
+        path: 'id/:photoId',
+        loadChildren: 'src/app/modules/photo-details/photo-details.module#PhotoDetailsModule'
+      }
+    ]
   }
 ];
 

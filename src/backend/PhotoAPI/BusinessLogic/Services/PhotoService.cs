@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -28,6 +29,14 @@ namespace BusinessLogic.Services
             IEnumerable<PhotoDocument> userPhotos = await _elasticService.GetPhotosAsync(userId);
 
             return userPhotos.OrderByDescending(p => p.UploadDate).Select(_mapper.Map<PhotoListDTO>);
+        }
+
+        public async Task<PhotoViewDTO> GetPhotoOrDefaultAsync(Guid photoId)
+        {
+            PhotoDocument userPhoto = await _elasticService.GetPhotoOrDefaultAsync(photoId);
+            if (userPhoto == null) return null;
+
+            return _mapper.Map<PhotoViewDTO>(userPhoto);
         }
 
         public async Task<IEnumerable<PhotoListDTO>> UploadPhotosAsync(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
