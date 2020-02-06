@@ -14,7 +14,7 @@ init:
 install:
   - npm install -g npm
   - dir
-  - cd src/frontend
+  - cd src/frontend/Angular
   - dir
   - npm install
 
