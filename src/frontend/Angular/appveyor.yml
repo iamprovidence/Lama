@@ -20,4 +20,4 @@ install:
 
 test_script:
   - node --version && npm --version
-  - npm build
+  - npm run-script build
