@@ -14,19 +14,19 @@ namespace API.Controllers
     [ApiController]
     public class CommentsController : ApiController
     {
-        [HttpGet]
+        [HttpGet("all")]
         public Task<IEnumerable<PhotoCommentsList>> Get([FromQuery] GetPhotoCommentsQuery query)
         {
             return Mediator.Send(query);
         }
 
-        [HttpPost]
-        public Task<int> Post([FromBody] AddCommentCommand command)
+        [HttpPost("add")]
+        public Task<PhotoCommentsList> Post([FromBody] AddCommentCommand command)
         {
             return Mediator.Send(command);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public Task<MediatR.Unit> Delete([FromQuery] DeleteCommentCommand command)
         {
             return Mediator.Send(command);

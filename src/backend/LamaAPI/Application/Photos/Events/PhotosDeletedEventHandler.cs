@@ -1,10 +1,17 @@
-﻿using Events.Photo;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+using Events.Photo;
 
 using EventBus.Abstraction.Interfaces;
 
-using System.Threading.Tasks;
-
 using Application.Common.Interfaces;
+
+using Domains.Entities;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Photos.Events
 {
@@ -17,11 +24,18 @@ namespace Application.Photos.Events
             _context = context;
         }
 
-        public Task Handle(PhotosDeletedEvent integrationEvent)
+        public async Task Handle(PhotosDeletedEvent integrationEvent)
         {
-            System.Console.WriteLine($"PHOTO DELETED EVENT");
+            IEnumerable<Guid> deletedPhotosIds = integrationEvent.PhotoIds;
 
-            return Task.CompletedTask;
+            IEnumerable<Comment> commentsToDelete = await _context
+                .Set<Comment>()
+                .Where(c => deletedPhotosIds.Contains(c.PhotoId))
+                .ToArrayAsync();
+
+            _context.Set<Comment>().RemoveRange(commentsToDelete);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

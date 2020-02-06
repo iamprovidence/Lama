@@ -7,6 +7,7 @@ export enum ActionTypes {
 
   LoadPhotos = '[PHOTOS] LoadPhotos',
   LoadPhotosSucceed = '[PHOTOS] LoadPhotosSucceed',
+  LoadPhotosFailed = '[PHOTOS] LoadPhotosFailed',
   ClearPhotos = '[PHOTOS] ClearPhotos',
 
   AddPhotos = '[PHOTOS] AddPhotos',
@@ -29,6 +30,11 @@ export class LoadPhotos implements Action {
 export class LoadPhotosSucceed implements Action {
   readonly type = ActionTypes.LoadPhotosSucceed;
   constructor(public payload: PhotoListDTO[]) {}
+}
+
+export class LoadPhotosFailed implements Action {
+  readonly type = ActionTypes.LoadPhotosFailed;
+  constructor(public payload: string) {}
 }
 
 export class ClearPhotos implements Action {
@@ -57,6 +63,7 @@ export type Actions =
   | SetViewType
   | LoadPhotos
   | LoadPhotosSucceed
+  | LoadPhotosFailed
   | ClearPhotos
   | AddPhotos
   | SelectPhoto

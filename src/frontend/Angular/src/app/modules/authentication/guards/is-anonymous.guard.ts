@@ -19,10 +19,10 @@ export class IsAnonymousGuard implements CanActivate {
   public canActivate(): Observable<boolean> {
     return this.isAuthorized$.pipe(
       map(isAuthorized => {
-        return false;
-        // if (isAuthorized) this.router.navigate(['/']);
+        // return false;
+        if (isAuthorized) this.router.navigate(['/']);
 
-        // return !isAuthorized;
+        return !isAuthorized;
       })
     );
   }

@@ -10,9 +10,6 @@ import { DataState } from 'src/app/core/enums';
 })
 export class PhotoDetailsModalComponent implements OnInit {
   @Input()
-  public isActive: boolean;
-
-  @Input()
   public isLoading: DataState;
 
   @Input()

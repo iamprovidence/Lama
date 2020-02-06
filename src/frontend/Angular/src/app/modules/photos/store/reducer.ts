@@ -18,6 +18,11 @@ export function reducer(state: State = InitialState, action: Actions): State {
         isLoading: action.payload.length === 0 ? DataState.NoContent : DataState.DisplayContent,
         photos: action.payload
       };
+    case ActionTypes.LoadPhotosFailed:
+        return {
+          ...state,
+          isLoading: DataState.Failed
+        };
     case ActionTypes.ClearPhotos: {
       return { ...state, photos: [], isLoading: DataState.DisplayContent };
     }

@@ -8,3 +8,7 @@ export * from './photos/photo-list-dto';
 export * from './photos/photo-to-upload-dto';
 export * from './photos/deleted-photos-list-dto';
 export * from './photos/photo-to-delete-restore-dto';
+
+// comments
+export * from './comments/add-comment-dto';
+export * from './comments/comment-list-dto';

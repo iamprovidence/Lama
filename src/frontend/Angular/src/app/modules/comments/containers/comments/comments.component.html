@@ -1,0 +1,16 @@
+<div>
+  <app-add-comment-form
+    [loggedUser]="loggedUser$ | async"
+    [currentPhoto]="currentPhoto$ | async"
+    (addNewCommentEvent)="addComment($event)"
+  ></app-add-comment-form>
+  <hr />
+  <div *appIsLoading="isLoading$ | async">
+    <app-comments-list
+      [loggedUser]="loggedUser$ | async"
+      [currentPhoto]="currentPhoto$ | async"
+      [comments]="comments$ | async"
+      (deleteCommentEvent)="deleteComment($event)"
+    ></app-comments-list>
+  </div>
+</div>

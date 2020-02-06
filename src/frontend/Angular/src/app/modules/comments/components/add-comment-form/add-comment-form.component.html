@@ -1,0 +1,17 @@
+<div class="field">
+  <div class="control">
+    <textarea
+      placeholder="Your comments goes here..."
+      rows="2"
+      required
+      maxlength="1250"
+      [(ngModel)]="newCommentText"
+      #commentTextarea="ngModel"
+      class="textarea is-primary"
+      [class.is-primary]="commentTextarea.valid || commentTextarea.untouched"
+      [class.is-danger]="commentTextarea.invalid && commentTextarea.touched"
+    ></textarea>
+  </div>
+</div>
+
+<button class="button is-primary is-fullwidth" [disabled]="commentTextarea.invalid" (click)="addComment()">Send</button>

@@ -29,7 +29,7 @@ namespace API.Controllers
             _eventBus = eventBus;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public Task<IEnumerable<DeletedPhotosListDTO>> Get()
         {
             string userId = _authService.GetCurrentUserId();

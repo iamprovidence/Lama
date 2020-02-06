@@ -85,6 +85,6 @@ export class AuthService {
   }
 
   private updateUserInServer(user: FirebaseUser): void {
-    this.httpClient.post<boolean>(`${this.apiUri}/`, user).subscribe();
+    this.httpClient.post<boolean>(`${this.apiUri}/update`, user).subscribe();
   }
 }
