@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { Observable } from 'rxjs';
 
-import { CommentListDTO, AddCommentDTO  from 'src/app/core/models';
+import { CommentListDTO, AddCommentDTO } from 'src/app/core/models';
 
 @Injectable()
 export class CommentsService {
