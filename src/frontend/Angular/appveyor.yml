@@ -8,12 +8,9 @@ init:
   - git config --global core.autocrlf true
 
 install:
-  # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   - npm install -g npm
-  - dir
   - cd src/frontend/Angular
-  - dir
   - npm install
 
 test_script:
