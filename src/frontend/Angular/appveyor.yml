@@ -17,7 +17,8 @@ install:
   - ps: $env:path = $env:appdata + "\npm;" + $env:path
   - dir
   - ps: cd src\frontend\Angular
-  - cd src\frontend\Angular
+  - cd src
+  - dir
   - npm install
 
 test_script:
