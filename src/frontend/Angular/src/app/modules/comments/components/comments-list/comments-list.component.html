@@ -1,0 +1,25 @@
+<div class="comments">
+  <article class="media" *ngFor="let comment of comments">
+    <div class="media-content">
+      <div class="content">
+        <!--user info-->
+        <p class="header">
+          <figure>
+            <p class="image is-32x32">
+              <img src="{{ comment.userAvatarUrl }}" alt="User avatar" appPrettyImage />
+            </p>
+          </figure>
+          <strong>{{ comment.userName }}</strong>
+          <small class="date">{{ comment.createdAt | date }}</small>
+        </p>
+        <!--text-->
+        <p>
+          {{ comment.text }}
+        </p>
+      </div>
+    </div>
+    <div class="media-right" *ngIf="canDeleteComment(comment)">
+      <button class="delete" (click)="deleteComment(comment)"></button>
+    </div>
+  </article>
+</div>

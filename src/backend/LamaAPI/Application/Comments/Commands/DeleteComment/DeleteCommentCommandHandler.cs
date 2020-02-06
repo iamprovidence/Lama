@@ -21,8 +21,8 @@ namespace Application.Comments.Commands.DeleteComment
 
         public async Task<Unit> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
         {
-            Comment commentToRemove = await _context.Set<Comment>().FindAsync(request.Id);
-            if (commentToRemove == null) throw new NotFoundException(nameof(Comment), request.Id);
+            Comment commentToRemove = await _context.Set<Comment>().FindAsync(request.CommentId);
+            if (commentToRemove == null) throw new NotFoundException(nameof(Comment), request.CommentId);
 
             _context.Set<Comment>().Remove(commentToRemove);
 

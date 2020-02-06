@@ -24,7 +24,7 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public Task<IEnumerable<PhotoListDTO>> GetCurrentUserPhotos()
         {
             string userId = _authService.GetCurrentUserId();
@@ -40,13 +40,13 @@ namespace API.Controllers
             return photo;
         }
 
-        [HttpPost]
+        [HttpPost("upload")]
         public Task<IEnumerable<PhotoListDTO>> Upload(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
         {
             return _photoService.UploadPhotosAsync(photosToUploadDTO);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public Task MarkPhotosAsDeleted([FromBody]IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
         {
             return _photoService.MarkPhotosAsDeletedAsync(photosToDelete);

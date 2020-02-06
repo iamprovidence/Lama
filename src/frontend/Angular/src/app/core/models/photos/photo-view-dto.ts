@@ -3,4 +3,5 @@ export interface PhotoViewDTO {
   name: string;
   description: string;
   photoUrl: string;
+  userId: string;
 }

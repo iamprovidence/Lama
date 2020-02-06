@@ -13,7 +13,7 @@ export class PhotosService {
   constructor(private httpClient: HttpClient) {}
 
   public getCurrentUserPhotos(): Observable<PhotoListDTO[]> {
-    return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/`);
+    return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/all`);
   }
 
   private getOptionsWithBody<TBody>(body: TBody): { headers: HttpHeaders; body: TBody } {
@@ -28,10 +28,10 @@ export class PhotosService {
   public markPhotosAsDeleted(photosToDelete: PhotoToDeleteRestoreDTO[]): Observable<object> {
     const options = this.getOptionsWithBody(photosToDelete);
 
-    return this.httpClient.delete(`${this.apiUri}/`, options);
+    return this.httpClient.delete(`${this.apiUri}/delete`, options);
   }
 
   public uploadPhotos(photos: PhotoToUploadDTO[]): Observable<PhotoListDTO[]> {
-    return this.httpClient.post<PhotoListDTO[]>(`${this.apiUri}/`, photos);
+    return this.httpClient.post<PhotoListDTO[]>(`${this.apiUri}/upload`, photos);
   }
 }

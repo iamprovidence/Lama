@@ -10,7 +10,7 @@
     <div class="details">
       <div class="columns">
         <div class="column title has-text-overflowed is-size-4 name">
-          {{ photo.name }}
+          {{ photo?.name }}
         </div>
         <div class="column is-one-quarter has-text-right">
           <div (click)="closeModal()">
@@ -18,6 +18,9 @@
           </div>
         </div>
       </div>
+
+      <!--comments-->
+      <app-comments></app-comments>
     </div>
   </div>
 </div>

@@ -5,8 +5,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { State } from 'src/app/app.state';
 import * as Selectors from '../store/selectors';
 
-import { Observable } from 'rxjs';
-import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, withLatestFrom, catchError } from 'rxjs/operators';
 
 import { PhotosService } from '../photos.service';
 import * as PhotosActions from '../store/actions';
@@ -22,7 +22,8 @@ export class PhotosEffects {
   loadPhotos$: Observable<Action> = this.actions$.pipe(
     ofType(PhotosActions.ActionTypes.LoadPhotos),
     mergeMap(() =>
-      this.photosService.getCurrentUserPhotos().pipe(map(photos => new PhotosActions.LoadPhotosSucceed(photos)))
+      this.photosService.getCurrentUserPhotos().pipe(map(photos => new PhotosActions.LoadPhotosSucceed(photos)),
+      catchError(err => of(new PhotosActions.LoadPhotosFailed(err))))
     )
   );
 

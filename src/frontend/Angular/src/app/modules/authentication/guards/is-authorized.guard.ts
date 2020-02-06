@@ -19,10 +19,10 @@ export class IsAuthorizedGuard implements CanActivate {
   public canActivate(): Observable<boolean> {
     return this.isAuthorized$.pipe(
       map(isAuthorized => {
-        return true;
-        // if (!isAuthorized) this.router.navigate(['/landing']);
+        // return true;
+        if (!isAuthorized) this.router.navigate(['/landing']);
 
-        // return isAuthorized;
+        return isAuthorized;
       })
     );
   }

@@ -5,7 +5,7 @@ import { DataState } from 'src/app/core/enums';
 export const SLICE_NAME = 'photo-details';
 
 export interface AppState extends RootState {
-  ['photo-details']: State;
+  [SLICE_NAME]: State;
 }
 
 export interface State {

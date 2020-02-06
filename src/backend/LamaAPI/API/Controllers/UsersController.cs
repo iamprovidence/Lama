@@ -11,7 +11,7 @@ namespace API.Controllers
     [AllowAnonymous]
     public class UsersController : ApiController
     {
-        [HttpPost]
+        [HttpPost("update")]
         public Task<bool> Post([FromBody] ModifyUserCommand command)
         {
             return Mediator.Send(command);

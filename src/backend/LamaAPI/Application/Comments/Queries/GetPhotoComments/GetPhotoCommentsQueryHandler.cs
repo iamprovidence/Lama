@@ -14,7 +14,6 @@ using System.Collections.Generic;
 
 using Application.Common.Interfaces;
 
-
 namespace Application.Comments.Queries.GetPhotoComments
 {
     public class GetPhotoCommentsQueryHandler : IRequestHandler<GetPhotoCommentsQuery, IEnumerable<PhotoCommentsList>>

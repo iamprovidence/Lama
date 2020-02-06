@@ -5,8 +5,8 @@
   "ReRoutes": [
     {
       "SwaggerKey": "photo",
-      "UpstreamPathTemplate": "/api/photos",
-      "DownstreamPathTemplate": "/api/photos",
+      "UpstreamPathTemplate": "/api/Photos/{everything}",
+      "DownstreamPathTemplate": "/api/Photos/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -16,9 +16,34 @@
       ]
     },
     {
+      "SwaggerKey": "photo",
+      "UpstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2711
+        }
+      ]
+    },
+
+    {
       "SwaggerKey": "lama",
-      "UpstreamPathTemplate": "/api/{everything}",
-      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2701
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/Users/{everything}",
+      "DownstreamPathTemplate": "/api/Users/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

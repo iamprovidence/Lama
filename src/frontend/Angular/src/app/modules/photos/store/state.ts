@@ -5,7 +5,7 @@ import { State as RootState } from 'src/app/app.state';
 export const SLICE_NAME = 'photos';
 
 export interface AppState extends RootState {
-  photos: State;
+  [SLICE_NAME]: State;
 }
 
 export interface State {

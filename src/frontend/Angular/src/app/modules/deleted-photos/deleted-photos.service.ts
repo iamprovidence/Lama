@@ -13,7 +13,7 @@ export class DeletedPhotosService {
   constructor(private httpClient: HttpClient) {}
 
   public getCurrentUserDeletedPhotos(): Observable<DeletedPhotosListDTO[]> {
-    return this.httpClient.get<DeletedPhotosListDTO[]>(`${this.apiUri}/`);
+    return this.httpClient.get<DeletedPhotosListDTO[]>(`${this.apiUri}/all`);
   }
 
   public restoresDeletedPhotos(photosToRestore: PhotoToDeleteRestoreDTO[]): Observable<object> {
