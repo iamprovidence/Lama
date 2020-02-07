@@ -1,0 +1,40 @@
+<!--image-->
+<figure class="image">
+  <img class="has-rounded-corners" [src]="user.photoURL" appPrettyImage />
+</figure>
+
+<!--display name-->
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Display name</label>
+  </div>
+
+  <div class="field-body">
+    <div class="field">
+      <p class="control is-expanded has-icons-left">
+        <input class="input is-primary" type="text" [value]="user.displayName" readonly />
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!--email-->
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Email</label>
+  </div>
+
+  <div class="field-body">
+    <div class="field">
+      <p class="control is-expanded has-icons-left">
+        <input class="input is-primary" type="email" [value]="user.email" readonly />
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

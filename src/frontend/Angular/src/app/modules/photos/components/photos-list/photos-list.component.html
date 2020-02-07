@@ -1,0 +1,23 @@
+<div
+  class="media photo is-marginless-top"
+  *ngFor="let photo of photos"
+  (click)="select(photo)"
+  [class.is-selected]="isSelected(photo)"
+>
+  <figure class="media-left is-marginless-bottom is-clipped">
+    <p class="image is-64x64">
+      <img src="{{ photo.photoUrl64 }}" alt="{{ photo.name }}" appPrettyImage />
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong>
+          <a [routerLink]="['id', photo.id]" (click)="$event.stopPropagation()">{{ photo.name }} </a>
+        </strong>
+        <br />
+        {{ photo.description }}
+      </p>
+    </div>
+  </div>
+</div>

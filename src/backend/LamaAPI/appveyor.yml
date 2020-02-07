@@ -1,0 +1,10 @@
+image: Visual Studio 2017
+
+platform: Any CPU
+configuration: Release
+
+before_build:
+ - nuget restore "src/backend/LamaAPI/LamaAPI.sln"
+build:
+ verbosity: quiet
+ project: src/backend/LamaAPI/LamaAPI.sln

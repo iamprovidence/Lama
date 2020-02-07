@@ -1,0 +1,64 @@
+<nav class="level" role="navigation" aria-label="main navigation">
+  <div class="level-left">
+    <div class="level-item">
+      <figure class="image is-32x32">
+        <img src="assets/background/lama.png" />
+      </figure>
+      <span class="is-size-3 is-uppercase has-text-weight-bold is-family-cursive">Lama</span>
+    </div>
+  </div>
+
+  <div class="level-left">
+    <!--search-->
+    <div class="level-item field is-search">
+      <div class="control has-icons-left is-width-100">
+        <input class="input is-medium is-primary is-rounded" type="text" placeholder="Search" />
+        <span class="icon is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <!--upload-->
+    <app-upload-photos></app-upload-photos>
+    <div class="level-item field">
+      <div class="button is-medium is-primary is-outlined is-rounded is-rounded-button" (click)="setIsModalOpen(true)">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="level-right">
+    <div class="level-item">
+      <div class="buttons are-medium">
+        <!--notification-->
+        <a class="button is-primary is-outlined is-rounded is-rounded-button">
+          <span class="icon">
+            <i class="fas fa-bell"></i>
+          </span>
+        </a>
+
+        <!--user settings-->
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a routerLink="/profile" class="button is-primary is-outlined is-rounded is-rounded-button">
+            <span class="icon">
+              <i class="far fa-user"></i>
+            </span>
+          </a>
+
+          <div class="navbar-dropdown is-right">
+            <a routerLink="/profile" class="navbar-item is-size-6">
+              Profile
+            </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item is-size-6 has-text-danger has-text-weight-bold" (click)="logout()">
+              Exit
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

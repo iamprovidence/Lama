@@ -1,0 +1,26 @@
+<div class="modal is-active">
+  <div class="modal-background has-transparent-background" (click)="closeModal()"></div>
+  <!--content-->
+  <div class="content" *appIsLoading="isLoading">
+    <div class="photo">
+      <div class="wrapper">
+        <img src="{{ photo.photoUrl }}" alt="{{ photo.description }}" appPrettyImage />
+      </div>
+    </div>
+    <div class="details">
+      <div class="columns">
+        <div class="column title has-text-overflowed is-size-4 name">
+          {{ photo?.name }}
+        </div>
+        <div class="column is-one-quarter has-text-right">
+          <div (click)="closeModal()">
+            <i class="fas fa-reply fa-flip-horizontal is-close-button"></i>
+          </div>
+        </div>
+      </div>
+
+      <!--comments-->
+      <app-comments></app-comments>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
+
+:root {
+  --primary-color: hsl(171, 100%, 41%);
+  --primary-color-with-opacity: hsla(171, 100%, 41%, 40%);
+  --primary-color-text: hsl(171, 73%, 93%);
+
+  --danger-color: #cc0f35;
+  --danger-light-color: #feecf0;
+
+  --grey-light-color: hsl(0, 0%, 96%);
+}
+
+.is-justify-centered {
+  justify-content: center;
+}
+.is-family-cursive {
+  font-family: cursive;
+}
+
+.is-width-100 {
+  width: 100%;
+}
+
+.is-items-container-centered {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.is-marginless-top {
+  margin-top: 0 !important;
+}
+
+.is-marginless-bottom {
+  margin-bottom: 0 !important;
+}
+
+.is-danger.is-light {
+  background-color: var(--danger-light-color);
+  color: var(--danger-color);
+}
+
+.has-rounded-corners {
+  border-radius: 10px;
+}
+
+.has-text-overflowed {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.has-transparent-background {
+  background-color: transparent;
+}

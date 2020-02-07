@@ -1,0 +1,51 @@
+.image-item {
+  padding: 10px;
+}
+
+.uploaded-image {
+  background-color: var(--primary-color);
+  overflow: hidden;
+  position: relative;
+  width: 250px;
+  height: 250px;
+
+  img {
+    border: var(--primary-color) 1px solid;
+    border-radius: 4px 4px 0 0;
+    border-bottom: unset;
+  }
+
+  & .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.3s ease;
+    background-color: white;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+.remove-button {
+  width: 100%;
+  height: 100%;
+  font-size: 200px;
+  & i {
+    color: #000;
+  }
+  &:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+}
+
+textarea {
+  border-top: unset;
+  border-radius: 0 0 4px 4px;
+  resize: none;
+}

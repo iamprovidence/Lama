@@ -1,0 +1,28 @@
+<!--photos-->
+<div class="is-items-container-centered">
+  <!--photos list-->
+  <div *ngFor="let photo of photos">
+    <div class="photo">
+      <!--image-->
+
+      <img src="{{ photo.photoUrl256 }}" alt="{{ photo.name }}" appPrettyImage />
+
+      <!--selected-->
+      <div (click)="select(photo)" *ngIf="isSelected(photo)" class="selected">
+        <i class="fas fa-check-circle is-select-photo-checked"></i>
+      </div>
+
+      <div class="overlay">
+        <div (click)="select(photo)" *ngIf="!isSelected(photo)">
+          <i class="far fa-check-circle is-select-photo-check"></i>
+        </div>
+
+        <a [routerLink]="['id', photo.id]">
+          <div class="name">
+            {{ photo.name }}
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

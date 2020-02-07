@@ -1,0 +1,12 @@
+<div class="image-item">
+  <div class="uploaded-image">
+    <img src="{{ photo.base64Image }}" />
+    <div class="overlay">
+      <span class="icon remove-button" (click)="onRemovePhoto(photo.name)">
+        <i class="fas fa-times"></i>
+      </span>
+    </div>
+  </div>
+
+  <textarea class="textarea is-primary" rows="2" placeholder="Description" #textarea>{{ photo.description }}</textarea>
+</div>

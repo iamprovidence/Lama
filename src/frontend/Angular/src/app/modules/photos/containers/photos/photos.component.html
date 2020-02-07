@@ -1,0 +1,34 @@
+<div *appIsLoading="isLoading$ | async">
+  <!--buttons-->
+  <div class="has-left-padding">
+    <app-photos-buttons
+      [viewType]="viewType$ | async"
+      (changeViewTypeEvent)="changeView($event)"
+      (deleteSelectedPhotosEvent)="deleteSelectedPhotos()"
+    >
+    </app-photos-buttons>
+  </div>
+
+  <!--photos-->
+  <div id="container1">
+    <div [ngSwitch]="viewType$ | async" id="container2">
+      <ng-template ngSwitchCase="0" ngSwitchDefault>
+        <app-photos-cards
+          [photos]="photos$ | async"
+          [selected]="selected$ | async"
+          (selectPhotoEvent)="selectPhoto($event)"
+        ></app-photos-cards>
+      </ng-template>
+      <ng-template ngSwitchCase="1">
+        <app-photos-list
+          [photos]="photos$ | async"
+          [selected]="selected$ | async"
+          (selectPhotoEvent)="selectPhoto($event)"
+        ></app-photos-list>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!--photo-details-->
+<router-outlet></router-outlet>

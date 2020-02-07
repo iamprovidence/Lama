@@ -1,0 +1,54 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://192.168.99.100:5000"
+  },
+  "ReRoutes": [
+    {
+      "SwaggerKey": "photo",
+      "UpstreamPathTemplate": "/api/photos",
+      "DownstreamPathTemplate": "/api/photos",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 2710
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 2700
+        }
+      ]
+    }
+  ],
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "lama",
+      "Config": [
+        {
+          "Name": "Lama API",
+          "Version": "v1",
+          "Url": "http://192.168.99.100:2700/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "photo",
+      "Config": [
+        {
+          "Name": "Photo API",
+          "Version": "v1",
+          "Url": "http://192.168.99.100:2710/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

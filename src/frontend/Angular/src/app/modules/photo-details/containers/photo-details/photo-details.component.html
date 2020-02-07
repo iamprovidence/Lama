@@ -1,0 +1,5 @@
+<app-photo-details-modal
+  [isLoading]="isLoading$ | async"
+  [photo]="photo$ | async"
+  (closeModalEvent)="closePhotoDetails()"
+></app-photo-details-modal>

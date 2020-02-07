@@ -1,0 +1,71 @@
+.photo {
+  position: relative;
+  height: 14rem;
+  width: 14rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0.5rem;
+  border-radius: 0.3rem;
+
+  .selected {
+    position: absolute;
+    top: 0;
+
+    .is-select-photo-checked {
+      position: absolute;
+      color: var(--primary-color);
+      z-index: 1;
+      left: 0;
+      margin: 5px;
+      font-size: 35px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+
+    .overlay {
+      opacity: 1;
+    }
+  }
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s ease;
+
+  -moz-box-shadow: inset 0px -100px 25px var(--primary-color-with-opacity);
+  -webkit-box-shadow: inset 0px -100px 25px var(--primary-color-with-opacity);
+  box-shadow: inset 0px -100px 25px var(--primary-color-with-opacity);
+
+  .name {
+    color: var(--primary-color-text);
+    position: absolute;
+    bottom: 20px;
+    padding: 10px;
+    font-weight: bolder;
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+
+  .is-select-photo-check {
+    margin: 5px;
+    font-size: 35px;
+    color: var(--primary-color-text);
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}

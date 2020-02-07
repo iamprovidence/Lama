@@ -1,0 +1,10 @@
+<app-upload-photos-modal
+  [photos]="photos$ | async"
+  [isActive]="isActive$ | async"
+  (setIsModalOpenEvent)="onSetIsModalOpen($event)"
+  (photoUploadedEvent)="onPhotoUploaded($event)"
+  (removePhotoEvent)="onPhotoRemoved($event)"
+  (updatePhotoEvent)="onPhotoUpdated($event)"
+  (saveUploadedPhotosEvent)="onSaveUploadedPhotos($event)"
+>
+</app-upload-photos-modal>
