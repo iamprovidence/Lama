@@ -1,9 +1,5 @@
 environment:
-  matrix:
-    - nodejs_version: '10.16.0'
-
-matrix:
-  fast_finish: true
+  nodejs_version: '10.16.0'
 
 build: off
 
@@ -14,11 +10,9 @@ init:
 install:
   - ps: Install-Product node $env:nodejs_version
   - npm install -g npm
-  - ps: $env:path = $env:appdata + "\npm;" + $env:path
-  - ps: cd frontend/Angular
-  - cd frontend/Angular
+  - cd src/frontend/Angular
   - npm install
 
 test_script:
   - node --version && npm --version
-  - npm build
+  - npm run-script build
