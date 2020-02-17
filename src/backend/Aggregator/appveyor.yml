@@ -1,0 +1,10 @@
+image: Visual Studio 2017
+
+platform: Any CPU
+configuration: Release
+
+before_build:
+ - nuget restore "src/backend/Aggregator/Aggregator.sln"
+build:
+ verbosity: quiet
+ project: src/backend/Aggregator/Aggregator.sln

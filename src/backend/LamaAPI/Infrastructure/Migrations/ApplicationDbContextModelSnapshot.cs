@@ -19,6 +19,24 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Domains.Entities.Album", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Album");
+                });
+
             modelBuilder.Entity("Domains.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -42,6 +60,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("Comment");
                 });
 
+            modelBuilder.Entity("Domains.Entities.PhotoAlbum", b =>
+                {
+                    b.Property<int>("AlbumId");
+
+                    b.Property<Guid>("PhotoId");
+
+                    b.HasKey("AlbumId", "PhotoId");
+
+                    b.ToTable("PhotoAlbum");
+                });
+
             modelBuilder.Entity("Domains.Entities.User", b =>
                 {
                     b.Property<string>("Id");
@@ -57,11 +86,27 @@ namespace Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Domains.Entities.Album", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("Albums")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Domains.Entities.Comment", b =>
                 {
                     b.HasOne("Domains.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.PhotoAlbum", b =>
+                {
+                    b.HasOne("Domains.Entities.Album", "Album")
+                        .WithMany("PhotoAlbums")
+                        .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

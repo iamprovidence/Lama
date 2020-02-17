@@ -1,0 +1,28 @@
+<div class="modal" [class.is-active]="isActive">
+  <!--background-->
+  <div class="modal-background" (click)="closeModal()"></div>
+  <!--card-->
+  <div class="modal-card">
+    <!--header-->
+    <header class="modal-card-head has-background-danger">
+      <p class="modal-card-title has-text-white has-text-centered is-marginless">Delete album</p>
+      <button (click)="closeModal()" class="delete" aria-label="close"></button>
+    </header>
+
+    <!--body-->
+    <section class="modal-card-body has-text-centered">
+      <h3 class="title is-4">
+        Yey amigo, are you sure you want to delete <i>"{{ album?.title }}"</i> ?
+      </h3>
+    </section>
+    <!--footer-->
+    <footer class="modal-card-foot">
+      <div class="is-width-100 buttons is-right">
+        <button class="button is-danger is-outlined" (click)="deleteAlbum()">
+          Delete
+        </button>
+        <button class="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </footer>
+  </div>
+</div>

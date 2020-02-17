@@ -1,0 +1,15 @@
+<!--albums-->
+<div class="is-items-container-centered">
+  <app-add-album-button (openCreateAlbumModalEvent)="openCreateAlbumModal()"></app-add-album-button>
+
+  <!--albums list-->
+  <div *ngFor="let album of albums">
+    <div class="album">
+      <app-album-item
+        [album]="album"
+        (renameAlbumEvent)="renameAlbum($event)"
+        (deleteAlbumEvent)="deleteAlbum($event)"
+      ></app-album-item>
+    </div>
+  </div>
+</div>

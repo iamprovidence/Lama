@@ -21,10 +21,11 @@
        * [Azure Storage](#Azure-Storage)
        * [ELK](#ELK)
          * [Elasticsearch](#Elasticsearch)
-         * [Kibana](#Kibana (*optional))
+         * [Kibana](#Kibana-optional)
        * [RabbitMQ](#RabbitMQ)
        * [LamaAPI](#LamaAPI)
        * [PhotoAPI](#PhotoAPI)
+       * [Aggregator](#Aggregator)
        * [APIGateway](#APIGateway)
      * [Frontend](#Frontend-1)
        * [Angular](#Angular)
@@ -38,6 +39,7 @@
 ||Events |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-egi6l">| Моделі подій, які виникають у сервісах |
 ||EventBus |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-mikv2">| Реалізація шини для обміну повідомлень |
 ||APIGateway |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-e7mpq">| Фасад над сервісами у вигляді API шлюзу |
+||Aggregator|<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-dmb1t">| Сервіс для об'єднання даних з інших сервісів  |
 || LamaAPI |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama">| Основний сервіс системи  |
 ||PhotoAPI |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-dg5ix">| Сервіс для роботи із фотографіями |
 |**Frontend**|||||
@@ -144,6 +146,22 @@
 * документація:
   * http://localhost:2710/swagger/index.html
   * https://localhost:2711/swagger/index.html
+  
+##### Aggregator
+
+* перейдіть в папку з проектом ``cd \src\backend\Aggregator``
+* запустіть ``run.bat`` файл
+
+------
+
+* відкрийте діалогове вікно виконання команд ``win + R`` 
+* відкрийте термінал, введіть ``cmd`` 
+* перейдіть в папку проекту ``cd \src\backend\Aggregator``
+* будуємо проект ``dotnet build``
+* запускаємо сервіс ``dotnet run --project Aggregator``
+* документація:
+  * http://localhost:1710/swagger/index.html
+  * https://localhost:1711/swagger/index.html
 
 ##### APIGateway
 

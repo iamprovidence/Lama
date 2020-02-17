@@ -34,6 +34,7 @@ namespace API
             services.AddSwagger(Configuration);
             services.AddEventBus(Configuration);
             services.AddDataBaseServices(Configuration);
+            services.AddExternalServices(Configuration);
 
             return services.BuildServicesProvider();
         }
@@ -44,6 +45,7 @@ namespace API
             app.UseCORS();
             app.UseAuthentication(Configuration);
             app.UseSwagger();
+            app.UseErrorMiddleware();
             app.UseMvc();
             app.ConfigureEventBus();
         }

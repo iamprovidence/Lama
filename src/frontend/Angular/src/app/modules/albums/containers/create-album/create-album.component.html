@@ -1,0 +1,5 @@
+<app-create-album-view
+  [isActive]="iaActive$ | async"
+  (closeModalEvent)="closeCreateAlbumModal()"
+  (createAlbumEvent)="createAlbum($event)"
+></app-create-album-view>

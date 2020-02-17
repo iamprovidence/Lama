@@ -1,0 +1,7 @@
+<app-delete-modal
+  [isActive]="isActive$ | async"
+  [album]="album$ | async"
+  (closeModalEvent)="closeModal()"
+  (deleteAlbumEvent)="deleteAlbum($event)"
+>
+</app-delete-modal>

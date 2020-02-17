@@ -1,0 +1,51 @@
+@add-btn-size: 50px;
+@add-btn-hover-size: 60px;
+
+.animated {
+  transition: all ease-out 0.5s;
+  -webkit-transition: all ease-out 0.5s;
+  -moz-transition: all ease-out 0.5s;
+  -o-transition: all ease-out 0.5s;
+}
+
+.create-album {
+  width: 270px;
+
+  .cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    height: 256px;
+    width: 256px;
+    overflow: hidden;
+    margin: 0.5rem;
+    border: var(--primary-color) 4px solid;
+    border-radius: 0.3rem;
+    .animated();
+
+    .icon {
+      width: @add-btn-size;
+      height: @add-btn-size;
+      font-size: @add-btn-size;
+      color: var(--primary-color);
+      border: var(--primary-color) 4px solid;
+      border-radius: 50%;
+      padding: 5px;
+      .animated();
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--primary-color-text);
+
+      .icon {
+        width: @add-btn-hover-size;
+        height: @add-btn-hover-size;
+        font-size: @add-btn-hover-size;
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}

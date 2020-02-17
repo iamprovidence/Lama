@@ -1,0 +1,34 @@
+<div class="modal modal-full-screen" [class.is-active]="isActive">
+  <!--card-->
+  <div class="modal-content modal-card">
+    <!--header-->
+    <header class="modal-card-head has-background-primary is-border-roundless">
+      <p class="modal-card-title has-text-white has-text-centered is-marginless">Update album</p>
+      <button (click)="closeModal()" class="delete" aria-label="close"></button>
+    </header>
+
+    <!--body-->
+    <section class="modal-card-body has-text-centered">
+      <div *appIsLoading="isLoading">
+        <!--photos-->
+        <div class="is-items-container-centered">
+          <!--photos list-->
+          <div *ngFor="let photo of photos">
+            <div class="photo" [class.is-selected]="isSelected(photo)" (click)="selectPhoto(photo)">
+              <img src="{{ photo.photoUrl256 }}" appPrettyImage />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--footer-->
+    <footer class="modal-card-foot">
+      <div class="is-width-100 buttons is-right">
+        <button class="button is-primary" (click)="updateAlbum()">
+          Save
+        </button>
+        <button class="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </footer>
+  </div>
+</div>
