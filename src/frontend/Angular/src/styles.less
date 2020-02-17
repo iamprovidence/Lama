@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css';
+@import '../node_modules/bulma-modal-fx/dist/css/modal-fx.min.css';
 
 :root {
   --primary-color: hsl(171, 100%, 41%);
   --primary-color-with-opacity: hsla(171, 100%, 41%, 40%);
   --primary-color-text: hsl(171, 73%, 93%);
+  --primary-color-text-with-opacity: hsl(171, 73%, 93%, 40%);
 
   --danger-color: #cc0f35;
   --danger-light-color: #feecf0;
@@ -27,6 +29,13 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.is-items-container-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
   flex-wrap: wrap;
 }
 
@@ -54,5 +63,5 @@
 }
 
 .has-transparent-background {
-  background-color: transparent;
+  background-color: transparent !important;
 }

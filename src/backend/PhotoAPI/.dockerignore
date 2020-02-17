@@ -5,3 +5,4 @@
 **/obj
 **/Dockerfile
 **/appveyor.yml
+.bat

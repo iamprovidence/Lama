@@ -16,12 +16,16 @@ const childRoutes: Routes = [
     loadChildren: 'src/app/modules/photos/photos.module#PhotosModule'
   },
   {
-    path: 'profile',
-    loadChildren: 'src/app/modules/profile/profile.module#ProfileModule'
+    path: 'albums',
+    loadChildren: 'src/app/modules/albums/albums.module#AlbumsModule'
   },
   {
     path: 'bin',
     loadChildren: 'src/app/modules/deleted-photos/deleted-photos.module#DeletedPhotosModule'
+  },
+  {
+    path: 'profile',
+    loadChildren: 'src/app/modules/profile/profile.module#ProfileModule'
   }
 ];
 

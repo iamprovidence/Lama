@@ -25,10 +25,6 @@ export class AuthService {
     private router: Router
   ) {}
 
-  get isAuthenticated(): boolean {
-    return this.afAuth !== null;
-  }
-
   public getCurrentUserToken(): Observable<string> {
     return this.afAuth.idToken;
   }

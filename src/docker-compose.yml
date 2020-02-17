@@ -33,6 +33,9 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+      
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest 
 
   lama-api:
     build:
@@ -50,6 +53,7 @@ services:
       RabbitMq:HostName: ${RABBIT_MQ_HOST}
     depends_on:
       - 'rabbitmq'
+      - 'sql-server'
 
   photo-api:
     build:

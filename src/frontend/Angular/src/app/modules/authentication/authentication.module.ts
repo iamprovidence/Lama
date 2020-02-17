@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SignInModalComponent } from './components/sign-in-modal/sign-in-modal.component';
 import { AuthorizationComponent } from './containers/authorization/authorization.component';
-import { environment } from 'src/environments/environment';
-
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AuthService } from './auth.service';
-import { IsAuthorizedGuard, IsAnonymousGuard } from './guards';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -36,8 +35,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
   ],
   providers: [
     AuthService,
-    IsAuthorizedGuard,
-    IsAnonymousGuard,
+    AngularFireAuthGuard,
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AddAuthHeaderInterceptor,

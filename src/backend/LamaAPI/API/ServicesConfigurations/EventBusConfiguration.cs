@@ -7,7 +7,8 @@ using Events.Photo;
 using EventBus.Abstraction.Interfaces;
 using EventBus.Extensions.Microsoft.DependencyInjection;
 
-using Application.Photos.Events;
+using Application.Comments.Events;
+using Application.PhotoAlbums.Events;
 
 namespace API.ServicesConfigurations
 {
@@ -24,7 +25,8 @@ namespace API.ServicesConfigurations
         {
             IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<PhotosDeletedEvent, PhotosDeletedEventHandler>();
+            eventBus.Subscribe<PhotosDeletedEvent, ClearCommentsOnPhotosDeletedEventHandler>();
+            eventBus.Subscribe<PhotosDeletedEvent, ClearAlbumsOnPhotosDeletedEventHandler>();
         }
     }
 }

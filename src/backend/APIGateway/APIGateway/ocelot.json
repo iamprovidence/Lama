@@ -1,42 +1,56 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001"
+    "BaseUrl": "http://localhost:5000"
   },
   "ReRoutes": [
     {
-      "SwaggerKey": "photo",
-      "UpstreamPathTemplate": "/api/Photos/{everything}",
-      "DownstreamPathTemplate": "/api/Photos/{everything}",
-      "DownstreamScheme": "https",
+      "SwaggerKey": "aggregator",
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/api/Albums/{everything}",
+      "DownstreamPathTemplate": "/api/Albums/{everything}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 2711
-        }
-      ]
-    },
-    {
-      "SwaggerKey": "photo",
-      "UpstreamPathTemplate": "/api/DeletedPhotos/{everything}",
-      "DownstreamPathTemplate": "/api/DeletedPhotos/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 2711
+          "Port": 1700
         }
       ]
     },
 
     {
       "SwaggerKey": "lama",
-      "UpstreamPathTemplate": "/api/Comments/{everything}",
-      "DownstreamPathTemplate": "/api/Comments/{everything}",
-      "DownstreamScheme": "https",
+      "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/api/Albums/{everything}",
+      "DownstreamPathTemplate": "/api/Albums/{everything}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 2701
+          "Port": 2700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/PhotoAlbums/{everything}",
+      "DownstreamPathTemplate": "/api/PhotoAlbums/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2700
         }
       ]
     },
@@ -44,24 +58,59 @@
       "SwaggerKey": "lama",
       "UpstreamPathTemplate": "/api/Users/{everything}",
       "DownstreamPathTemplate": "/api/Users/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 2701
+          "Port": 2700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "photo",
+      "UpstreamPathTemplate": "/api/Photos/{everything}",
+      "DownstreamPathTemplate": "/api/Photos/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2710
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "photo",
+      "UpstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2710
         }
       ]
     }
+
   ],
 
   "SwaggerEndPoints": [
+    {
+      "Key": "aggregator",
+      "Config": [
+        {
+          "Name": "Aggregator API",
+          "Version": "v1",
+          "Url": "http://localhost:1700/swagger/v1/swagger.json"
+        }
+      ]
+    },
     {
       "Key": "lama",
       "Config": [
         {
           "Name": "Lama API",
           "Version": "v1",
-          "Url": "https://localhost:2701/swagger/v1/swagger.json"
+          "Url": "http://localhost:2700/swagger/v1/swagger.json"
         }
       ]
     },
@@ -71,7 +120,7 @@
         {
           "Name": "Photo API",
           "Version": "v1",
-          "Url": "https://localhost:2711/swagger/v1/swagger.json"
+          "Url": "http://localhost:2710/swagger/v1/swagger.json"
         }
       ]
     }

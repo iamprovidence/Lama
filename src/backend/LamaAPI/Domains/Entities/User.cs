@@ -10,5 +10,6 @@ namespace Domains.Entities
         public string PhotoURL { get; set; }
 
         public ICollection<Comment> Comments { get; private set; } = new List<Comment>();
+        public ICollection<Album> Albums { get; private set; } = new List<Album>();
     }
 }

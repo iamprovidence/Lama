@@ -1,0 +1,9 @@
+<app-add-photos-modal
+  [isActive]="isActive$ | async"
+  [isLoading]="isLoading$ | async"
+  [photos]="photos$ | async"
+  [selected]="selected$ | async"
+  (selectPhotoEvent)="selectPhoto($event)"
+  (updateAlbumEvent)="updateAlbum()"
+  (closeModalEvent)="closeModal()"
+></app-add-photos-modal>

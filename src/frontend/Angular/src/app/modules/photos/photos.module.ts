@@ -18,6 +18,7 @@ import { PhotosService } from './photos.service';
     StoreModule.forFeature(SLICE_NAME, reducer),
     EffectsModule.forFeature([Effects])
   ],
-  providers: [PhotosService]
+  providers: [PhotosService],
+  exports: [RoutingModule.components]
 })
 export class PhotosModule {}
