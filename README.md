@@ -59,6 +59,7 @@
 - [RabbitMQ](https://www.rabbitmq.com/download.html)
 - [ELK Stack](https://www.elastic.co/what-is/elk-stack)
 - [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator)
+- [Hangfire](https://www.hangfire.io/)
 
 ### Frontend
 
@@ -146,6 +147,9 @@
 * документація:
   * http://localhost:2710/swagger/index.html
   * https://localhost:2711/swagger/index.html
+* фонові задачі:
+  * http://localhost:2710/hangfire
+  * https://localhost:2711/hangfire
   
 ##### Aggregator
 

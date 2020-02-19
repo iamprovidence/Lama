@@ -64,6 +64,32 @@ namespace DataAccess.Implementations
         }
 
         #region Delete
+        public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays)
+        {
+            List<QueryContainer> mustClauses = new List<QueryContainer>
+            {
+                new TermQuery
+                {
+                    Field = Infer.Field<PhotoDocument>(p => p.IsDeleted),
+                    Value = true
+                },
+                new DateRangeQuery
+                {
+                    Field =  Infer.Field<PhotoDocument>(p => p.DeleteTime),
+                    LessThanOrEqualTo = DateMath.Now.Subtract(TimeSpan.FromDays(deletedTimeLimitInDays)),
+                }
+            };
+
+            SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>
+            {
+                Query = new BoolQuery { Must = mustClauses }
+            };
+
+            ISearchResponse<PhotoDocument> searchResult = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
+
+            return searchResult.Documents;
+        }
+
         public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId)
         {
             List<QueryContainer> mustClauses = new List<QueryContainer>
@@ -105,7 +131,7 @@ namespace DataAccess.Implementations
             // TODO: make this in single request
             foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToDelete)
             {
-                var updateDeleteField = new { IsDeleted = true };
+                var updateDeleteField = new { IsDeleted = true, DeleteTime = DateTime.Now };
 
                 await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
             }
@@ -116,16 +142,22 @@ namespace DataAccess.Implementations
             await _elasticClient.DeleteManyAsync(photosToDelete);
         }
 
+        public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete)
+        {
+            await _elasticClient.DeleteManyAsync(photosToDelete);
+        }
+
         public async Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)
         {
             // TODO: make this in single request
             foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToRestore)
             {
-                var updateDeleteField = new { IsDeleted = false };
+                var updateDeleteField = new { IsDeleted = false, DeleteTime = default(DateTime?) };
 
                 await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
             }
         }
+
         #endregion
     }
 }
