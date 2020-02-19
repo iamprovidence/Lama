@@ -1,4 +1,5 @@
 ﻿using Domains.DataTransferObjects;
+using Domains.ElasticsearchDocuments;
 
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -11,5 +12,7 @@ namespace BusinessLogic.Interfaces
 
         Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
         Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore);
+
+        Task<IEnumerable<PhotoDocument>> ClearDeletedPhotosAsync(int deletedTimeLimitInDays);
     }
 }

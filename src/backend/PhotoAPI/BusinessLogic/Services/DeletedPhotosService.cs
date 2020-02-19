@@ -39,8 +39,27 @@ namespace BusinessLogic.Services
         {
             IEnumerable<PhotoDocument> photoDocumentsToDelete = await _elasticService.GetDeletedPhotosAsync(photosToDelete);
 
-            await _elasticService.DeletePhotosPermanentlyAsync(photosToDelete);
+            await Task.WhenAll(
+                _elasticService.DeletePhotosPermanentlyAsync(photosToDelete),
+                ClearAllBlobsIfExistsAsync(photoDocumentsToDelete));
+        }
 
+        public async Task<IEnumerable<PhotoDocument>> ClearDeletedPhotosAsync(int deletedTimeLimitInDays)
+        {
+            IEnumerable<PhotoDocument> photoDocumentsToDelete = await _elasticService.GetDeletedPhotosAsync(deletedTimeLimitInDays);
+
+            if (photoDocumentsToDelete.Any())
+            {
+                await Task.WhenAll(
+                    _elasticService.DeletePhotosPermanentlyAsync(photoDocumentsToDelete),
+                    ClearAllBlobsIfExistsAsync(photoDocumentsToDelete));
+            }
+
+            return photoDocumentsToDelete;
+        }
+
+        private async Task ClearAllBlobsIfExistsAsync(IEnumerable<PhotoDocument> photoDocumentsToDelete)
+        {
             foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
             {
                 await Task.WhenAll(
@@ -50,6 +69,5 @@ namespace BusinessLogic.Services
                     _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
             }
         }
-
     }
 }

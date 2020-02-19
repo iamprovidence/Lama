@@ -14,10 +14,12 @@ namespace DataAccess.Interfaces
         Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId);
 
         #region Delete
+        Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays);
         Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId);
         Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
 
         Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
+        Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete);
         Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
         Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore);
         #endregion
