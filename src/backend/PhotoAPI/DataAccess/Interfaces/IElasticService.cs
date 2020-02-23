@@ -10,7 +10,7 @@ namespace DataAccess.Interfaces
     public interface IElasticService
     {
         Task<PhotoDocument> CreateAsync(PhotoDocument item);
-        Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId);
+        Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload);
         Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId);
 
         #region Delete

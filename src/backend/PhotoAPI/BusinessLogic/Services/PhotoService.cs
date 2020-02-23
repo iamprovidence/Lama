@@ -24,9 +24,9 @@ namespace BusinessLogic.Services
             IImageService imageService) 
             : base(mapper, authService, elasticService, blobStorage, imageService) { }
 
-        public async Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(string userId)
+        public async Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(string userId, string searchPayload)
         {
-            IEnumerable<PhotoDocument> userPhotos = await _elasticService.GetPhotosAsync(userId);
+            IEnumerable<PhotoDocument> userPhotos = await _elasticService.GetPhotosAsync(userId, searchPayload);
 
             return userPhotos.OrderByDescending(p => p.UploadDate).Select(_mapper.Map<PhotoListDTO>);
         }

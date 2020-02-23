@@ -30,7 +30,7 @@ namespace DataAccess.Implementations
             return item;
         }
 
-        public async Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId)
+        public async Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload)
         {
             List<QueryContainer> mustClauses = new List<QueryContainer>
             {
@@ -43,12 +43,37 @@ namespace DataAccess.Implementations
                 {
                     Field = Infer.Field<PhotoDocument>(pd => pd.IsDeleted),
                     Value = false
+                }
+            };
+
+            List<QueryContainer> shouldClauses = new List<QueryContainer>
+            {
+                new QueryStringQuery
+                {
+                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.BlobName),
+                    Query = $"*{searchPayload}*",
+                    
+                },
+                new QueryStringQuery
+                {
+                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.Name),
+                    Query = $"*{searchPayload}*",
+                },
+                new QueryStringQuery
+                {
+                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.Description),
+                    Query = $"*{searchPayload}*",
                 },
             };
 
             SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>(_indexName)
             {
-                Query = new BoolQuery { Must = mustClauses }
+                Query = new BoolQuery
+                {
+                    Must = mustClauses,
+                    Should = shouldClauses,
+                    MinimumShouldMatch = 1
+                },
             };
 
             ISearchResponse<PhotoDocument> foundPhotos = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
@@ -157,7 +182,6 @@ namespace DataAccess.Implementations
                 await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
             }
         }
-
         #endregion
     }
 }

@@ -1,0 +1,15 @@
+<div class="level-item field is-search">
+  <div class="control has-icons-left is-width-100">
+    <input
+      class="input is-medium is-primary is-rounded"
+      type="text"
+      placeholder="Search"
+      (keyup.enter)="search($event.target.value)"
+      (focus)="focus()"
+      (focusout)="focusout()"
+    />
+    <span class="icon is-left">
+      <i class="fas fa-search"></i>
+    </span>
+  </div>
+</div>

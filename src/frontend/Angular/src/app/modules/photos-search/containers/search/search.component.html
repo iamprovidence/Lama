@@ -1,0 +1,7 @@
+<app-search-input (searchEvent)="search($event)" (isFocusedEvent)="openSearchHistory($event)"></app-search-input>
+<app-search-history
+  [isLoading]="isLoading$ | async"
+  [isOpen]="isSearchHistoryShown$ | async"
+  [searchHistory]="searchHistory$ | async"
+  (searchEvent)="search($event)"
+></app-search-history>
