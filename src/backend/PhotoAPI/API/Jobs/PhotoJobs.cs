@@ -23,9 +23,11 @@ namespace API.Jobs
         {
             IEnumerable<PhotoDocument> deletedPhotos = await _photoService.ClearDeletedPhotosAsync(deletedTimeLimitInDays);
 
-            IEnumerable<System.Guid> deletedPhotosIds = deletedPhotos.Select(p => p.Id);
-            _eventBus.Publish(new Events.Photo.PhotosDeletedEvent(deletedPhotosIds));
+            if (deletedPhotos.Any())
+            {
+                IEnumerable<System.Guid> deletedPhotosIds = deletedPhotos.Select(p => p.Id);
+                _eventBus.Publish(new Events.Photo.PhotosDeletedEvent(deletedPhotosIds));
+            }
         }
-
     }
 }

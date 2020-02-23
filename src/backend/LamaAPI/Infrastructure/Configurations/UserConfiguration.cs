@@ -27,6 +27,12 @@ namespace Infrastructure.Configurations
                 .WithOne(a => a.User)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(u => u.Searches)
+                .WithOne(sh => sh.User)
+                .HasForeignKey(sh => sh.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

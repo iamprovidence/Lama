@@ -26,6 +26,10 @@ const childRoutes: Routes = [
   {
     path: 'profile',
     loadChildren: 'src/app/modules/profile/profile.module#ProfileModule'
+  },
+  {
+    path: 'search',
+    loadChildren: 'src/app/modules/photos/photos.module#PhotosModule'
   }
 ];
 

@@ -11,5 +11,6 @@ namespace Domains.Entities
 
         public ICollection<Comment> Comments { get; private set; } = new List<Comment>();
         public ICollection<Album> Albums { get; private set; } = new List<Album>();
+        public ICollection<SearchHistory> Searches { get; private set; } = new List<SearchHistory>();
     }
 }

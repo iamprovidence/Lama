@@ -18,3 +18,7 @@ export * from './albums/albums-list-dto';
 export * from './albums/create-album-dto';
 export * from './albums/edit-album-dto';
 export * from './albums/photo-album-dto';
+
+// search history
+export * from './search-history/search-history-list-dto';
+export * from './search-history/add-search-dto';

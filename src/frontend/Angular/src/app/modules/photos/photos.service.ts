@@ -16,6 +16,10 @@ export class PhotosService {
     return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/all`);
   }
 
+  public searchPhotos(searchPayload: string): Observable<PhotoListDTO[]> {
+    return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/search`, { params: { searchPayload } });
+  }
+
   private getOptionsWithBody<TBody>(body: TBody): { headers: HttpHeaders; body: TBody } {
     return {
       headers: new HttpHeaders({

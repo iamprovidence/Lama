@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from, observable, forkJoin, merge, zip } from 'rxjs';
-import { map, mergeMap, tap, toArray, switchMap } from 'rxjs/operators';
+import { Observable, from, forkJoin } from 'rxjs';
 
 import { PhotoToUploadDTO } from 'src/app/core/models';
 

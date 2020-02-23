@@ -28,7 +28,14 @@ namespace API.Controllers
         public Task<IEnumerable<PhotoListDTO>> GetCurrentUserPhotos()
         {
             string userId = _authService.GetCurrentUserId();
-            return _photoService.GetPhotosAsync(userId);
+            return _photoService.GetPhotosAsync(userId, string.Empty);
+        }
+
+        [HttpGet("search")]
+        public Task<IEnumerable<PhotoListDTO>> SearchCurrentUserPhotos(string searchPayload)
+        {
+            string userId = _authService.GetCurrentUserId();
+            return _photoService.GetPhotosAsync(userId, searchPayload);
         }
 
         [HttpGet("{photoId}")]

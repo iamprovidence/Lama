@@ -67,6 +67,19 @@
       ]
     },
     {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/SearchHistory/{everything}",
+      "DownstreamPathTemplate": "/api/SearchHistory/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2700
+        }
+      ]
+    },
+
+    {
       "SwaggerKey": "photo",
       "UpstreamPathTemplate": "/api/Photos/{everything}",
       "DownstreamPathTemplate": "/api/Photos/{everything}",
