@@ -5,9 +5,12 @@ import { EnsureModuleLoadedOnceGuard } from './guards';
 import { HttpClientModule } from '@angular/common/http';
 import { PageloaderComponent } from './components';
 
+import { EventBusService } from './eventBus';
+
 @NgModule({
   imports: [HttpClientModule],
   declarations: [PageloaderComponent],
+  providers: [EventBusService],
   exports: [PageloaderComponent]
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {

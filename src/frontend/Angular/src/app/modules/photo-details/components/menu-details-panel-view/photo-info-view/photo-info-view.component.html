@@ -1,0 +1,35 @@
+<div class="info">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input is-primary" type="text" placeholder="Name" value="{{ photo.name }}" readonly />
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Description</label>
+    <div class="control">
+      <textarea
+        class="textarea is-primary"
+        rows="4"
+        placeholder="Description..."
+        value="{{ photo.description }}"
+        #descriptionTextarea
+      >
+      </textarea>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Upload date</label>
+    <div class="control">
+      <input class="input is-primary" type="text" value="23.02.2020" readonly />
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-primary is-width-100" (click)="updatePhoto()">Update</button>
+    </div>
+  </div>
+</div>

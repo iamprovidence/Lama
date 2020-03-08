@@ -3,24 +3,19 @@
   <!--content-->
   <div class="content" *appIsLoading="isLoading">
     <div class="photo">
+      <!--image-->
       <div class="wrapper">
-        <img src="{{ photo.photoUrl }}" alt="{{ photo.description }}" appPrettyImage />
+        <app-photo-details-panel></app-photo-details-panel>
+      </div>
+      <!--overlay-->
+      <div class="overlay">
+        <app-photo-top-bar-menu></app-photo-top-bar-menu>
       </div>
     </div>
-    <div class="details">
-      <div class="columns">
-        <div class="column title has-text-overflowed is-size-4 name">
-          {{ photo?.name }}
-        </div>
-        <div class="column is-one-quarter has-text-right">
-          <div (click)="closeModal()">
-            <i class="fas fa-reply fa-flip-horizontal is-close-button"></i>
-          </div>
-        </div>
-      </div>
 
-      <!--comments-->
-      <app-comments></app-comments>
+    <!--menu details-->
+    <div class="details">
+      <app-menu-details-panel></app-menu-details-panel>
     </div>
   </div>
 </div>

@@ -10,178 +10,184 @@ using Domains.ElasticsearchDocuments;
 
 namespace DataAccess.Implementations
 {
-    public class ElasticService : Interfaces.IElasticService
-    {
-        // FIELDS
-        private readonly string _indexName;
-        private readonly IElasticClient _elasticClient;
+	public class ElasticService : Interfaces.IElasticService
+	{
+		// FIELDS
+		private readonly string _indexName;
+		private readonly IElasticClient _elasticClient;
 
-        // CONSTRUCTORS
-        public ElasticService(string indexName, IElasticClient elasticClient)
-        {
-            _indexName = indexName;
-            _elasticClient = elasticClient;
-        }
+		// CONSTRUCTORS
+		public ElasticService(string indexName, IElasticClient elasticClient)
+		{
+			_indexName = indexName;
+			_elasticClient = elasticClient;
+		}
 
-        // METHODS
-        public async Task<PhotoDocument> CreateAsync(PhotoDocument item)
-        {
-            await _elasticClient.CreateDocumentAsync(item);
-            return item;
-        }
+		// METHODS
+		public async Task<PhotoDocument> CreateAsync(PhotoDocument item)
+		{
+			await _elasticClient.CreateDocumentAsync(item);
+			return item;
+		}
 
-        public async Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload)
-        {
-            List<QueryContainer> mustClauses = new List<QueryContainer>
-            {
-                new MatchQuery
-                {
-                    Field = Infer.Field<PhotoDocument>(pd => pd.UserId),
-                    Query = userId
-                },
-                new TermQuery
-                {
-                    Field = Infer.Field<PhotoDocument>(pd => pd.IsDeleted),
-                    Value = false
-                }
-            };
+		public async Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload)
+		{
+			List<QueryContainer> mustClauses = new List<QueryContainer>
+			{
+				new MatchQuery
+				{
+					Field = Infer.Field<PhotoDocument>(pd => pd.UserId),
+					Query = userId
+				},
+				new TermQuery
+				{
+					Field = Infer.Field<PhotoDocument>(pd => pd.IsDeleted),
+					Value = false
+				}
+			};
 
-            List<QueryContainer> shouldClauses = new List<QueryContainer>
-            {
-                new QueryStringQuery
-                {
-                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.BlobName),
-                    Query = $"*{searchPayload}*",
-                    
-                },
-                new QueryStringQuery
-                {
-                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.Name),
-                    Query = $"*{searchPayload}*",
-                },
-                new QueryStringQuery
-                {
-                    DefaultField = Infer.Field<PhotoDocument>(pd => pd.Description),
-                    Query = $"*{searchPayload}*",
-                },
-            };
+			List<QueryContainer> shouldClauses = new List<QueryContainer>
+			{
+				new QueryStringQuery
+				{
+					DefaultField = Infer.Field<PhotoDocument>(pd => pd.BlobName),
+					Query = $"*{searchPayload}*",
 
-            SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>(_indexName)
-            {
-                Query = new BoolQuery
-                {
-                    Must = mustClauses,
-                    Should = shouldClauses,
-                    MinimumShouldMatch = 1
-                },
-            };
+				},
+				new QueryStringQuery
+				{
+					DefaultField = Infer.Field<PhotoDocument>(pd => pd.Name),
+					Query = $"*{searchPayload}*",
+				},
+				new QueryStringQuery
+				{
+					DefaultField = Infer.Field<PhotoDocument>(pd => pd.Description),
+					Query = $"*{searchPayload}*",
+				},
+			};
 
-            ISearchResponse<PhotoDocument> foundPhotos = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
+			SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>(_indexName)
+			{
+				Query = new BoolQuery
+				{
+					Must = mustClauses,
+					Should = shouldClauses,
+					MinimumShouldMatch = 1
+				},
+			};
 
-            return foundPhotos.Documents;
-        }
+			ISearchResponse<PhotoDocument> foundPhotos = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
 
-        public async Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId)
-        {
-            GetResponse<PhotoDocument> response = await _elasticClient.GetAsync<PhotoDocument>(photoId);
+			return foundPhotos.Documents;
+		}
 
-            return response.Source;
-        }
+		public async Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId)
+		{
+			GetResponse<PhotoDocument> response = await _elasticClient.GetAsync<PhotoDocument>(photoId);
 
-        #region Delete
-        public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays)
-        {
-            List<QueryContainer> mustClauses = new List<QueryContainer>
-            {
-                new TermQuery
-                {
-                    Field = Infer.Field<PhotoDocument>(p => p.IsDeleted),
-                    Value = true
-                },
-                new DateRangeQuery
-                {
-                    Field =  Infer.Field<PhotoDocument>(p => p.DeleteTime),
-                    LessThanOrEqualTo = DateMath.Now.Subtract(TimeSpan.FromDays(deletedTimeLimitInDays)),
-                }
-            };
+			return response.Source;
+		}
 
-            SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>
-            {
-                Query = new BoolQuery { Must = mustClauses }
-            };
+		public Task UpdatePhotoAsync<TPartialObject>(Guid photoId, TPartialObject updatePhotoPartialObject)
+			where TPartialObject : class
+		{
+			return _elasticClient.UpdateAsync<PhotoDocument, TPartialObject>(photoId, p => p.Doc(updatePhotoPartialObject));
+		}
 
-            ISearchResponse<PhotoDocument> searchResult = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
+		#region Delete
+		public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays)
+		{
+			List<QueryContainer> mustClauses = new List<QueryContainer>
+			{
+				new TermQuery
+				{
+					Field = Infer.Field<PhotoDocument>(p => p.IsDeleted),
+					Value = true
+				},
+				new DateRangeQuery
+				{
+					Field =  Infer.Field<PhotoDocument>(p => p.DeleteTime),
+					LessThanOrEqualTo = DateMath.Now.Subtract(TimeSpan.FromDays(deletedTimeLimitInDays)),
+				}
+			};
 
-            return searchResult.Documents;
-        }
+			SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>
+			{
+				Query = new BoolQuery { Must = mustClauses }
+			};
 
-        public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId)
-        {
-            List<QueryContainer> mustClauses = new List<QueryContainer>
-            {
-                new TermQuery
-                {
-                    Field = Infer.Field<PhotoDocument>(p => p.IsDeleted),
-                    Value = true
-                },
-                new MatchQuery
-                {
-                    Field = Infer.Field<PhotoDocument>(p => p.UserId),
-                    Query = userId
-                },
-            };
+			ISearchResponse<PhotoDocument> searchResult = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
 
-            SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>
-            {
-                Query = new BoolQuery { Must = mustClauses }
+			return searchResult.Documents;
+		}
 
-            };
+		public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId)
+		{
+			List<QueryContainer> mustClauses = new List<QueryContainer>
+			{
+				new TermQuery
+				{
+					Field = Infer.Field<PhotoDocument>(p => p.IsDeleted),
+					Value = true
+				},
+				new MatchQuery
+				{
+					Field = Infer.Field<PhotoDocument>(p => p.UserId),
+					Query = userId
+				},
+			};
 
-            ISearchResponse<PhotoDocument> searchResult = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
+			SearchRequest<PhotoDocument> searchRequest = new SearchRequest<PhotoDocument>
+			{
+				Query = new BoolQuery { Must = mustClauses }
 
-            return searchResult.Documents;
-        }
+			};
 
-        public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
-        {
-            IEnumerable<string> ids = photosToDelete.Select(p => p.Id.ToString());
+			ISearchResponse<PhotoDocument> searchResult = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);
 
-            IEnumerable<IMultiGetHit<PhotoDocument>> response = await _elasticClient.GetManyAsync<PhotoDocument>(ids, _indexName);
+			return searchResult.Documents;
+		}
 
-            return response.Select(r => r.Source);
-        }
+		public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+		{
+			IEnumerable<string> ids = photosToDelete.Select(p => p.Id.ToString());
 
-        public async Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
-        { 
-            // TODO: make this in single request
-            foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToDelete)
-            {
-                var updateDeleteField = new { IsDeleted = true, DeleteTime = DateTime.Now };
+			IEnumerable<IMultiGetHit<PhotoDocument>> response = await _elasticClient.GetManyAsync<PhotoDocument>(ids, _indexName);
 
-                await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
-            }
-        }
+			return response.Select(r => r.Source);
+		}
 
-        public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
-        {
-            await _elasticClient.DeleteManyAsync(photosToDelete);
-        }
+		public async Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+		{
+			// TODO: make this in single request
+			foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToDelete)
+			{
+				var updateDeleteField = new { IsDeleted = true, DeleteTime = DateTime.Now };
 
-        public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete)
-        {
-            await _elasticClient.DeleteManyAsync(photosToDelete);
-        }
+				await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
+			}
+		}
 
-        public async Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)
-        {
-            // TODO: make this in single request
-            foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToRestore)
-            {
-                var updateDeleteField = new { IsDeleted = false, DeleteTime = default(DateTime?) };
+		public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+		{
+			await _elasticClient.DeleteManyAsync(photosToDelete);
+		}
 
-                await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
-            }
-        }
-        #endregion
-    }
+		public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete)
+		{
+			await _elasticClient.DeleteManyAsync(photosToDelete);
+		}
+
+		public async Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)
+		{
+			// TODO: make this in single request
+			foreach (PhotoToDeleteRestoreDTO restorePhoto in photosToRestore)
+			{
+				var updateDeleteField = new { IsDeleted = false, DeleteTime = default(DateTime?) };
+
+				await _elasticClient.UpdateAsync<PhotoDocument, object>(restorePhoto.Id, p => p.Doc(updateDeleteField));
+			}
+		}
+		#endregion
+	}
 }

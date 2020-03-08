@@ -1,0 +1,9 @@
+<app-photo-top-bar-menu-view
+  [menuState]="photoMenuState$ | async"
+  [currentMenuItem]="photoMenuItem$ | async"
+  (menuClickedEvent)="menuClicked($event)"
+  (restoreOriginalEvent)="restoreOriginal()"
+  (resetChangesEvent)="resetChanges()"
+  (saveChangesEvent)="saveChanges()"
+  (cancelChangesEvent)="cancelChanges()"
+></app-photo-top-bar-menu-view>

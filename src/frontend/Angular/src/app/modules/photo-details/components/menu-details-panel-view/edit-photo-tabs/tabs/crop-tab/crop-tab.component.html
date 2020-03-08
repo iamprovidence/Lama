@@ -1,0 +1,23 @@
+<div class="field has-addons">
+  <p class="control">
+    <span class="button is-static has-background-primary has-text-white">
+      width
+    </span>
+  </p>
+  <div class="control is-width-100">
+    <input class="input is-primary has-text-right" type="text" value="{{ width }} px" readonly />
+  </div>
+</div>
+
+<div class="field has-addons">
+  <p class="control">
+    <span class="button is-static has-background-primary has-text-white">
+      height
+    </span>
+  </p>
+  <div class="control is-width-100">
+    <input class="input is-primary has-text-right" type="text" value="{{ height }} px" readonly />
+  </div>
+</div>
+
+<button class="button is-primary is-width-100" (click)="cropImage()">Crop</button>

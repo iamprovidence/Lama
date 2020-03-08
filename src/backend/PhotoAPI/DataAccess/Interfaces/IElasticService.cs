@@ -7,21 +7,25 @@ using Domains.ElasticsearchDocuments;
 
 namespace DataAccess.Interfaces
 {
-    public interface IElasticService
-    {
-        Task<PhotoDocument> CreateAsync(PhotoDocument item);
-        Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload);
-        Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId);
+	public interface IElasticService
+	{
+		Task<PhotoDocument> CreateAsync(PhotoDocument item);
 
-        #region Delete
-        Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays);
-        Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId);
-        Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
+		Task<IEnumerable<PhotoDocument>> GetPhotosAsync(string userId, string searchPayload);
+		Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId);
 
-        Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
-        Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete);
-        Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
-        Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore);
-        #endregion
-    }
+		Task UpdatePhotoAsync<TPartialObject>(Guid photoId, TPartialObject updatePhotoPartialObject)
+			where TPartialObject : class;
+
+		#region Delete
+		Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(int deletedTimeLimitInDays);
+		Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(string userId);
+		Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
+
+		Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
+		Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete);
+		Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete);
+		Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore);
+		#endregion
+	}
 }

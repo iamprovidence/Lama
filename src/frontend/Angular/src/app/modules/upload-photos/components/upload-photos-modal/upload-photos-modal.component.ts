@@ -53,7 +53,7 @@ export class UploadPhotosModalComponent implements OnInit {
     this.updatePhotoEvent.emit(updatedPhoto);
   }
 
-  public onSaveChanges(): void {
-    this.saveUploadedPhotosEvent.emit(this.photos);
+  public onSaveChanges(photos: PhotoToUploadDTO[]): void {
+    this.saveUploadedPhotosEvent.emit(photos);
   }
 }
