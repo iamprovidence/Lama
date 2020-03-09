@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Injectable, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { PhotoListDTO } from 'src/app/core/models';
 
-@Component({
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
+@Injectable()
 export abstract class PhotosViewBaseComponent implements OnInit {
   @Input()
   public photos: PhotoListDTO[];

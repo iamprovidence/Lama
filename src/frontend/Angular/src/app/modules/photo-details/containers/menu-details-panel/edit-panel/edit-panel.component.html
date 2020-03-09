@@ -1,0 +1,14 @@
+<app-edit-photo-tabs
+  [editTab]="editTab$ | async"
+  [imageWidth]="imageWidth$ | async"
+  [imageHeight]="imageHeight$ | async"
+  [filtersThumbnails]="filtersThumbnails$ | async"
+  [colorAdjustments]="colorAdjustments$ | async"
+  (selectEditTabEvent)="selectEditTab($event)"
+  (cropEvent)="cropImage()"
+  (flipEvent)="flipImage($event)"
+  (rotateEvent)="rotateImage($event)"
+  (applyRotationEvent)="applyRotation()"
+  (filterSelectedEvent)="filterSelected($event)"
+  (colorAdjustmentsChangedEvent)="colorAdjustmentsChanged($event)"
+></app-edit-photo-tabs>

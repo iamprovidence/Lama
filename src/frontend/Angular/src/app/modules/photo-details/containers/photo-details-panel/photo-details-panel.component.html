@@ -1,0 +1,9 @@
+<app-photo-details-panel-view
+  [menuState]="menuState$ | async"
+  [photo]="photo$ | async"
+  [imageFileBase64]="imageBase64$ | async"
+  [editEvent]="editEvent"
+  (imageCroppedEvent)="imageCropped($event)"
+  (imageRotatedEvent)="imageRotated($event)"
+  (cropAreaChangedEvent)="cropAreaChanged($event)"
+></app-photo-details-panel-view>

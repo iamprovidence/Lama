@@ -19,9 +19,8 @@ namespace BusinessLogic.Services
             IMapper mapper,
             IAuthService authService,
             IElasticService elasticService,
-            IPhotoBlobStorage blobStorage,
-            IImageService imageService)
-            : base(mapper, authService, elasticService, blobStorage, imageService) { }
+            IPhotoBlobStorage blobStorage)
+            : base(mapper, authService, elasticService, blobStorage) { }
 
         public async Task<IEnumerable<DeletedPhotosListDTO>> GetDeletePhotosAsync(string userId)
         {
@@ -56,18 +55,6 @@ namespace BusinessLogic.Services
             }
 
             return photoDocumentsToDelete;
-        }
-
-        private async Task ClearAllBlobsIfExistsAsync(IEnumerable<PhotoDocument> photoDocumentsToDelete)
-        {
-            foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
-            {
-                await Task.WhenAll(
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.OriginalBlobName)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
-            }
         }
     }
 }

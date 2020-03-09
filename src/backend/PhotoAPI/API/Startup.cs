@@ -25,7 +25,6 @@ namespace API
             services.AddAuthentication(Configuration);
             services.AddSwagger(Configuration);
             services.AddMapper(Configuration);
-            services.AddDataAccessServices(Configuration);
             services.AddElasticSearch(Configuration);
             services.AddBlobStorage(Configuration);
             services.AddEventBus(Configuration);

@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/app.state';
 import * as Actions from '../../store/actions';
 import * as fromComment from '../../store/selectors';
-import * as fromPhoto from 'src/app/modules/photo-details/store/selectors';
+import * as fromPhoto from 'src/app/modules/photo-details/store/details/selectors';
 import * as fromUser from 'src/app/modules/authentication/store/selectors';
 
 import { DataState } from 'src/app/core/enums';

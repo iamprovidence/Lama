@@ -1,0 +1,29 @@
+<div class="field">
+  <label class="label">Brightness</label>
+  <div class="control">
+    <input
+      class="slider is-fullwidth is-large is-primary is-circle"
+      step="1"
+      min="-100"
+      max="100"
+      value="{{ colorAdjustments.brightness }}"
+      type="range"
+      (change)="brightnessChanged($event.target.value)"
+    />
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Contrast</label>
+  <div class="control">
+    <input
+      class="slider is-fullwidth is-large is-primary is-circle"
+      step="1"
+      min="-100"
+      max="100"
+      value="{{ colorAdjustments.contrast }}"
+      type="range"
+      (change)="contrastChanged($event.target.value)"
+    />
+  </div>
+</div>

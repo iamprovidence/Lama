@@ -1,32 +1,56 @@
 ﻿using AutoMapper;
 
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
 using BusinessLogic.Interfaces;
 
 using DataAccess.Interfaces;
 
+using Domains.ElasticsearchDocuments;
+
 namespace BusinessLogic.Services.Abstract
 {
-    public abstract class PhotoServiceBase
-    {
-        protected readonly IMapper _mapper;
-        protected readonly IAuthService _authService;
-        protected readonly IElasticService _elasticService;
-        protected readonly IPhotoBlobStorage _blobStorage;
-        protected readonly IImageService _imageService;
+	public abstract class PhotoServiceBase
+	{
+		protected readonly IMapper _mapper;
+		protected readonly IAuthService _authService;
+		protected readonly IElasticService _elasticService;
+		protected readonly IPhotoBlobStorage _blobStorage;
 
-        protected PhotoServiceBase(
-            IMapper mapper,
-            IAuthService authService,
-            IElasticService elasticService,
-            IPhotoBlobStorage blobStorage,
-            IImageService imageService)
-        {
-            _mapper = mapper;
-            _authService = authService;
-            _elasticService = elasticService;
-            _blobStorage = blobStorage;
-            _imageService = imageService;
-        }
+		protected PhotoServiceBase(
+			IMapper mapper,
+			IAuthService authService,
+			IElasticService elasticService,
+			IPhotoBlobStorage blobStorage)
+		{
+			_mapper = mapper;
+			_authService = authService;
+			_elasticService = elasticService;
+			_blobStorage = blobStorage;
+		}
 
-    }
+		protected async Task ClearAllBlobsExceptOriginalIfExistsAsync(IEnumerable<PhotoDocument> photoDocumentsToDelete)
+		{
+			foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
+			{
+				await Task.WhenAll(
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
+			}
+		}
+
+		protected async Task ClearAllBlobsIfExistsAsync(IEnumerable<PhotoDocument> photoDocumentsToDelete)
+		{
+			foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
+			{
+				await Task.WhenAll(
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.OriginalBlobName)),
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
+					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
+			}
+		}
+	}
 }
