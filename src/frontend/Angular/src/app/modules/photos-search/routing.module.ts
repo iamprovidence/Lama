@@ -5,10 +5,16 @@ import { SearchComponent } from './containers/search/search.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { SearchHistoryComponent } from './components/search-history/search-history.component';
 
+import { PhotosType } from '@core/enums';
+import { PhotosData } from '@core/routes-data';
+
 const routes: Routes = [
   {
     path: '',
-    component: null
+    loadChildren: 'src/app/modules/photos/photos.module#PhotosModule',
+    data: {
+      photosType: PhotosType.Search
+    } as PhotosData
   }
 ];
 

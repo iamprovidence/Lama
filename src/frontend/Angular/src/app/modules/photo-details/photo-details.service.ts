@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { PhotoViewDTO, UpdatePhotoDTO, OriginalPhotoDTO, EditPhotoDTO } from 'src/app/core/models';
 

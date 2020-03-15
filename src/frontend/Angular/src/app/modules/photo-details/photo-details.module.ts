@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SharingModule } from 'src/app/modules/sharing/sharing.module';
 import { CommentsModule } from 'src/app/modules/comments/comments.module';
 
 import { SLICE_NAME } from './store';
@@ -24,6 +25,7 @@ import { ImageEditService } from './image-edit.service';
   imports: [
     RoutingModule,
     SharedModule,
+    SharingModule,
     CommentsModule,
     ImageCropperModule,
     StoreModule.forFeature(SLICE_NAME, {

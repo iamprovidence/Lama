@@ -16,6 +16,18 @@
         }
       ]
     },
+    {
+      "SwaggerKey": "aggregator",
+      "UpstreamPathTemplate": "/api/Photos/shared",
+      "DownstreamPathTemplate": "/api/Sharing/all",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1700
+        }
+      ]
+    },
 
     {
       "SwaggerKey": "lama",
@@ -70,6 +82,18 @@
       "SwaggerKey": "lama",
       "UpstreamPathTemplate": "/api/SearchHistory/{everything}",
       "DownstreamPathTemplate": "/api/SearchHistory/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 2700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/Sharing/{everything}",
+      "DownstreamPathTemplate": "/api/Sharing/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

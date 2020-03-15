@@ -10,6 +10,8 @@ export const getIsLoading = createSelector(getState, state => state.isLoading);
 
 export const getPhoto = createSelector(getState, state => state.photo);
 
+export const getCurrentPhotoId = createSelector(getState, state => state.photo.id);
+
 export const getPhotoMenuState = createSelector(getState, state => state.photoMenuState);
 
 export const getCurrentMenuItem = createSelector(getState, state => state.currentMenuItem);

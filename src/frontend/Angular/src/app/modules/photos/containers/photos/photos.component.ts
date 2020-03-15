@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 import { State } from '../../store/state';
 import * as Selectors from '../../store/selectors';
@@ -6,8 +8,9 @@ import * as Actions from '../../store/actions';
 
 import { Observable } from 'rxjs';
 
-import { PhotoListDTO } from 'src/app/core/models';
-import { PhotoViewType, DataState } from 'src/app/core/enums';
+import { PhotosData } from '@core/routes-data';
+import { PhotoListDTO } from '@core/models';
+import { PhotoViewType, DataState, PhotosType } from '@core/enums';
 
 @Component({
   selector: 'app-photos',
@@ -20,7 +23,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   public isLoading$: Observable<DataState>;
   public selected$: Observable<Set<string>>;
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.photos$ = this.store.select(Selectors.getPhotos);
@@ -28,7 +31,24 @@ export class PhotosComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.store.select(Selectors.getIsLoading);
     this.selected$ = this.store.select(Selectors.getSelectedPhotos);
 
-    this.store.dispatch(new Actions.LoadPhotos());
+    this.LoadPhotos(this.route.snapshot.data as PhotosData);
+  }
+
+  private LoadPhotos(photosRouteData: PhotosData): void {
+    const { photosType } = photosRouteData;
+
+    switch (photosType) {
+      case PhotosType.All:
+        this.store.dispatch(new Actions.LoadPhotos());
+        break;
+      case PhotosType.Shared:
+        this.store.dispatch(new Actions.LoadSharedPhotos());
+        break;
+      case PhotosType.Search /* Loads on effect */:
+        break;
+      default:
+        throw new Error('Invalid enum type');
+    }
   }
 
   ngOnDestroy() {

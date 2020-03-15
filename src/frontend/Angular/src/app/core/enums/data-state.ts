@@ -1,6 +1,6 @@
 export enum DataState {
-  Loading,
-  NoContent,
-  DisplayContent,
-  Failed
+  Loading = 'Loading',
+  NoContent = 'No Content',
+  DisplayContent = 'Display Content',
+  Failed = 'Failed'
 }

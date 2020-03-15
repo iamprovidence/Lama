@@ -34,17 +34,20 @@ namespace DataAccess.Implementations
 		{
 			List<QueryContainer> mustClauses = new List<QueryContainer>
 			{
-				new MatchQuery
-				{
-					Field = Infer.Field<PhotoDocument>(pd => pd.UserId),
-					Query = userId
-				},
 				new TermQuery
 				{
 					Field = Infer.Field<PhotoDocument>(pd => pd.IsDeleted),
 					Value = false
 				}
 			};
+			if (!string.IsNullOrWhiteSpace(userId))
+			{
+				mustClauses.Add(new MatchQuery
+				{
+					Field = Infer.Field<PhotoDocument>(pd => pd.UserId),
+					Query = userId
+				});
+			}
 
 			List<QueryContainer> shouldClauses = new List<QueryContainer>
 			{
@@ -72,8 +75,9 @@ namespace DataAccess.Implementations
 				{
 					Must = mustClauses,
 					Should = shouldClauses,
-					MinimumShouldMatch = 1
+					MinimumShouldMatch = 1,
 				},
+				Size = 100
 			};
 
 			ISearchResponse<PhotoDocument> foundPhotos = await _elasticClient.SearchAsync<PhotoDocument>(searchRequest);

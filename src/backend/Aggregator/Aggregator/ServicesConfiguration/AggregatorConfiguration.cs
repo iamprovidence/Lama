@@ -6,11 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Aggregator.ServicesConfiguration
 {
-    public static class AggregatorConfiguration
-    {
-        public static void AddAggregators(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSingleton<IAlbumAggregator, AlbumAggregator>();
-        }
-    }
+	public static class AggregatorConfiguration
+	{
+		public static void AddAggregators(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSingleton<IAlbumAggregator, AlbumAggregator>();
+			services.AddSingleton<ISharingAggregator, SharingAggregator>();
+		}
+	}
 }

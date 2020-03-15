@@ -31,3 +31,8 @@ export * from './images/image-rotated-dto';
 export * from './images/image-cropped-dto';
 export * from './images/image-filter-dto';
 export * from './images/image-color-adjustments-dto';
+
+// sharing
+export * from './sharing/share-photo-dto';
+export * from './sharing/shared-emails-list-dto';
+export * from './sharing/delete-shared-photo-dto';

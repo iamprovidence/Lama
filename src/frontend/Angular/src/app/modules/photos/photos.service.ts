@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Observable, of } from 'rxjs';
 
 import { PhotoListDTO, PhotoToUploadDTO, PhotoToDeleteRestoreDTO } from 'src/app/core/models';
 
@@ -16,8 +17,18 @@ export class PhotosService {
     return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/all`);
   }
 
+  public getSharedPhotos(): Observable<PhotoListDTO[]> {
+    return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/shared`);
+  }
+
   public searchPhotos(searchPayload: string): Observable<PhotoListDTO[]> {
     return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/search`, { params: { searchPayload } });
+  }
+
+  public markPhotosAsDeleted(photosToDelete: PhotoToDeleteRestoreDTO[]): Observable<object> {
+    const options = this.getOptionsWithBody(photosToDelete);
+
+    return this.httpClient.delete(`${this.apiUri}/delete`, options);
   }
 
   private getOptionsWithBody<TBody>(body: TBody): { headers: HttpHeaders; body: TBody } {
@@ -27,12 +38,6 @@ export class PhotosService {
       }),
       body
     };
-  }
-
-  public markPhotosAsDeleted(photosToDelete: PhotoToDeleteRestoreDTO[]): Observable<object> {
-    const options = this.getOptionsWithBody(photosToDelete);
-
-    return this.httpClient.delete(`${this.apiUri}/delete`, options);
   }
 
   public uploadPhotos(photos: PhotoToUploadDTO[]): Observable<PhotoListDTO[]> {

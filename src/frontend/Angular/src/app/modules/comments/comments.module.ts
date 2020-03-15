@@ -5,7 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { SLICE_NAME } from './store/state';
 import { reducer } from './store/reducer';
-import { PhotoDetailssEffects as Effects } from './store/effects';
+import { CommentsEffects as Effects } from './store/effects';
 
 import { CommentsService as ApiService } from './comments.service';
 

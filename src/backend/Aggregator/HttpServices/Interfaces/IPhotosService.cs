@@ -7,6 +7,7 @@ namespace HttpServices.Interfaces
 {
     public interface IPhotosService
     {
+        Task<IEnumerable<PhotoListDTO>> GetAllPhotosAsync();
         Task<IEnumerable<PhotoListDTO>> GetCurrentUserPhotosAsync();
-    }
+	}
 }

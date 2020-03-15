@@ -9,22 +9,26 @@ using HttpServices.Configuration;
 
 namespace Aggregator.ServicesConfiguration
 {
-    internal static class HttpServicesConfiguration
-    {
-        public static void AddHttpServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+	internal static class HttpServicesConfiguration
+	{
+		public static void AddHttpServices(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-            services.Configure<UrlsConfiguration>(configuration.GetSection("urls"));
+			services.Configure<UrlsConfiguration>(configuration.GetSection("urls"));
 
-            services
-                .AddHttpClient<IPhotosService, PhotosService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+			services
+				.AddHttpClient<IPhotosService, PhotosService>()
+				.AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
-            services
-                .AddHttpClient<IAlbumsService, AlbumsService>()
-                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
-        }
-    }
+			services
+				.AddHttpClient<IAlbumsService, AlbumsService>()
+				.AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
+			services
+				.AddHttpClient<ISharingService, SharingService>()
+				.AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+		}
+	}
 }
