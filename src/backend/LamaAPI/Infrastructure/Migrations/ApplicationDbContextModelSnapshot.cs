@@ -90,13 +90,31 @@ namespace Infrastructure.Migrations
                     b.ToTable("SearchHistory");
                 });
 
+            modelBuilder.Entity("Domains.Entities.SharedPhoto", b =>
+                {
+                    b.Property<Guid>("PhotoId");
+
+                    b.Property<string>("SharedWithUserEmail");
+
+                    b.Property<DateTime>("SharedAt");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("PhotoId", "SharedWithUserEmail");
+
+                    b.HasIndex("UserEmail");
+
+                    b.ToTable("SharedPhoto");
+                });
+
             modelBuilder.Entity("Domains.Entities.User", b =>
                 {
                     b.Property<string>("Id");
 
                     b.Property<string>("DisplayName");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("PhotoURL");
 
@@ -135,6 +153,14 @@ namespace Infrastructure.Migrations
                         .WithMany("Searches")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.SharedPhoto", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("SharedPhotos")
+                        .HasForeignKey("UserEmail")
+                        .HasPrincipalKey("Email");
                 });
 #pragma warning restore 612, 618
         }

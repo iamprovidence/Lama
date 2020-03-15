@@ -24,6 +24,12 @@ namespace API.Controllers
 			_photoService = photoService;
 		}
 
+		[HttpGet("Internal/all")]
+		public Task<IEnumerable<PhotoListDTO>> GetAllPhotos()
+		{
+			return _photoService.GetPhotosAsync(string.Empty, string.Empty);
+		}
+
 		[HttpGet("all")]
 		public Task<IEnumerable<PhotoListDTO>> GetCurrentUserPhotos()
 		{

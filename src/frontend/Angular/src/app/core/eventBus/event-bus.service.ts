@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { EventBase } from './eventBase';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class EventBusService {

@@ -1,6 +1,6 @@
 <div *ngIf="isLoading$ | async as loadedContent">
   <app-deleted-photos-buttons
-    *ngIf="loadedContent === 2"
+    *ngIf="loadedContent === 'Display Content'"
     [selectedPhotosAmount]="selectedPhotosAmount$ | async"
     (deleteSelectedPhotosEvent)="deleteSelectedPhotos()"
     (restoreSelectedPhotosEvent)="restoreSelectedPhotos()"

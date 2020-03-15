@@ -36,6 +36,17 @@ export class PhotosEffects {
   );
 
   @Effect()
+  loadShared$: Observable<Action> = this.actions$.pipe(
+    ofType(PhotosActions.ActionTypes.LoadSharedPhotos),
+    mergeMap(() =>
+      this.photosService.getSharedPhotos().pipe(
+        map(photos => new PhotosActions.LoadPhotosSucceed(photos)),
+        catchError(err => of(new PhotosActions.LoadPhotosFailed(err)))
+      )
+    )
+  );
+
+  @Effect()
   searchPhotos$: Observable<Action> = this.actions$.pipe(
     ofType(PhotosActions.ActionTypes.SearchPhotos),
     map((action: PhotosActions.SearchPhotos) => action.payload),

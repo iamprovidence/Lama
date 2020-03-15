@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FirebaseUser, PhotoViewDTO, AddCommentDTO } from 'src/app/core/models';
 
 @Component({
   selector: 'app-add-comment-form',
   templateUrl: './add-comment-form.component.html',
-  styleUrls: ['./add-comment-form.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./add-comment-form.component.less']
 })
 export class AddCommentFormComponent implements OnInit {
   public newCommentText: string;

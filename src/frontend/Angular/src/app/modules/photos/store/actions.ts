@@ -7,6 +7,7 @@ export enum ActionTypes {
 
   LoadPhotos = '[PHOTOS] LoadPhotos',
   SearchPhotos = '[PHOTOS] SearchPhotos',
+  LoadSharedPhotos = '[PHOTOS] LoadSharedPhotos',
   LoadPhotosSucceed = '[PHOTOS] LoadPhotosSucceed',
   LoadPhotosFailed = '[PHOTOS] LoadPhotosFailed',
   ClearPhotos = '[PHOTOS] ClearPhotos',
@@ -31,6 +32,10 @@ export class LoadPhotos implements Action {
 export class SearchPhotos implements Action {
   readonly type = ActionTypes.SearchPhotos;
   constructor(public payload: string) {}
+}
+
+export class LoadSharedPhotos implements Action {
+  readonly type = ActionTypes.LoadSharedPhotos;
 }
 
 export class LoadPhotosSucceed implements Action {
@@ -69,6 +74,7 @@ export type Actions =
   | SetViewType
   | LoadPhotos
   | SearchPhotos
+  | LoadSharedPhotos
   | LoadPhotosSucceed
   | LoadPhotosFailed
   | ClearPhotos

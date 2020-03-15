@@ -3,5 +3,6 @@
     public interface IAuthService
     {
         string GetCurrentUserId();
-    }
+		string GetCurrentUserEmail();
+	}
 }

@@ -11,7 +11,7 @@ import * as StoreActions from '../store/actions';
 import { AddCommentDTO } from 'src/app/core/models';
 
 @Injectable()
-export class PhotoDetailssEffects {
+export class CommentsEffects {
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
   @Effect()

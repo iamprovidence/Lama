@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DataState } from 'src/app/core/enums';
+import { PhotoViewType } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-photos-buttons',
@@ -8,10 +8,10 @@ import { DataState } from 'src/app/core/enums';
 })
 export class PhotosButtonsComponent implements OnInit {
   @Input()
-  public viewType: DataState;
+  public viewType: PhotoViewType;
 
   @Output()
-  public changeViewTypeEvent = new EventEmitter<DataState>();
+  public changeViewTypeEvent = new EventEmitter<PhotoViewType>();
 
   @Output()
   public deleteSelectedPhotosEvent = new EventEmitter();
@@ -20,7 +20,7 @@ export class PhotosButtonsComponent implements OnInit {
 
   ngOnInit() {}
 
-  public changeView(newViewType: DataState): void {
+  public changeView(newViewType: PhotoViewType): void {
     this.changeViewTypeEvent.emit(newViewType);
   }
 
