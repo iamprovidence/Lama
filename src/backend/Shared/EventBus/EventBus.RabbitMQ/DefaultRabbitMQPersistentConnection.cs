@@ -11,76 +11,76 @@ using EventBus.RabbitMQ.Interfaces;
 
 namespace EventBus.RabbitMQ
 {
-    public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection, IDisposable
-    {
-        // FIELDS
-        private readonly IConnectionFactory _connectionFactory;
-        IConnection _connection;
-        private readonly int _retryCount;
+	public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection, IDisposable
+	{
+		// FIELDS
+		private readonly IConnectionFactory _connectionFactory;
+		IConnection _connection;
+		private readonly int _retryCount;
 
-        private bool _disposed;
-        private readonly object syncRoot = new object();
+		private bool _disposed;
+		private readonly object syncRoot = new object();
 
-        // CONSTRUCTORS
-        public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, int retryCount = 5)
-        {
-            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-            _retryCount = retryCount;
-        }
-        
-        public void Dispose()
-        {
-            if (_disposed) return;
+		// CONSTRUCTORS
+		public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory, int retryCount = 5)
+		{
+			_connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+			_retryCount = retryCount;
+		}
 
-            _disposed = true;
-            _connection.Dispose();
-        }
-        
-        // PROPERTIES
-        public bool IsConnected
-        {
-            get
-            {
-                if (_disposed) return false;
-                if (_connection == null) return false;
+		public void Dispose()
+		{
+			if (_disposed) return;
 
-                return _connection.IsOpen;
-            }
-        }
+			_disposed = true;
+			_connection.Dispose();
+		}
 
-        // METHODS
-        public IModel CreateModel()
-        {
-            if (!IsConnected)
-            {
-                throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
-            }
+		// PROPERTIES
+		public bool IsConnected
+		{
+			get
+			{
+				if (_disposed) return false;
+				if (_connection == null) return false;
 
-            return _connection.CreateModel();
-        }
+				return _connection.IsOpen;
+			}
+		}
 
-        public bool TryConnect()
-        {
-            lock (syncRoot)
-            {
-                RetryPolicy policy = 
-                    RetryPolicy.Handle<SocketException>()
-                    .Or<BrokerUnreachableException>()
-                    .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+		// METHODS
+		public IModel CreateModel()
+		{
+			if (!IsConnected)
+			{
+				throw new InvalidOperationException("No RabbitMQ connections are available to perform this action");
+			}
 
-                policy.Execute(() =>
-                {
-                    _connection = _connectionFactory.CreateConnection();
-                });
+			return _connection.CreateModel();
+		}
 
-                if (!IsConnected) return false;
-                
-                _connection.ConnectionShutdown += (o, e) => { if (!_disposed) TryConnect(); };
-                _connection.CallbackException  += (o, e) => { if (!_disposed) TryConnect(); };
-                _connection.ConnectionBlocked  += (o, e) => { if (!_disposed) TryConnect(); };
+		public bool TryConnect()
+		{
+			lock (syncRoot)
+			{
+				RetryPolicy policy = Policy
+					.Handle<SocketException>()
+					.Or<BrokerUnreachableException>()
+					.WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-                return true;
-            }
-        }
-    }
+				policy.Execute(() =>
+				{
+					_connection = _connectionFactory.CreateConnection();
+				});
+
+				if (!IsConnected) return false;
+
+				_connection.ConnectionShutdown += (o, e) => { if (!_disposed) TryConnect(); };
+				_connection.CallbackException += (o, e) => { if (!_disposed) TryConnect(); };
+				_connection.ConnectionBlocked += (o, e) => { if (!_disposed) TryConnect(); };
+
+				return true;
+			}
+		}
+	}
 }

@@ -7,3 +7,4 @@ export * from './edit-tab';
 export * from './flip-types';
 export * from './rotate-types';
 export * from './photos-type';
+export * from './notification-types';

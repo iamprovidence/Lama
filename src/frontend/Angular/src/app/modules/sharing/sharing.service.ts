@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 
@@ -24,6 +24,16 @@ export class SharingService {
   }
 
   public deleteSharedPhoto(deleteSharedPhoto: DeleteSharedPhotoDTO): Observable<object> {
-    return this.httpClient.delete(`${this.apiUri}/delete`, { params: { ...deleteSharedPhoto } });
+    const optionsWithBody = this.getOptionsWithBody(deleteSharedPhoto);
+    return this.httpClient.delete(`${this.apiUri}/delete`, optionsWithBody);
+  }
+
+  private getOptionsWithBody<TBody>(body: TBody): { headers: HttpHeaders; body: TBody } {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body
+    };
   }
 }

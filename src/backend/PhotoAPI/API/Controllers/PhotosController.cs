@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 using BusinessLogic.Interfaces;
 
+using ApiResponse.Enums;
+using ApiResponse.ActionResult;
+
 namespace API.Controllers
 {
 	[Authorize]
@@ -66,11 +69,13 @@ namespace API.Controllers
 		}
 
 		[HttpPost("update")]
-		public async Task<PhotoViewDTO> Update(UpdatePhotoDTO updatePhotoDTO)
+		public async Task<NotificationActionResult<PhotoViewDTO>> Update(UpdatePhotoDTO updatePhotoDTO)
 		{
 			await _photoService.UpdatePhotoAsync(updatePhotoDTO);
 
-			return await _photoService.GetPhotoOrDefaultAsync(updatePhotoDTO.Id);
+			PhotoViewDTO updatedPhoto = await _photoService.GetPhotoOrDefaultAsync(updatePhotoDTO.Id);
+
+			return this.Notify(updatedPhoto).As(NotificationType.Success).WithMessage("Updated successfully");
 		}
 
 		[HttpPost("edit")]

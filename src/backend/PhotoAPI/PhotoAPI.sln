@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{994A1459-86F2-4896-B0F4-F92FD231D412}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiResponse", "..\Shared\ApiResponse\ApiResponse\ApiResponse.csproj", "{EAA4902A-76C2-45FE-80F3-A104DB50059B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,10 @@ Global
 		{7378FDD3-9C63-4B2E-B6FC-18012C822CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7378FDD3-9C63-4B2E-B6FC-18012C822CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7378FDD3-9C63-4B2E-B6FC-18012C822CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA4902A-76C2-45FE-80F3-A104DB50059B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA4902A-76C2-45FE-80F3-A104DB50059B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA4902A-76C2-45FE-80F3-A104DB50059B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA4902A-76C2-45FE-80F3-A104DB50059B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,7 @@ Global
 		{515AE76D-9096-40BC-8FE7-E862C3A94D52} = {29841358-1280-4FA9-9267-52E547C3840E}
 		{0EA1D0C1-5713-4CB3-92F8-72B52FA25A2C} = {29841358-1280-4FA9-9267-52E547C3840E}
 		{7378FDD3-9C63-4B2E-B6FC-18012C822CE6} = {29841358-1280-4FA9-9267-52E547C3840E}
+		{EAA4902A-76C2-45FE-80F3-A104DB50059B} = {994A1459-86F2-4896-B0F4-F92FD231D412}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {68DD685A-BFF2-4AB3-8BDF-1B5762EC0AF6}
