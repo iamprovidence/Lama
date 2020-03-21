@@ -31,7 +31,8 @@ namespace Application.PhotosSearch.Commands.AddSearch
 
         public async Task<SearchHistoryListDTO> Handle(AddSearchCommand request, CancellationToken cancellationToken)
         {
-            SearchHistory searchToSave = _mapper.Map<SearchHistory>(request);
+			throw new Domains.Exceptions.PhotoIsAlreadySharedException("asd");
+			SearchHistory searchToSave = _mapper.Map<SearchHistory>(request);
             searchToSave.UserId = _authService.GetCurrentUserId();
 
             await _context.Set<SearchHistory>().AddAsync(searchToSave, cancellationToken);

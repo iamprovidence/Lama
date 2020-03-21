@@ -38,6 +38,12 @@ namespace Infrastructure.Configurations
 				.HasMany(u => u.SharedPhotos)
 				.WithOne(sp => sp.User)
 				.HasPrincipalKey(u => u.Email);
+
+			builder
+				.HasMany(u => u.Notifications)
+				.WithOne(n => n.User)
+				.HasForeignKey(n => n.UserId)
+				.OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

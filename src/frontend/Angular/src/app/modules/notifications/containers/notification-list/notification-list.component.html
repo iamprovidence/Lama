@@ -1,0 +1,7 @@
+<ng-container *appIsLoading="isLoading$ | async">
+  <app-notification-list-view
+    [notifications]="notifications$ | async"
+    (clickNotificationEvent)="clickNotification($event)"
+  >
+  </app-notification-list-view>
+</ng-container>

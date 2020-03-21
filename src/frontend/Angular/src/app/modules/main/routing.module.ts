@@ -40,6 +40,10 @@ const childRoutes: Routes = [
   {
     path: 'search',
     loadChildren: 'src/app/modules/photos-search/photos-search.module#PhotosSearchModule'
+  },
+  {
+    path: 'notifications',
+    loadChildren: 'src/app/modules/notifications/notifications.module#NotificationsModule'
   }
 ];
 

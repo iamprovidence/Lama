@@ -1,0 +1,19 @@
+@left-padding: 25px;
+@left-border: 10px;
+
+.notification {
+  cursor: pointer;
+  padding-left: @left-padding;
+  margin: 10px 0px;
+
+  transition: all ease 200ms;
+
+  &:hover {
+    border-left: #00d1b2 @left-border solid;
+    padding-left: calc(@left-padding - @left-border);
+  }
+  &.is-primary.is-light {
+    background-color: #ebfffc;
+    color: #00947e;
+  }
+}

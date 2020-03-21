@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\ApiResponse\ApiResponse\ApiResponse.csproj" />
     <ProjectReference Include="..\..\Shared\EventBus\EventBus.Abstraction\EventBus.Abstraction.csproj" />
     <ProjectReference Include="..\..\Shared\EventBus\EventBus.Extensions.Microsoft.DependencyInjection\EventBus.Extensions.Microsoft.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\Shared\Events\Events\Events.csproj" />

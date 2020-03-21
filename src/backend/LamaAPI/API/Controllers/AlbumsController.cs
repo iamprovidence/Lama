@@ -41,5 +41,5 @@ namespace API.Controllers
         {
             return Mediator.Send(command);
         }
-    }
+	}
 }

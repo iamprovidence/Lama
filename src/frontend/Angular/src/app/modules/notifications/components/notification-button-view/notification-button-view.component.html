@@ -1,0 +1,17 @@
+<a
+  routerLink="/notifications"
+  class="button is-outlined is-rounded is-rounded-button"
+  [class.is-primary]="notificationsAmount === 0"
+  [class.is-warning]="notificationsAmount !== 0"
+>
+  <span class="icon">
+    <i class="fas fa-bell"></i>
+    <ng-container *ngIf="notificationsAmount !== 0">
+      <p>
+        <b>
+          <sup>{{ notificationsAmount > 99 ? '99+' : notificationsAmount }}</sup>
+        </b>
+      </p>
+    </ng-container>
+  </span>
+</a>

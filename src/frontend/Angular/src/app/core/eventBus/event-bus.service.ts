@@ -12,10 +12,10 @@ export class EventBusService {
   }
 
   public on<TEvent extends EventBase>(action: (event?: TEvent) => void): Subscription {
-    return this.events.pipe(filter((e: EventBase) => this.isCorrentEvent<TEvent>(e))).subscribe(action);
+    return this.events.pipe(filter((e: EventBase) => this.isCorrectEvent<TEvent>(e))).subscribe(action);
   }
 
-  private isCorrentEvent<TEvent extends EventBase>(event: EventBase): event is TEvent {
+  private isCorrectEvent<TEvent extends EventBase>(event: EventBase): event is TEvent {
     return (event as TEvent) !== undefined;
   }
 }
