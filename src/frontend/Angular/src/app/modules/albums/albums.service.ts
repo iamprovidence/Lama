@@ -3,8 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { AlbumListDTO, CreateAlbumDTO, EditAlbumDTO } from 'src/app/core/models';
+
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class AlbumsService {
@@ -28,5 +31,25 @@ export class AlbumsService {
 
   public getCurrentUserAlbums(): Observable<AlbumListDTO[]> {
     return this.httpClient.get<AlbumListDTO[]>(`${this.apiUri}/all/`);
+  }
+
+  public downloadAlbum(albumId: number): Observable<ArrayBuffer> {
+    return this.httpClient
+      .post(
+        `${this.apiUri}/download`,
+        {
+          albumId: albumId.toString()
+        },
+        {
+          observe: 'body',
+          responseType: 'arraybuffer'
+        }
+      )
+      .pipe(tap((data: ArrayBuffer) => this.downloadFile(data)));
+  }
+
+  private downloadFile(data: ArrayBuffer): void {
+    const blob = new Blob([data], { type: 'application/vnd.rar' });
+    saveAs(blob, 'Album.rar');
   }
 }

@@ -16,6 +16,9 @@ export class PhotosButtonsComponent implements OnInit {
   @Output()
   public deleteSelectedPhotosEvent = new EventEmitter();
 
+  @Output()
+  public downloadSelectedPhotosEvent = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {}
@@ -26,5 +29,9 @@ export class PhotosButtonsComponent implements OnInit {
 
   public deleteSelected(): void {
     this.deleteSelectedPhotosEvent.emit();
+  }
+
+  public downloadSelected(): void {
+    this.downloadSelectedPhotosEvent.emit();
   }
 }

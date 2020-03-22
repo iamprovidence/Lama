@@ -73,4 +73,11 @@ export class AlbumsEffects {
         )
     )
   );
+
+  @Effect({ dispatch: false })
+  downloadAlbum$: Observable<object> = this.actions$.pipe(
+    ofType(AlbumsActions.ActionTypes.DownloadAlbum),
+    map((action: AlbumsActions.DownloadAlbum) => action.payload),
+    mergeMap((albumId: number) => this.apiService.downloadAlbum(albumId))
+  );
 }

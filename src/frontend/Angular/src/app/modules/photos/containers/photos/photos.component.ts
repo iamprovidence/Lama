@@ -66,4 +66,8 @@ export class PhotosComponent implements OnInit, OnDestroy {
   public deleteSelectedPhotos(): void {
     this.store.dispatch(new Actions.DeleteSelectedPhotos());
   }
+
+  public downloadSelectedPhotos(): void {
+    this.store.dispatch(new Actions.DownloadSelectedPhotos());
+  }
 }

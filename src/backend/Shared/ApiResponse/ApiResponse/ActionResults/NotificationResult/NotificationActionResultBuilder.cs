@@ -1,14 +1,14 @@
 ﻿using ApiResponse.Enums;
 
-namespace ApiResponse.ActionResult
+namespace ApiResponse.ActionResults.NotificationResult
 {
 	public class NotificationActionResultBuilder<T>
 	{
-		private readonly NotificationResult<T> result;
+		private readonly NotificationResponse<T> result;
 
 		public NotificationActionResultBuilder(T response)
 		{
-			result = new NotificationResult<T>()
+			result = new NotificationResponse<T>()
 			{
 				NotificationType = NotificationType.Info,
 				Result = response

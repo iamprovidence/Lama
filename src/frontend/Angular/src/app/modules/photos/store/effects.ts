@@ -7,7 +7,7 @@ import { State } from 'src/app/app.state';
 import * as Selectors from '../store/selectors';
 
 import { Observable, of } from 'rxjs';
-import { map, mergeMap, withLatestFrom, catchError, switchMap, tap } from 'rxjs/operators';
+import { map, mergeMap, withLatestFrom, catchError, switchMap, tap, filter } from 'rxjs/operators';
 
 import { PhotosService } from '../photos.service';
 import * as PhotosActions from '../store/actions';
@@ -90,5 +90,14 @@ export class PhotosEffects {
     mergeMap((photos: PhotoToDeleteRestoreDTO[]) =>
       this.photosService.markPhotosAsDeleted(photos).pipe(map(() => new PhotosActions.DeleteSelectedPhotosSucceed()))
     )
+  );
+
+  @Effect({ dispatch: false })
+  downloadPhotos$: Observable<object> = this.actions$.pipe(
+    ofType(PhotosActions.ActionTypes.DownloadSelectedPhotos),
+    withLatestFrom(this.store$.select(Selectors.getSelectedPhotos)),
+    map(([action, selectedPhotos]) => [...selectedPhotos]),
+    filter((photosIds: string[]) => photosIds.length > 0),
+    mergeMap((photosIds: string[]) => this.photosService.downloadPhotos(photosIds))
   );
 }

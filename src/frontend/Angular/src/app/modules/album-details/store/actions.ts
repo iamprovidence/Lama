@@ -20,7 +20,9 @@ export enum ActionTypes {
   SelectAlbumPhoto = '[ALBUM-DETAILS] SelectAlbumPhoto',
 
   DeleteSelectedPhotos = '[ALBUM-DETAILS] DeleteSelectedPhotos',
-  DeleteSelectedPhotosSucceed = '[ALBUM-DETAILS] DeleteSelectedPhotosSucceed'
+  DeleteSelectedPhotosSucceed = '[ALBUM-DETAILS] DeleteSelectedPhotosSucceed',
+
+  DownloadSelectedPhotos = '[ALBUM-DETAILS] DownloadSelectedPhotos'
 }
 
 export class LoadAlbumPhotos implements Action {
@@ -89,6 +91,10 @@ export class DeleteSelectedPhotosSucceed implements Action {
   readonly type = ActionTypes.DeleteSelectedPhotosSucceed;
 }
 
+export class DownloadSelectedPhotos implements Action {
+  readonly type = ActionTypes.DownloadSelectedPhotos;
+}
+
 export type Actions =
   | LoadAlbumPhotos
   | LoadAlbumPhotosSucceed
@@ -103,4 +109,5 @@ export type Actions =
   | SelectPhoto
   | SelectAlbumPhoto
   | DeleteSelectedPhotos
-  | DeleteSelectedPhotosSucceed;
+  | DeleteSelectedPhotosSucceed
+  | DownloadSelectedPhotos;

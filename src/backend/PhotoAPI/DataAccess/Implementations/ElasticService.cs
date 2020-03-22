@@ -85,6 +85,15 @@ namespace DataAccess.Implementations
 			return foundPhotos.Documents;
 		}
 
+		public async Task<IEnumerable<PhotoDocument>> GetPhotosAsync(IEnumerable<Guid> photoIds)
+		{
+			IEnumerable<string> ids = photoIds.Select(id => id.ToString());
+
+			IEnumerable<IMultiGetHit<PhotoDocument>> response = await _elasticClient.GetManyAsync<PhotoDocument>(ids, _indexName);
+
+			return response.Select(r => r.Source);
+		}
+
 		public async Task<PhotoDocument> GetPhotoOrDefaultAsync(Guid photoId)
 		{
 			GetResponse<PhotoDocument> response = await _elasticClient.GetAsync<PhotoDocument>(photoId);
@@ -151,16 +160,7 @@ namespace DataAccess.Implementations
 
 			return searchResult.Documents;
 		}
-
-		public async Task<IEnumerable<PhotoDocument>> GetDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
-		{
-			IEnumerable<string> ids = photosToDelete.Select(p => p.Id.ToString());
-
-			IEnumerable<IMultiGetHit<PhotoDocument>> response = await _elasticClient.GetManyAsync<PhotoDocument>(ids, _indexName);
-
-			return response.Select(r => r.Source);
-		}
-
+		
 		public async Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
 		{
 			// TODO: make this in single request
@@ -172,14 +172,14 @@ namespace DataAccess.Implementations
 			}
 		}
 
-		public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+		public Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
 		{
-			await _elasticClient.DeleteManyAsync(photosToDelete);
+			return _elasticClient.DeleteManyAsync(photosToDelete);
 		}
 
-		public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete)
+		public Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoDocument> photosToDelete)
 		{
-			await _elasticClient.DeleteManyAsync(photosToDelete);
+			return _elasticClient.DeleteManyAsync(photosToDelete);
 		}
 
 		public async Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace ApiResponse.ActionResult
+namespace ApiResponse.ActionResults.NotificationResult
 {
-	public class NotificationResult<T>
+	public class NotificationResponse<T>
 	{
 		[JsonProperty(PropertyName = "notificationType")]
 		public Enums.NotificationType NotificationType { get; set; }

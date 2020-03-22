@@ -7,7 +7,7 @@ import * as fromAlbumDetails from './selectors';
 import * as AlbumActions from '../store/actions';
 
 import { Observable, of } from 'rxjs';
-import { map, mergeMap, catchError, flatMap, reduce, first } from 'rxjs/operators';
+import { map, mergeMap, catchError, flatMap, reduce, first, withLatestFrom, filter } from 'rxjs/operators';
 
 import { AlbumDetailsService as ApiService } from '../album-details.service';
 import { PhotoAlbumDTO } from 'src/app/core/models';
@@ -80,5 +80,14 @@ export class AlbumDetailsEffects {
         )
       )
     )
+  );
+
+  @Effect({ dispatch: false })
+  downloadSelectedPhotosFromAlbum$: Observable<object> = this.actions$.pipe(
+    ofType(AlbumActions.ActionTypes.DownloadSelectedPhotos),
+    withLatestFrom(this.store$.select(fromAlbumDetails.getSelectedPhotos)),
+    map(([action, selectedPhotos]) => [...selectedPhotos]),
+    filter((photosIds: string[]) => photosIds.length > 0),
+    mergeMap((photosIds: string[]) => this.apiService.downloadPhotos(photosIds))
   );
 }

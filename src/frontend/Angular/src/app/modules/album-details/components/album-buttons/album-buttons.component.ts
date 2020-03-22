@@ -7,7 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class AlbumButtonsComponent implements OnInit {
   @Output()
-  public downloadSelectedEvent = new EventEmitter();
+  public downloadSelectedPhotosEvent = new EventEmitter();
 
   @Output()
   public deleteSelectedEvent = new EventEmitter();
@@ -18,6 +18,10 @@ export class AlbumButtonsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  public downloadSelectedPhotos(): void {
+    this.downloadSelectedPhotosEvent.emit();
+  }
 
   public deleteSelected(): void {
     this.deleteSelectedEvent.emit();

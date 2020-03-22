@@ -18,6 +18,18 @@
     },
     {
       "SwaggerKey": "aggregator",
+      "UpstreamPathTemplate": "/api/Albums/download",
+      "DownstreamPathTemplate": "/api/Albums/download",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "aggregator",
       "UpstreamPathTemplate": "/api/Photos/shared",
       "DownstreamPathTemplate": "/api/Sharing/all",
       "DownstreamScheme": "http",

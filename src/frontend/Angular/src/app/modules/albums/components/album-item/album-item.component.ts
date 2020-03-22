@@ -16,6 +16,9 @@ export class AlbumItemComponent implements OnInit {
   @Output()
   public deleteAlbumEvent = new EventEmitter<AlbumListDTO>();
 
+  @Output()
+  public downloadAlbumEvent = new EventEmitter<AlbumListDTO>();
+
   public isDropdownActive: boolean;
 
   constructor() {}
@@ -34,6 +37,12 @@ export class AlbumItemComponent implements OnInit {
 
   public deleteAlbum(): void {
     this.deleteAlbumEvent.emit(this.album);
+
+    this.toggleDropdown();
+  }
+
+  public downloadAlbum(): void {
+    this.downloadAlbumEvent.emit(this.album);
 
     this.toggleDropdown();
   }

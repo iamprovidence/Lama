@@ -17,7 +17,9 @@ export enum ActionTypes {
   SelectPhoto = '[PHOTOS] SelectPhoto',
 
   DeleteSelectedPhotos = '[PHOTOS] DeleteSelectedPhotos',
-  DeleteSelectedPhotosSucceed = '[PHOTOS] DeleteSelectedPhotosSucceed'
+  DeleteSelectedPhotosSucceed = '[PHOTOS] DeleteSelectedPhotosSucceed',
+
+  DownloadSelectedPhotos = '[PHOTOS] DownloadSelectedPhotos'
 }
 
 export class SetViewType implements Action {
@@ -70,6 +72,10 @@ export class DeleteSelectedPhotosSucceed implements Action {
   readonly type = ActionTypes.DeleteSelectedPhotosSucceed;
 }
 
+export class DownloadSelectedPhotos implements Action {
+  readonly type = ActionTypes.DownloadSelectedPhotos;
+}
+
 export type Actions =
   | SetViewType
   | LoadPhotos
@@ -81,4 +87,5 @@ export type Actions =
   | AddPhotos
   | SelectPhoto
   | DeleteSelectedPhotos
-  | DeleteSelectedPhotosSucceed;
+  | DeleteSelectedPhotosSucceed
+  | DownloadSelectedPhotos;

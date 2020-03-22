@@ -3,9 +3,12 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { PhotoListDTO, PhotoToUploadDTO, PhotoToDeleteRestoreDTO } from 'src/app/core/models';
+
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class PhotosService {
@@ -23,6 +26,20 @@ export class PhotosService {
 
   public searchPhotos(searchPayload: string): Observable<PhotoListDTO[]> {
     return this.httpClient.get<PhotoListDTO[]>(`${this.apiUri}/search`, { params: { searchPayload } });
+  }
+
+  public downloadPhotos(photoIds: string[]): Observable<ArrayBuffer> {
+    return this.httpClient
+      .post(`${this.apiUri}/download`, photoIds, {
+        observe: 'body',
+        responseType: 'arraybuffer'
+      })
+      .pipe(tap((data: ArrayBuffer) => this.downloadFile(data)));
+  }
+
+  private downloadFile(data: ArrayBuffer): void {
+    const blob = new Blob([data], { type: 'application/vnd.rar' });
+    saveAs(blob, 'Photos.rar');
   }
 
   public markPhotosAsDeleted(photosToDelete: PhotoToDeleteRestoreDTO[]): Observable<object> {

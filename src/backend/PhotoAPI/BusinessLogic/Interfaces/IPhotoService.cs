@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
+using ApiResponse.ActionResults.ZipResult;
+
 namespace BusinessLogic.Interfaces
 {
 	public interface IPhotoService
@@ -13,6 +15,7 @@ namespace BusinessLogic.Interfaces
 		Task<OriginalPhotoDTO> GetOriginalPhotoAsync(Guid photoId);
 
 		Task<IEnumerable<PhotoListDTO>> UploadPhotosAsync(IEnumerable<PhotoToUploadDTO> photosToUploadDTO);
+		Task<IEnumerable<FileItem>> DownloadPhotosAsync(IEnumerable<Guid> photoIds);
 
 		Task EditPhotoAsync(EditPhotoDTO editPhotoDTO);
 		Task UpdatePhotoAsync(UpdatePhotoDTO updatePhotoDTO);

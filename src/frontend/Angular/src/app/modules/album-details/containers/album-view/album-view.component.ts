@@ -46,6 +46,10 @@ export class AlbumViewComponent implements OnInit, OnDestroy {
     this.store.dispatch(new Actions.SelectPhoto(photoId));
   }
 
+  public downloadSelectedPhotos(): void {
+    this.store.dispatch(new Actions.DownloadSelectedPhotos());
+  }
+
   public deleteSelected(): void {
     const albumId: number = Number(this.activateRoute.snapshot.params['albumId']);
     this.store.dispatch(new Actions.DeleteSelectedPhotos(albumId));

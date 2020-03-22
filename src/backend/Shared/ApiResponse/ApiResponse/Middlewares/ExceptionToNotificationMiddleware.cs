@@ -1,5 +1,5 @@
 ﻿using ApiResponse.Exceptions;
-using ApiResponse.ActionResult;
+using ApiResponse.ActionResults.NotificationResult;
 
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace ApiResponse.Middlewares
 			}
 			catch (UserFriendlyException ex)
 			{
-				NotificationResult<string> response = new NotificationResult<string>
+				NotificationResponse<string> response = new NotificationResponse<string>
 				{
 					NotificationType = ex.NotificationType,
 					Message = ex.Message

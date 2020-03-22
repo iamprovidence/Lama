@@ -18,7 +18,9 @@ export enum ActionTypes {
 
   SetIsDeleteAlbumModalOpen = '[ALBUMS] SetIsDeleteAlbumModalOpen',
   DeleteAlbum = '[ALBUMS] DeleteAlbum',
-  DeleteAlbumSucceed = '[ALBUMS] DeleteAlbumSucceed'
+  DeleteAlbumSucceed = '[ALBUMS] DeleteAlbumSucceed',
+
+  DownloadAlbum = '[ALBUMS] DownloadAlbum'
 }
 
 export class SetCurrentAlbumId implements Action {
@@ -89,6 +91,11 @@ export class DeleteAlbumSucceed implements Action {
   constructor(public payload: number) {}
 }
 
+export class DownloadAlbum implements Action {
+  readonly type = ActionTypes.DownloadAlbum;
+  constructor(public payload: number) {}
+}
+
 export type Actions =
   | SetCurrentAlbumId
   | LoadAlbums
@@ -103,4 +110,5 @@ export type Actions =
   | EditAlbumSucceed
   | SetIsDeleteAlbumModalOpen
   | DeleteAlbum
-  | DeleteAlbumSucceed;
+  | DeleteAlbumSucceed
+  | DownloadAlbum;

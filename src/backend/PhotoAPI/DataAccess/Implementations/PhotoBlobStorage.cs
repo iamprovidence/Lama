@@ -1,10 +1,15 @@
-﻿using Domains.Settings;
+﻿using ApiResponse.ActionResults.ZipResult;
+
+using Domains.Settings;
 
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Shared.Protocol;
 
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DataAccess.Implementations
 {
@@ -75,14 +80,14 @@ namespace DataAccess.Implementations
 			return GetFullBlobName(block);
 		}
 
-		public byte[] FromBase64String(string imageBase64)
+		private byte[] FromBase64String(string imageBase64)
 		{
 			// js base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABG4...YII='
 			string pureBase64 = imageBase64.Substring(imageBase64.IndexOf(',') + 1);
 			return System.Convert.FromBase64String(pureBase64);
 		}
 
-		public string GetContentType(string imageBase64)
+		private string GetContentType(string imageBase64)
 		{
 			int startIndex = imageBase64.IndexOf(':') + 1;
 			int endIndex = imageBase64.IndexOf(';');
@@ -106,6 +111,25 @@ namespace DataAccess.Implementations
 		{
 			CloudBlockBlob blob = _cloudBlobContainerPhotos.GetBlockBlobReference(blobName);
 			return blob.DeleteIfExistsAsync();
+		}
+
+		public async Task<IEnumerable<FileItem>> DownloadAsync(IEnumerable<string> fullBlobNames)
+		{
+			IEnumerable<Task<ICloudBlob>> cloudBlobsTasks = fullBlobNames
+				.Select(Path.GetFileName)
+				.Select(blobName => _cloudBlobContainerPhotos.GetBlobReferenceFromServerAsync(blobName));
+
+			IEnumerable<ICloudBlob> cloudBlobs = await Task.WhenAll(cloudBlobsTasks);
+
+			IEnumerable<Task<FileItem>> fileItemsTasks = cloudBlobs.Select(async blob =>
+			{
+				MemoryStream memoryStream = new MemoryStream();
+				await blob.DownloadToStreamAsync(memoryStream);
+				memoryStream.Position = 0;
+				return new FileItem(blob.Name, memoryStream);
+			});
+
+			return await Task.WhenAll(fileItemsTasks);
 		}
 	}
 }
