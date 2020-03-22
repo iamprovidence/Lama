@@ -20,7 +20,7 @@ namespace Application.Common.Behaviours
         {
             string requestName = typeof(TRequest).Name;
 
-            _logger.LogInformation("CleanArchitecture Request: {Name} {@Request}", requestName, request);
+            _logger.LogInformation("LamaAPI Request: {Name} {@Request}", requestName, request);
 
             return Task.CompletedTask;
         }

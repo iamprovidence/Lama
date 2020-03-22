@@ -12,6 +12,8 @@ using DataAccess.Interfaces;
 
 using BusinessLogic.Interfaces;
 
+using ApiResponse.ActionResults.ZipResult;
+
 namespace BusinessLogic.Services
 {
 	public class PhotoService : Abstract.PhotoServiceBase, IPhotoService
@@ -62,6 +64,14 @@ namespace BusinessLogic.Services
 			}
 
 			return createdPhotos;
+		}
+
+		public async Task<IEnumerable<FileItem>> DownloadPhotosAsync(IEnumerable<Guid> photoIds)
+		{
+			IEnumerable<PhotoDocument> photoDocuments = await _elasticService.GetPhotosAsync(photoIds);
+			IEnumerable<string> blobNames = photoDocuments.Select(p => p.BlobName);
+
+			return await _blobStorage.DownloadAsync(blobNames);
 		}
 
 		public Task UpdatePhotoAsync(UpdatePhotoDTO updatePhotoDTO)

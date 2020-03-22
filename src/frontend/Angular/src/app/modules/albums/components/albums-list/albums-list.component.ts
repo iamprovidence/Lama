@@ -20,6 +20,9 @@ export class AlbumsListComponent implements OnInit {
   @Output()
   public deleteAlbumEvent = new EventEmitter<AlbumListDTO>();
 
+  @Output()
+  public downloadAlbumEvent = new EventEmitter<AlbumListDTO>();
+
   constructor() {}
 
   ngOnInit() {}
@@ -34,5 +37,9 @@ export class AlbumsListComponent implements OnInit {
 
   public deleteAlbum(album: AlbumListDTO): void {
     this.deleteAlbumEvent.emit(album);
+  }
+
+  public downloadAlbum(album: AlbumListDTO): void {
+    this.downloadAlbumEvent.emit(album);
   }
 }

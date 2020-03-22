@@ -3,13 +3,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using BusinessLogic.Interfaces;
 
 using ApiResponse.Enums;
-using ApiResponse.ActionResult;
+using ApiResponse.ActionResults;
+using ApiResponse.ActionResults.ZipResult;
+using ApiResponse.ActionResults.NotificationResult;
 
 namespace API.Controllers
 {
@@ -48,7 +51,7 @@ namespace API.Controllers
 		}
 
 		[HttpGet("{photoId}")]
-		public async Task<ActionResult<PhotoViewDTO>> GetCurrentUserPhoto(System.Guid photoId)
+		public async Task<ActionResult<PhotoViewDTO>> GetCurrentUserPhoto(Guid photoId)
 		{
 			PhotoViewDTO photo = await _photoService.GetPhotoOrDefaultAsync(photoId);
 
@@ -57,7 +60,7 @@ namespace API.Controllers
 		}
 
 		[HttpGet("original/{photoId}")]
-		public Task<OriginalPhotoDTO> GetOriginalPhoto(System.Guid photoId)
+		public Task<OriginalPhotoDTO> GetOriginalPhoto(Guid photoId)
 		{
 			return _photoService.GetOriginalPhotoAsync(photoId);
 		}
@@ -66,6 +69,14 @@ namespace API.Controllers
 		public Task<IEnumerable<PhotoListDTO>> Upload(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
 		{
 			return _photoService.UploadPhotosAsync(photosToUploadDTO);
+		}
+
+		[HttpPost("download")]
+		public async Task<ZipActionResult> Download(IEnumerable<Guid> photosToDownloadIds)
+		{
+			IEnumerable<FileItem> filesToDownload = await _photoService.DownloadPhotosAsync(photosToDownloadIds);
+
+			return this.Zip(filesToDownload);
 		}
 
 		[HttpPost("update")]

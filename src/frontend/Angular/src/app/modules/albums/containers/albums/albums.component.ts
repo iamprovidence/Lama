@@ -38,8 +38,12 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new Actions.SetIsEditAlbumModalOpen(true));
   }
 
-  public deleteAlbum(albumToRename: AlbumListDTO): void {
-    this.store.dispatch(new Actions.SetCurrentAlbumId(albumToRename.id));
+  public deleteAlbum(albumToDelete: AlbumListDTO): void {
+    this.store.dispatch(new Actions.SetCurrentAlbumId(albumToDelete.id));
     this.store.dispatch(new Actions.SetIsDeleteAlbumModalOpen(true));
+  }
+
+  public downloadAlbum(albumToDownload: AlbumListDTO): void {
+    this.store.dispatch(new Actions.DownloadAlbum(albumToDownload.id));
   }
 }

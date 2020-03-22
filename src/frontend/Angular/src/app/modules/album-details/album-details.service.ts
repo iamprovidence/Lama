@@ -3,8 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { PhotoListDTO, PhotoAlbumDTO } from 'src/app/core/models';
+
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class AlbumDetailsService {
@@ -37,5 +40,19 @@ export class AlbumDetailsService {
 
   public getCurrentUserPhotos(): Observable<PhotoListDTO[]> {
     return this.httpClient.get<PhotoListDTO[]>(`${environment.apiUrl}/api/Photos/all`);
+  }
+
+  public downloadPhotos(photoIds: string[]): Observable<ArrayBuffer> {
+    return this.httpClient
+      .post(`${environment.apiUrl}/api/Photos/download`, photoIds, {
+        observe: 'body',
+        responseType: 'arraybuffer'
+      })
+      .pipe(tap((data: ArrayBuffer) => this.downloadFile(data)));
+  }
+
+  private downloadFile(data: ArrayBuffer): void {
+    const blob = new Blob([data], { type: 'application/vnd.rar' });
+    saveAs(blob, 'Photos.rar');
   }
 }

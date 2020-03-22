@@ -1,5 +1,6 @@
 <div class="has-left-padding">
   <app-album-buttons
+    (downloadSelectedPhotosEvent)="downloadSelectedPhotos()"
     (deleteSelectedEvent)="deleteSelected()"
     (addPhotosEvent)="openAddPhotosModal()"
   ></app-album-buttons>

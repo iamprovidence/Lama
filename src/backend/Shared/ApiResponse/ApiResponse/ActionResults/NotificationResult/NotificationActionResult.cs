@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ApiResponse.ActionResult
+namespace ApiResponse.ActionResults.NotificationResult
 {
 	public class NotificationActionResult<T> : ObjectResult
 	{
-		public NotificationActionResult(NotificationResult<T> notificationResult) 
+		public NotificationActionResult(NotificationResponse<T> notificationResult) 
 			: base(notificationResult) { }
 	}
 }
