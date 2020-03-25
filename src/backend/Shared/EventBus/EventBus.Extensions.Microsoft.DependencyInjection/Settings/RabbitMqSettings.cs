@@ -1,8 +1,8 @@
 ﻿using RabbitMQ.Client;
 
-namespace EventBus.Extensions.Microsoft.DependencyInjection.Models
+namespace EventBus.Extensions.Microsoft.DependencyInjection.Settings
 {
-    internal class RabbitMqSettings
+    internal class RabbitMqSettings : Abstract.ISettings
     {
         public int RetryCount { get; set; }
         public string SubscriptionName { get; set; }
