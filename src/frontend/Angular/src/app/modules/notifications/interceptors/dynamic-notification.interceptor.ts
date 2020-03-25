@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 
 import { Observable, merge } from 'rxjs';
-import { map, tap, filter, partition } from 'rxjs/operators';
+import { map, tap, filter, partition, share } from 'rxjs/operators';
 
 import { EventBusService } from '@core/eventBus';
 import { NotificationTypes } from '@core/enums';
@@ -16,7 +16,8 @@ export class DynamicNotificationInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const httpResponse = next.handle(request).pipe(
       filter((event: HttpEvent<any>) => event instanceof HttpResponse),
-      map((event: HttpEvent<any>) => event as HttpResponse<any>)
+      map((event: HttpEvent<any>) => event as HttpResponse<any>),
+      share()
     );
 
     const [notificationResponse, regularResponse] = partition((response: HttpResponse<any>) =>

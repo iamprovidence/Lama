@@ -52,6 +52,7 @@ export class RestoreDeleteSelectedPhotosSucceed implements Action {
 
 export class RestoreDeleteSelectedPhotosFailed implements Action {
   readonly type = ActionTypes.RestoreDeleteSelectedPhotosFailed;
+  constructor(public payload: string) {}
 }
 
 export type Actions =

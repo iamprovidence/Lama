@@ -3,8 +3,6 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using BusinessLogic.Interfaces;
-
 using DataAccess.Interfaces;
 
 using Domains.ElasticsearchDocuments;
