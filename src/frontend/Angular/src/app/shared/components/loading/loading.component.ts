@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading.component.less']
 })
 export class LoadingComponent implements OnInit {
+  public loadingImageNumber: number;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
+    this.loadingImageNumber = this.getRandomInt(3);
   }
 
+  ngOnInit() {}
+
+  private getRandomInt(max): number {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
 }

@@ -5,7 +5,7 @@ namespace EventBus.Extensions.Microsoft.DependencyInjection.ServicesInjectors.Ab
 {
 	public interface IServicesInjector
 	{
-        void AddPersistentConnection(IServiceCollection services, ISettings settings);
+		void AddPersistentConnection(IServiceCollection services, ISettings settings);
 		void AddSubscriptionManager(IServiceCollection services);
 		void AddEventBus(IServiceCollection services, ISettings settings);
 		void AddHandlers(IServiceCollection services, System.Reflection.Assembly assembly);
