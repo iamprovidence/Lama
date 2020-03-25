@@ -11,7 +11,8 @@ export enum ActionTypes {
 
   RestoreSelectedPhotos = '[DELETED-PHOTOS] RestoreSelectedPhotos',
   DeleteSelectedPhotos = '[DELETED-PHOTOS] DeleteSelectedPhotos',
-  RestoreDeleteSelectedPhotosSucceed = '[DELETED-PHOTOS] RestoreDeleteSelectedPhotosSucceed'
+  RestoreDeleteSelectedPhotosSucceed = '[DELETED-PHOTOS] RestoreDeleteSelectedPhotosSucceed',
+  RestoreDeleteSelectedPhotosFailed = '[DELETED-PHOTOS] RestoreDeleteSelectedPhotosFailed'
 }
 
 export class LoadPhotos implements Action {
@@ -49,6 +50,10 @@ export class RestoreDeleteSelectedPhotosSucceed implements Action {
   readonly type = ActionTypes.RestoreDeleteSelectedPhotosSucceed;
 }
 
+export class RestoreDeleteSelectedPhotosFailed implements Action {
+  readonly type = ActionTypes.RestoreDeleteSelectedPhotosFailed;
+}
+
 export type Actions =
   | LoadPhotos
   | LoadPhotosSucceed
@@ -57,4 +62,5 @@ export type Actions =
   | SelectPhoto
   | RestoreSelectedPhotos
   | DeleteSelectedPhotos
-  | RestoreDeleteSelectedPhotosSucceed;
+  | RestoreDeleteSelectedPhotosSucceed
+  | RestoreDeleteSelectedPhotosFailed;

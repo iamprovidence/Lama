@@ -75,7 +75,7 @@ function deletePhotos(state: State): State {
 
 function updateThumbnails(state: State, thumbnails: PhotoThumbnailDTO[]): State {
   const thumbnailsMap = new Map(thumbnails.map(t => [t.photoId, t]));
-  const photos = state.photos.map(p => (thumbnailsMap.has(p.id) ? { ...p, ...thumbnailsMap[p.id] } : p));
+  const photos = state.photos.map(p => (thumbnailsMap.has(p.id) ? { ...p, ...thumbnailsMap.get(p.id) } : p));
 
   return { ...state, photos };
 }

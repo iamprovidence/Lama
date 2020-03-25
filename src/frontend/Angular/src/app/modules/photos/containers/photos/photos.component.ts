@@ -31,7 +31,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   constructor(private store: Store<State>, private route: ActivatedRoute, authService: AuthService) {
     // TODO: connect via gateway
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(`http://localhost:2700/PhotosHub`, {
+      .withUrl(`http://localhost:2710/PhotosHub`, {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
         accessTokenFactory: () =>
@@ -54,6 +54,12 @@ export class PhotosComponent implements OnInit, OnDestroy {
     this.LoadPhotos(this.route.snapshot.data as PhotosData);
   }
 
+  private registerHubs(): void {
+    this.hubConnection.start();
+
+    this.hubConnection.on('updateThumbnails', this.updateThumbnails.bind(this));
+  }
+  
   private LoadPhotos(photosRouteData: PhotosData): void {
     const { photosType } = photosRouteData;
 
@@ -69,12 +75,6 @@ export class PhotosComponent implements OnInit, OnDestroy {
       default:
         throw new Error('Invalid enum type');
     }
-  }
-
-  private registerHubs(): void {
-    this.hubConnection.start();
-
-    this.hubConnection.on('updateThumbnails', this.updateThumbnails.bind(this));
   }
 
   ngOnDestroy() {
