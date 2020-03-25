@@ -36,6 +36,14 @@ services:
       
   sql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest 
+        
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: 'redis'
+    ports:
+      - '6379'
+    environment:
+      - REDIS_REPLICATION_MODE=master
 
   lama-api:
     build:
@@ -72,6 +80,20 @@ services:
     depends_on:
       - rabbitmq
       - elasticsearch
+      
+  aggregator:
+    build:
+      context: ./backend/Aggregator
+      dockerfile: ./Dockerfile
+    container_name: 'aggregator'
+    restart: on-failure
+    expose:
+      - '1710'
+      - '1711'
+    ports:
+      - "1710:1710" # remove?
+    depends_on:
+      - redis
 
   api-gateway:
     build:
@@ -86,6 +108,7 @@ services:
     depends_on:
       - 'lama-api'
       - 'photo-api'
+      - 'aggregator'
 
   angular:
     build: ./frontend/Angular

@@ -60,6 +60,7 @@
 - [ELK Stack](https://www.elastic.co/what-is/elk-stack)
 - [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator)
 - [Hangfire](https://www.hangfire.io/)
+- [Redis](https://redis.io/)
 
 ### Frontend
 
