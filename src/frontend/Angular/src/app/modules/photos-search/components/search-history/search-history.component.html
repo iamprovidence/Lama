@@ -1,0 +1,8 @@
+<div class="search-history" [class.is-shown]="isOpen">
+  <div *appIsLoading="isLoading">
+    <a class="list-item" *ngFor="let searchItem of searchHistory" (click)="search(searchItem)">
+      <i class="fas fa-undo"></i>
+      {{ searchItem.text }}
+    </a>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Actions, ActionTypes } from './actions';
 import { InitialState, State } from './state';
 import { DataState } from 'src/app/core/enums';
+import { PhotoThumbnailDTO } from '@app/core/models';
 
 export function reducer(state: State = InitialState, action: Actions): State {
   switch (action.type) {
@@ -19,10 +20,10 @@ export function reducer(state: State = InitialState, action: Actions): State {
         photos: action.payload
       };
     case ActionTypes.LoadPhotosFailed:
-        return {
-          ...state,
-          isLoading: DataState.Failed
-        };
+      return {
+        ...state,
+        isLoading: DataState.Failed
+      };
     case ActionTypes.ClearPhotos: {
       return { ...state, photos: [], isLoading: DataState.DisplayContent };
     }
@@ -39,6 +40,9 @@ export function reducer(state: State = InitialState, action: Actions): State {
       return selectPhoto(state, action.payload);
     case ActionTypes.DeleteSelectedPhotosSucceed:
       return deletePhotos(state);
+
+    case ActionTypes.UpdateThumbnails:
+      return updateThumbnails(state, action.payload);
 
     default:
       return state;
@@ -67,4 +71,11 @@ function deletePhotos(state: State): State {
     photos,
     isLoading: photos.length === 0 ? DataState.NoContent : DataState.DisplayContent
   };
+}
+
+function updateThumbnails(state: State, thumbnails: PhotoThumbnailDTO[]): State {
+  const thumbnailsMap = new Map(thumbnails.map(t => [t.photoId, t]));
+  const photos = state.photos.map(p => (thumbnailsMap.has(p.id) ? { ...p, ...thumbnailsMap.get(p.id) } : p));
+
+  return { ...state, photos };
 }

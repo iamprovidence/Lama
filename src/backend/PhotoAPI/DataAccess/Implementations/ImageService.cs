@@ -1,21 +1,35 @@
-﻿namespace DataAccess.Implementations
+﻿using System.IO;
+using System.Drawing;
+
+using ImageProcessor;
+using ImageProcessor.Imaging.Formats;
+
+namespace DataAccess.Implementations
 {
-    public class ImageService : Interfaces.IImageService
-    {
-        // js base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABG4...YII='
-        public byte[] FromBase64String(string imageBase64)
-        {
-            string pureBase64 = imageBase64.Substring(imageBase64.IndexOf(',') + 1);
-            return System.Convert.FromBase64String(pureBase64);
-        }
+	public class ImageService : Interfaces.IImageService
+	{
+		public byte[] Resize(byte[] imageBytes, int size)
+		{
+			return Resize(imageBytes, size, size);
+		}
 
-        public string GetContentType(string imageBase64)
-        {
-            int startIndex = imageBase64.IndexOf(':') + 1;
-            int endIndex = imageBase64.IndexOf(';');
-            int length = endIndex - startIndex;
+		public byte[] Resize(byte[] imageBytes, int width, int height)
+		{
+			ISupportedImageFormat format = new PngFormat { Quality = 70 };
+			Size size = new Size(width, height);
 
-            return imageBase64.Substring(startIndex, length);
-        }
-    }
+			using (MemoryStream inStream = new MemoryStream(imageBytes))
+			using (MemoryStream outStream = new MemoryStream())
+			using (ImageFactory imageFactory = new ImageFactory())
+			{
+				imageFactory
+					.Load(inStream)
+					.Resize(size)
+					.Format(format)
+					.Save(outStream);
+
+				return outStream.ToArray();
+			}
+		}
+	}
 }

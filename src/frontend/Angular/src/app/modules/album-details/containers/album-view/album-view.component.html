@@ -1,0 +1,23 @@
+<div class="has-left-padding">
+  <app-album-buttons
+    (downloadSelectedPhotosEvent)="downloadSelectedPhotos()"
+    (deleteSelectedEvent)="deleteSelected()"
+    (addPhotosEvent)="openAddPhotosModal()"
+  ></app-album-buttons>
+</div>
+
+<div *appIsLoading="isLoading$ | async">
+  <div id="container1">
+    <div id="container2">
+      <app-photos-cards
+        [photos]="photos$ | async"
+        [selected]="selected$ | async"
+        (selectPhotoEvent)="selectPhoto($event)"
+      ></app-photos-cards>
+    </div>
+  </div>
+</div>
+
+<app-add-photos-to-album></app-add-photos-to-album>
+
+<router-outlet></router-outlet>

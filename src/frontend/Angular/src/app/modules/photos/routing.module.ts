@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { PhotosData } from '@core/routes-data';
+import { ParameterizedRouteGuard } from '@shared/guards';
+
 import { PhotosComponent } from './containers/photos/photos.component';
 import { PhotosCardsComponent } from './components/photos-cards/photos-cards.component';
 import { PhotosListComponent } from './components/photos-list/photos-list.component';
@@ -10,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: PhotosComponent,
+    canActivate: [ParameterizedRouteGuard],
     children: [
       {
         path: 'id/:photoId',
@@ -21,7 +25,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ParameterizedRouteGuard.Provider<PhotosData>()]
 })
 export class RoutingModule {
   static components = [PhotosComponent, PhotosCardsComponent, PhotosListComponent, PhotosButtonsComponent];

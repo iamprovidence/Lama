@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/app.state';
-import * as Actions from '../../store/actions';
-import * as Selectors from '../../store/selectors';
+import * as Actions from '../../store/details/actions';
+import * as Selectors from '../../store/details/selectors';
 
 import { Observable } from 'rxjs';
 
 import { DataState } from 'src/app/core/enums';
-import { PhotoViewDTO } from 'src/app/core/models';
 
 @Component({
   selector: 'app-photo-details',
@@ -18,13 +18,16 @@ import { PhotoViewDTO } from 'src/app/core/models';
 })
 export class PhotoDetailsComponent implements OnInit, OnDestroy {
   public isLoading$: Observable<DataState>;
-  public photo$: Observable<PhotoViewDTO>;
 
-  constructor(private store: Store<State>, private router: Router, private activateRoute: ActivatedRoute) {}
+  constructor(
+    private store: Store<State>,
+    private router: Router,
+    private activateRoute: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.isLoading$ = this.store.select(Selectors.getIsLoading);
-    this.photo$ = this.store.select(Selectors.getPhoto);
 
     const photoId: string = this.activateRoute.snapshot.params['photoId'];
     this.store.dispatch(new Actions.LoadPhoto(photoId));
@@ -34,6 +37,8 @@ export class PhotoDetailsComponent implements OnInit, OnDestroy {
   }
 
   public closePhotoDetails(): void {
-    this.router.navigate(['photos']);
+    this.location.back();
+    // TODO: fix this
+    // this.router.navigate(['../'], { relativeTo: this.activateRoute });
   }
 }

@@ -1,0 +1,22 @@
+.photo {
+  position: relative;
+  height: 256px;
+  width: 256px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0.5rem;
+  border-radius: 0.3rem;
+
+  &.is-selected {
+    border: 0.3rem solid var(--primary-color);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.is-border-roundless {
+  border-radius: 0;
+}

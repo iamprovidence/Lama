@@ -1,0 +1,24 @@
+<div [ngSwitch]="menuState">
+  <ng-template ngSwitchCase="0" ngSwitchDefault><ng-container *ngTemplateOutlet="view"></ng-container></ng-template>
+  <ng-template ngSwitchCase="1"><ng-container *ngTemplateOutlet="edit"></ng-container></ng-template>
+</div>
+
+<!--view photo mode-->
+<ng-template #view>
+  <img class="photo-image" src="{{ photo.photoUrl }}" alt="{{ photo.description }}" appPrettyImage />
+</ng-template>
+
+<!--edit photo mode-->
+<ng-template #edit>
+  <div class="image-container">
+    <image-cropper
+      #editor
+      class="image-edit"
+      [imageBase64]="imageFileBase64"
+      [maintainAspectRatio]="false"
+      [cropperMinWidth]="250"
+      [cropperMinHeight]="250"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
+</ng-template>

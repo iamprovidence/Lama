@@ -19,6 +19,24 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Domains.Entities.Album", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Album");
+                });
+
             modelBuilder.Entity("Domains.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -42,13 +60,82 @@ namespace Infrastructure.Migrations
                     b.ToTable("Comment");
                 });
 
+            modelBuilder.Entity("Domains.Entities.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Message");
+
+                    b.Property<DateTime?>("ReadAt");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("Domains.Entities.PhotoAlbum", b =>
+                {
+                    b.Property<int>("AlbumId");
+
+                    b.Property<Guid>("PhotoId");
+
+                    b.HasKey("AlbumId", "PhotoId");
+
+                    b.ToTable("PhotoAlbum");
+                });
+
+            modelBuilder.Entity("Domains.Entities.SearchHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("SearchDate");
+
+                    b.Property<string>("Text");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SearchHistory");
+                });
+
+            modelBuilder.Entity("Domains.Entities.SharedPhoto", b =>
+                {
+                    b.Property<Guid>("PhotoId");
+
+                    b.Property<string>("SharedWithUserEmail");
+
+                    b.Property<DateTime>("SharedAt");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("PhotoId", "SharedWithUserEmail");
+
+                    b.HasIndex("UserEmail");
+
+                    b.ToTable("SharedPhoto");
+                });
+
             modelBuilder.Entity("Domains.Entities.User", b =>
                 {
                     b.Property<string>("Id");
 
                     b.Property<string>("DisplayName");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("PhotoURL");
 
@@ -57,12 +144,52 @@ namespace Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Domains.Entities.Album", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("Albums")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Domains.Entities.Comment", b =>
                 {
                     b.HasOne("Domains.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.Notification", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.PhotoAlbum", b =>
+                {
+                    b.HasOne("Domains.Entities.Album", "Album")
+                        .WithMany("PhotoAlbums")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.SearchHistory", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("Searches")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Domains.Entities.SharedPhoto", b =>
+                {
+                    b.HasOne("Domains.Entities.User", "User")
+                        .WithMany("SharedPhotos")
+                        .HasForeignKey("UserEmail")
+                        .HasPrincipalKey("Email");
                 });
 #pragma warning restore 612, 618
         }

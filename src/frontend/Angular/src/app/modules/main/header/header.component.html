@@ -10,14 +10,7 @@
 
   <div class="level-left">
     <!--search-->
-    <div class="level-item field is-search">
-      <div class="control has-icons-left is-width-100">
-        <input class="input is-medium is-primary is-rounded" type="text" placeholder="Search" />
-        <span class="icon is-left">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
-    </div>
+    <app-search></app-search>
 
     <!--upload-->
     <app-upload-photos></app-upload-photos>
@@ -34,11 +27,9 @@
     <div class="level-item">
       <div class="buttons are-medium">
         <!--notification-->
-        <a class="button is-primary is-outlined is-rounded is-rounded-button">
-          <span class="icon">
-            <i class="fas fa-bell"></i>
-          </span>
-        </a>
+        <div class="with-right-margin">
+          <app-notification-button></app-notification-button>
+        </div>
 
         <!--user settings-->
         <div class="navbar-item has-dropdown is-hoverable">

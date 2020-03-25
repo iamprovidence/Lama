@@ -1,0 +1,52 @@
+<div class="modal" [class.is-active]="isActive" *ngIf="album">
+  <!--background-->
+  <div class="modal-background" (click)="closeModal()"></div>
+  <!--card-->
+  <div class="modal-card">
+    <!--header-->
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-white has-text-centered is-marginless">Edit album</p>
+      <button (click)="closeModal()" class="delete" aria-label="close"></button>
+    </header>
+
+    <!--body-->
+    <section class="modal-card-body has-text-centered">
+      <div class="columns">
+        <!--image-->
+        <div class="column is-one-quarter">
+          <p class="image is-128x128">
+            <img class="has-rounded-border" src="{{ album.coverUrl }}" appPrettyImage />
+          </p>
+        </div>
+        <!--editing-->
+        <div class="column is-three-quarters">
+          <h3 class="title is-4">Edit album name</h3>
+          <div class="field">
+            <div class="control">
+              <input
+                #name="ngModel"
+                name="name"
+                class="input is-primary"
+                [class.is-danger]="name.invalid && name.dirty"
+                type="text"
+                placeholder="Album name goes here..."
+                [(ngModel)]="album.title"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--footer-->
+    <footer class="modal-card-foot">
+      <div class="is-width-100 buttons is-right">
+        <button class="button is-primary" (click)="editAlbum()" [disabled]="name.invalid">
+          Save changes
+        </button>
+        <button class="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </footer>
+  </div>
+</div>

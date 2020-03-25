@@ -1,0 +1,61 @@
+<div class="tabs is-centered is-boxed">
+  <ul class="is-marginless">
+    <li [class.is-active]="editTab === 0">
+      <a (click)="selectTab(0)">
+        <span class="icon is-small">
+          <i class="fas fa-crop-alt"></i>
+        </span>
+      </a>
+    </li>
+    <li [class.is-active]="editTab === 1">
+      <a (click)="selectTab(1)">
+        <span class="icon is-small">
+          <i class="fas fa-sync-alt"></i>
+        </span>
+      </a>
+    </li>
+    <li [class.is-active]="editTab === 2">
+      <a (click)="selectTab(2)">
+        <span class="icon is-small">
+          <i class="fas fa-sliders-h"></i>
+        </span>
+      </a>
+    </li>
+    <li [class.is-active]="editTab === 3">
+      <a (click)="selectTab(3)">
+        <span class="icon is-small">
+          <i class="fas fa-magic"></i>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="details">
+  <div [ngSwitch]="editTab">
+    <ng-template ngSwitchCase="0" ngSwitchDefault>
+      <app-crop-tab [width]="imageWidth" [height]="imageHeight" (cropImageEvent)="cropImage()"></app-crop-tab>
+    </ng-template>
+    <ng-template ngSwitchCase="1">
+      <app-rotate-tab
+        (flipEvent)="flipImage($event)"
+        (rotateEvent)="rotateImage($event)"
+        (applyRotationEvent)="applyRotation()"
+      ></app-rotate-tab>
+    </ng-template>
+
+    <ng-template ngSwitchCase="2">
+      <app-adjust-tab
+        [colorAdjustments]="colorAdjustments"
+        (colorAdjustmentsChangedEvent)="colorAdjustmentsChanged($event)"
+      ></app-adjust-tab>
+    </ng-template>
+
+    <ng-template ngSwitchCase="3">
+      <app-filters-tab
+        [filtersThumbnails]="filtersThumbnails"
+        (filterSelectedEvent)="filterSelected($event)"
+      ></app-filters-tab>
+    </ng-template>
+  </div>
+</div>

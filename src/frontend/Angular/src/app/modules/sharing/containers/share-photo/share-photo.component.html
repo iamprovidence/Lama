@@ -1,0 +1,10 @@
+<div>
+  <app-share-photo-panel-view
+    [isLoading]="isLoading$ | async"
+    [error]="error$ | async"
+    [photoId]="photoId$ | async"
+    [sharedEmails]="sharedEmails$ | async"
+    (sharePhotoEvent)="sharePhoto($event)"
+    (deleteSharedEvent)="deleteShared($event)"
+  ></app-share-photo-panel-view>
+</div>

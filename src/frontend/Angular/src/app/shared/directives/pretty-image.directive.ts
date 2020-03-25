@@ -7,7 +7,7 @@ export class PrettyImageDirective {
   constructor(private elementRef: ElementRef) {}
 
   @HostListener('error')
-  private onCorruptedImage(): void {
+  public onCorruptedImage(): void {
     this.elementRef.nativeElement.src = 'assets/pictograms/default-image.png';
   }
 }

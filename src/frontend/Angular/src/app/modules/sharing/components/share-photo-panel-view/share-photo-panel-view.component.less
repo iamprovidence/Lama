@@ -1,0 +1,17 @@
+.shared-email.box {
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  &:hover {
+    .delete {
+      display: block;
+    }
+  }
+  .delete {
+    display: none;
+    float: right;
+    &:hover {
+      background-color: var(--danger-color);
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div class="columns">
+  <div class="column title has-text-overflowed is-size-4 name">
+    {{ photo.name }}
+  </div>
+  <div class="column is-one-quarter has-text-right">
+    <div (click)="closeModal()">
+      <i class="fas fa-reply fa-flip-horizontal is-close-button"></i>
+    </div>
+  </div>
+</div>
+
+<!--menu details-->
+<div [ngSwitch]="menuItem">
+  <ng-template ngSwitchCase="0"><app-share-photo></app-share-photo></ng-template>
+  <ng-template ngSwitchCase="1"><app-edit-panel></app-edit-panel></ng-template>
+  <ng-template ngSwitchCase="2"><app-photo-info></app-photo-info></ng-template>
+  <ng-template ngSwitchCase="3"><app-comments></app-comments></ng-template>
+</div>

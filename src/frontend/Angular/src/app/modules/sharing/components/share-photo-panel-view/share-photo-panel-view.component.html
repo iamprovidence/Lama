@@ -1,0 +1,40 @@
+<!--share input-->
+<div class="field has-addons">
+  <div class="control has-icons-left is-width-100">
+    <input
+      class="input is-primary"
+      type="email"
+      placeholder="Email..."
+      #email="ngModel"
+      [(ngModel)]="shareWithEmail"
+      required
+      pattern="[a-zA-Z_.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"
+      [class.is-danger]="email.invalid && email.touched"
+    />
+    <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+  </div>
+  <div class="control">
+    <button class="button is-primary" [disabled]="email.invalid" (click)="sharePhoto(shareWithEmail)">
+      Share
+    </button>
+  </div>
+</div>
+
+<!--error-->
+<div class="notification is-danger is-light" *ngIf="error">
+  {{ error }}
+</div>
+
+<!--shared emails list-->
+<div *appIsLoading="isLoading">
+  <div class="shared-email box" *ngFor="let sharedEmail of sharedEmails">
+    <span>
+      {{ sharedEmail.userEmail }}
+    </span>
+    <div class="delete" (click)="deleteShared(sharedEmail)">
+      <i class="fas fa-times"></i>
+    </div>
+  </div>
+</div>

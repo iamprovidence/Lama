@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -13,43 +14,50 @@ using Domains.ElasticsearchDocuments;
 
 namespace BusinessLogic.Services
 {
-    public class DeletedPhotosService : Abstract.PhotoServiceBase, IDeletedPhotosService
-    {
-        public DeletedPhotosService(
-            IMapper mapper,
-            IAuthService authService,
-            IElasticService elasticService,
-            IPhotoBlobStorage blobStorage,
-            IImageService imageService)
-            : base(mapper, authService, elasticService, blobStorage, imageService) { }
+	public class DeletedPhotosService : Abstract.PhotoServiceBase, IDeletedPhotosService
+	{
+		public DeletedPhotosService(
+			IMapper mapper,
+			IAuthService authService,
+			IElasticService elasticService,
+			IPhotoBlobStorage blobStorage)
+			: base(mapper, authService, elasticService, blobStorage) { }
 
-        public async Task<IEnumerable<DeletedPhotosListDTO>> GetDeletePhotosAsync(string userId)
-        {
-            IEnumerable<PhotoDocument> photoDocuments = await _elasticService.GetDeletedPhotosAsync(userId);
+		public async Task<IEnumerable<DeletedPhotosListDTO>> GetDeletePhotosAsync(string userId)
+		{
+			IEnumerable<PhotoDocument> photoDocuments = await _elasticService.GetDeletedPhotosAsync(userId);
 
-            return photoDocuments.Select(_mapper.Map<DeletedPhotosListDTO>);
-        }
+			return photoDocuments.Select(_mapper.Map<DeletedPhotosListDTO>);
+		}
 
-        public Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)
-        {
-            return _elasticService.RestoresDeletedPhotosAsync(photosToRestore);
-        }
+		public Task RestoresDeletedPhotosAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToRestore)
+		{
+			return _elasticService.RestoresDeletedPhotosAsync(photosToRestore);
+		}
 
-        public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
-        {
-            IEnumerable<PhotoDocument> photoDocumentsToDelete = await _elasticService.GetDeletedPhotosAsync(photosToDelete);
+		public async Task DeletePhotosPermanentlyAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
+		{
+			IEnumerable<Guid> photoIds = photosToDelete.Select(p => p.Id);
 
-            await _elasticService.DeletePhotosPermanentlyAsync(photosToDelete);
+			IEnumerable<PhotoDocument> photoDocumentsToDelete = await _elasticService.GetPhotosAsync(photoIds);
 
-            foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
-            {
-                await Task.WhenAll(
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.OriginalBlobName)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
-                    _blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
-            }
-        }
+			await Task.WhenAll(
+				_elasticService.DeletePhotosPermanentlyAsync(photosToDelete),
+				ClearAllBlobsIfExistsAsync(photoDocumentsToDelete));
+		}
 
-    }
+		public async Task<IEnumerable<PhotoDocument>> ClearDeletedPhotosAsync(int deletedTimeLimitInDays)
+		{
+			IEnumerable<PhotoDocument> photoDocumentsToDelete = await _elasticService.GetDeletedPhotosAsync(deletedTimeLimitInDays);
+
+			if (photoDocumentsToDelete.Any())
+			{
+				await Task.WhenAll(
+					_elasticService.DeletePhotosPermanentlyAsync(photoDocumentsToDelete),
+					ClearAllBlobsIfExistsAsync(photoDocumentsToDelete));
+			}
+
+			return photoDocumentsToDelete;
+		}
+	}
 }

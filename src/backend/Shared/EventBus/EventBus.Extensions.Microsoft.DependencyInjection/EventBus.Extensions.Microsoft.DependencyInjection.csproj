@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventBus.Abstraction\EventBus.Abstraction.csproj" />
     <ProjectReference Include="..\EventBus.RabbitMQ\EventBus.RabbitMQ.csproj" />
+    <ProjectReference Include="..\EventBus.ServiceBus\EventBus.ServiceBus.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,38 @@
+<div class="album">
+  <!--dropdown-->
+  <div class="dropdown-container">
+    <div class="dropdown" [class.is-active]="isDropdownActive">
+      <div class="dropdown-trigger" (click)="toggleDropdown()">
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
+
+      <div class="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item" (click)="renameAlbum()">
+            Rename
+          </a>
+          <a class="dropdown-item" (click)="downloadAlbum()">
+            Download
+          </a>
+          <hr class="dropdown-divider" />
+          <a class="dropdown-item is-size-6 has-text-danger has-text-weight-bold" (click)="deleteAlbum()">
+            Delete
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--image-->
+  <a [routerLink]="['id', album.id]">
+    <div class="cover">
+      <img src="{{ album.coverUrl }}" appPrettyImage />
+    </div>
+  </a>
+
+  <!--title-->
+  <div class="has-text-centered has-text-overflowed">
+    <p class="title is-5">{{ album.title }}</p>
+    <p class="subtitle is-6">{{ album.itemsAmount }} items</p>
+  </div>
+</div>

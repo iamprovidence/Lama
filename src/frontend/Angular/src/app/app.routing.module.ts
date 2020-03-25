@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IsAnonymousGuard, IsAuthorizedGuard } from 'src/app/modules/authentication/guards';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+
+const redirectAuthorizedToPhotos = () => redirectLoggedInTo(['']);
+const redirectUnauthorizedToLanding = () => redirectUnauthorizedTo(['landing']);
 
 const routes: Routes = [
   {
     path: 'landing',
     loadChildren: 'src/app/modules/landing/landing.module#LandingModule',
-    canActivate: [IsAnonymousGuard]
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectAuthorizedToPhotos }
   },
   {
     path: '',
     loadChildren: 'src/app/modules/main/main.module#MainModule',
-    canActivate: [IsAuthorizedGuard]
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLanding }
   }
 ];
 

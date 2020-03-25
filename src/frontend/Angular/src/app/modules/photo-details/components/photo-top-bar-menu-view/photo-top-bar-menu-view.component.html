@@ -1,0 +1,78 @@
+<div class="menu">
+  <div [ngSwitch]="menuState">
+    <ng-template ngSwitchCase="0"><ng-container *ngTemplateOutlet="details"></ng-container></ng-template>
+    <ng-template ngSwitchCase="1"><ng-container *ngTemplateOutlet="edit"></ng-container></ng-template>
+  </div>
+</div>
+
+<!--menu for photo details-->
+<ng-template #details>
+  <span
+    (click)="clickMenu(0)"
+    data-tooltip="Share"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 0"
+  >
+    <i class="fas fa-share-alt"></i>
+  </span>
+  <span
+    (click)="clickMenu(1)"
+    data-tooltip="Edit"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 1"
+  >
+    <i class="fas fa-sliders-h"></i>
+  </span>
+  <span
+    (click)="clickMenu(2)"
+    data-tooltip="Info"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 2"
+  >
+    <i class="fas fa-info-circle"></i>
+  </span>
+  <span
+    (click)="clickMenu(3)"
+    data-tooltip="Comments"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 3"
+  >
+    <i class="fas fa-comments"></i>
+  </span>
+</ng-template>
+
+<!--menu for photo editing-->
+<ng-template #edit>
+  <span
+    (click)="restoreOriginal()"
+    data-tooltip="Restore original"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 4"
+  >
+    <i class="far fa-window-restore"></i>
+  </span>
+  <span
+    (click)="resetChanges()"
+    data-tooltip="Reset"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 5"
+  >
+    <i class="fas fa-undo-alt"></i>
+  </span>
+  <span
+    (click)="cancelChanges()"
+    data-tooltip="Cancel"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 6"
+  >
+    <i class="fas fa-times"></i>
+  </span>
+  <span
+    (click)="saveChanges()"
+    data-tooltip="Save"
+    class="icon is-size-3 is-tooltip-primary is-tooltip-bottom tooltip has-text-light"
+    [class.has-text-primary]="currentMenuItem === 7"
+  >
+    <i class="fas fa-save"></i>
+  </span>
+</ng-template>

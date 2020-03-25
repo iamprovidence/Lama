@@ -1,8 +1,8 @@
 ﻿namespace DataAccess.Interfaces
 {
-    public interface IImageService
-    {
-        byte[] FromBase64String(string imageBase64);
-        string GetContentType(string imageBase64);
-    }
+	public interface IImageService
+	{
+		byte[] Resize(byte[] imageBytes, int size);
+		byte[] Resize(byte[] imageBytes, int width, int height);
+	}
 }

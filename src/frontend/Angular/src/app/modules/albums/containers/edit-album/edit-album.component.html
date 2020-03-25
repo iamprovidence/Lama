@@ -1,0 +1,6 @@
+<app-rename-album-modal
+  [isActive]="isActive$ | async"
+  [album]="album$ | async"
+  (closeModalEvent)="closeModal()"
+  (editAlbumEvent)="editAlbum($event)"
+></app-rename-album-modal>

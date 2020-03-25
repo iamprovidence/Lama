@@ -1,0 +1,7 @@
+<div class="columns is-multiline is-mobile">
+  <div class="column is-half" *ngFor="let filtersThumbnail of filtersThumbnails; let i = index">
+    <figure class="image is-128x128" (click)="selectFilter(i)">
+      <img src="{{ filtersThumbnail.imageBase64Thumbnails }}" />
+    </figure>
+  </div>
+</div>

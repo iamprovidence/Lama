@@ -4,6 +4,7 @@
 .gitignore
 .vs
 .vscode
+.bat
 docker-compose*.yml
 *.md
 **/bin/

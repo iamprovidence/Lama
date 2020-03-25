@@ -2,11 +2,10 @@
   "GlobalConfiguration": {
     "BaseUrl": "http://192.168.99.100:5000"
   },
-  "ReRoutes": [
-    {
+  "ReRoutes": [{
       "SwaggerKey": "photo",
-      "UpstreamPathTemplate": "/api/photos",
-      "DownstreamPathTemplate": "/api/photos",
+      "UpstreamPathTemplate": "/api/Photos/{everything}",
+      "DownstreamPathTemplate": "/api/Photos/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -16,9 +15,34 @@
       ]
     },
     {
+      "SwaggerKey": "photo",
+      "UpstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamPathTemplate": "/api/DeletedPhotos/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 2710
+        }
+      ]
+    },
+
+    {
       "SwaggerKey": "lama",
-      "UpstreamPathTemplate": "/api/{everything}",
-      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamPathTemplate": "/api/Comments/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.99.100",
+          "Port": 2700
+        }
+      ]
+    },
+    {
+      "SwaggerKey": "lama",
+      "UpstreamPathTemplate": "/api/Users/{everything}",
+      "DownstreamPathTemplate": "/api/Users/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -27,6 +51,7 @@
         }
       ]
     }
+	
   ],
 
   "SwaggerEndPoints": [
