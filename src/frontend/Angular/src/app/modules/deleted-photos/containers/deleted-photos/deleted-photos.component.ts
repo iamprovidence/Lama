@@ -21,7 +21,7 @@ export class DeletedPhotosComponent implements OnInit, OnDestroy {
   public selectedPhotosIds$: Observable<Set<string>>;
   public selectedPhotosAmount$: Observable<number>;
 
-  constructor(public store: Store<State>) {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.isLoading$ = this.store.select(Selectors.getIsLoading);

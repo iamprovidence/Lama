@@ -7,8 +7,12 @@ namespace DataAccess.Interfaces
 {
     public interface IPhotoBlobStorage
     {
+		Task<byte[]> GetAsync(string fullBlobNames);
+
 		Task<string> UploadFileAsync(string base64Image);
-		Task<bool> DeleteFileIfExistsAsync(string blobName);
+		Task<string> UploadFileAsync(byte[] imageFile, string extension);
+
+		Task<bool> DeleteFileIfExistsAsync(string fullBlobName);
 		Task<IEnumerable<FileItem>> DownloadAsync(IEnumerable<string> fullBlobNames);
 	}
 }

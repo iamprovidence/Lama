@@ -39,6 +39,7 @@ namespace APIGateway
 			app.UseCORS();
 			app.UseSwagger(Configuration);
 
+			app.UseWebSockets();
 			await app.UseOcelot();
 		}
 	}

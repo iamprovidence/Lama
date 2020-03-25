@@ -14,6 +14,7 @@ export * from './photos/photo-to-delete-restore-dto';
 export * from './photos/update-photo-dto';
 export * from './photos/original-photo-dto';
 export * from './photos/edit-photo-dto';
+export * from './photos/photo-thumbnail-dto';
 
 // comments
 export * from './comments/add-comment-dto';

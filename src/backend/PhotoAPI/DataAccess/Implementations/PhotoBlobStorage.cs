@@ -63,17 +63,32 @@ namespace DataAccess.Implementations
 		}
 
 		// METHODS
+		public async Task<byte[]> GetAsync(string fullBlobNames)
+		{
+			string blobName = Path.GetFileName(fullBlobNames);
+			ICloudBlob blob = await _cloudBlobContainerPhotos.GetBlobReferenceFromServerAsync(blobName);
+
+			byte[] blobBytes = new byte[blob.Properties.Length];
+			await blob.DownloadToByteArrayAsync(blobBytes, 0);
+			return blobBytes;
+		}
+
 		#region UploadFileAsync
-		public async Task<string> UploadFileAsync(string base64Image)
+		public Task<string> UploadFileAsync(string base64Image)
 		{
 			byte[] imageFile = FromBase64String(base64Image);
 			string contentType = GetContentType(base64Image);
-
 			string extension = GetExtension(contentType);
+
+			return UploadFileAsync(imageFile, extension);
+		}
+
+		public async Task<string> UploadFileAsync(byte[] imageFile, string extension)
+		{
 			string fileName = System.Guid.NewGuid().ToString() + extension;
 
 			CloudBlockBlob block = _cloudBlobContainerPhotos.GetBlockBlobReference(fileName);
-			block.Properties.ContentType = contentType;
+			block.Properties.ContentType = GetContentTypeFromExtension(extension);
 
 			await block.UploadFromByteArrayAsync(imageFile, 0, imageFile.Length);
 
@@ -96,19 +111,24 @@ namespace DataAccess.Implementations
 			return imageBase64.Substring(startIndex, length);
 		}
 
+		private string GetContentTypeFromExtension(string extension)
+		{
+			return MimeTypes.MimeTypeMap.GetMimeType(extension);
+		}
+
 		private string GetExtension(string contentType)
 		{
 			return MimeTypes.MimeTypeMap.GetExtension(contentType);
 		}
-
 		private string GetFullBlobName(CloudBlockBlob block)
 		{
 			return block.Uri.AbsoluteUri;
 		}
 		#endregion
 
-		public Task<bool> DeleteFileIfExistsAsync(string blobName)
+		public Task<bool> DeleteFileIfExistsAsync(string fullBlobName)
 		{
+			string blobName = Path.GetFileName(fullBlobName);
 			CloudBlockBlob blob = _cloudBlobContainerPhotos.GetBlockBlobReference(blobName);
 			return blob.DeleteIfExistsAsync();
 		}
@@ -131,5 +151,6 @@ namespace DataAccess.Implementations
 
 			return await Task.WhenAll(fileItemsTasks);
 		}
+
 	}
 }

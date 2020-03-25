@@ -18,12 +18,18 @@ namespace BusinessLogic.Services
 {
 	public class PhotoService : Abstract.PhotoServiceBase, IPhotoService
 	{
+		private readonly IImageService _imageService;
+
 		public PhotoService(
 			IMapper mapper,
 			IAuthService authService,
 			IElasticService elasticService,
-			IPhotoBlobStorage blobStorage)
-			: base(mapper, authService, elasticService, blobStorage) { }
+			IPhotoBlobStorage blobStorage,
+			IImageService imageService)
+			: base(mapper, authService, elasticService, blobStorage)
+		{
+			_imageService = imageService;
+		}
 
 		public async Task<IEnumerable<PhotoListDTO>> GetPhotosAsync(string userId, string searchPayload)
 		{
@@ -55,7 +61,9 @@ namespace BusinessLogic.Services
 			foreach (PhotoToUploadDTO photo in photosToUploadDTO)
 			{
 				PhotoDocument photoDocument = _mapper.Map<PhotoDocument>(photo);
-				await SetPhotoValues(photoDocument, photo.Base64Image);
+				photoDocument.UserId = _authService.GetCurrentUserId();
+				photoDocument.OriginalBlobName = await _blobStorage.UploadFileAsync(photo.Base64Image);
+				photoDocument.BlobName = await _blobStorage.UploadFileAsync(photo.Base64Image);
 
 				PhotoDocument createdPhoto = await _elasticService.CreateAsync(photoDocument);
 				PhotoListDTO photoDTO = _mapper.Map<PhotoListDTO>(createdPhoto);
@@ -64,6 +72,34 @@ namespace BusinessLogic.Services
 			}
 
 			return createdPhotos;
+		}
+
+		public async Task<IEnumerable<PhotoThumbnailDTO>> CreateThumbnailsToPhotosAsync(IEnumerable<Guid> photosToProcessIds)
+		{
+			IEnumerable<PhotoDocument> photoDocuments = await _elasticService.GetPhotosAsync(photosToProcessIds);
+
+			List<PhotoThumbnailDTO> updatedPhotos = new List<PhotoThumbnailDTO>();
+			foreach (PhotoDocument photoDocument in photoDocuments)
+			{
+				string extension = System.IO.Path.GetExtension(photoDocument.BlobName);
+				byte[] imageBlobFile = await _blobStorage.GetAsync(photoDocument.BlobName);
+
+				photoDocument.Blob64Name = await CreateThumbnailAsync(imageBlobFile, extension, 64);
+				photoDocument.Blob256Name = await CreateThumbnailAsync(imageBlobFile, extension, 256);
+
+				await _elasticService.UpdatePhotoAsync(photoDocument.Id, photoDocument);
+				PhotoThumbnailDTO photoThumbnailDTO = _mapper.Map<PhotoThumbnailDTO>(photoDocument);
+
+				updatedPhotos.Add(photoThumbnailDTO);
+			}
+
+			return updatedPhotos;
+		}
+
+		private Task<string> CreateThumbnailAsync(byte[] imageBlobFile, string extension, int size)
+		{
+			byte[] thumbnailImage = _imageService.Resize(imageBlobFile, size);
+			return _blobStorage.UploadFileAsync(thumbnailImage, extension);
 		}
 
 		public async Task<IEnumerable<FileItem>> DownloadPhotosAsync(IEnumerable<Guid> photoIds)
@@ -81,36 +117,17 @@ namespace BusinessLogic.Services
 
 		public async Task EditPhotoAsync(EditPhotoDTO editPhotoDTO)
 		{
-
 			PhotoDocument photoDocument = await _elasticService.GetPhotoOrDefaultAsync(editPhotoDTO.Id);
 			await ClearAllBlobsExceptOriginalIfExistsAsync(new PhotoDocument[] { photoDocument });
-			await SetUpdatePhotoValues(photoDocument, editPhotoDTO.Base64Image);
+			photoDocument.BlobName = await _blobStorage.UploadFileAsync(editPhotoDTO.Base64Image);
 
 			await _elasticService.UpdatePhotoAsync(editPhotoDTO.Id, photoDocument);
-		}
-		
-		// TODO: remove this
-		private async Task SetPhotoValues(PhotoDocument photoDocument, string base64Image)
-		{
-			photoDocument.UserId = _authService.GetCurrentUserId();
-
-			photoDocument.OriginalBlobName = await _blobStorage.UploadFileAsync(base64Image);
-			photoDocument.BlobName = await _blobStorage.UploadFileAsync(base64Image);
-			photoDocument.Blob64Name = await _blobStorage.UploadFileAsync(base64Image);
-			photoDocument.Blob256Name = await _blobStorage.UploadFileAsync(base64Image);
-		}
-
-		// TODO: remove this
-		private async Task SetUpdatePhotoValues(PhotoDocument photoDocument, string base64Image)
-		{
-			photoDocument.BlobName = await _blobStorage.UploadFileAsync(base64Image);
-			photoDocument.Blob64Name = await _blobStorage.UploadFileAsync(base64Image);
-			photoDocument.Blob256Name = await _blobStorage.UploadFileAsync(base64Image);
 		}
 
 		public Task MarkPhotosAsDeletedAsync(IEnumerable<PhotoToDeleteRestoreDTO> photosToDelete)
 		{
 			return _elasticService.MarkPhotosAsDeletedAsync(photosToDelete);
 		}
+
 	}
 }

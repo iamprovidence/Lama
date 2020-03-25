@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,12 +17,7 @@ export class AuthService {
   private readonly apiUri = `${environment.apiUrl}/api/Users`;
   private readonly firebaseUri = `users`;
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private afStore: AngularFirestore,
-    private httpClient: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, private httpClient: HttpClient) {}
 
   public getCurrentUserToken(): Observable<string> {
     return this.afAuth.idToken;

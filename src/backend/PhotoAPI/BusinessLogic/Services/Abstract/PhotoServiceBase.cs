@@ -35,9 +35,9 @@ namespace BusinessLogic.Services.Abstract
 			foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
 			{
 				await Task.WhenAll(
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.BlobName),
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.Blob64Name),
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.Blob256Name));
 			}
 		}
 
@@ -46,10 +46,10 @@ namespace BusinessLogic.Services.Abstract
 			foreach (PhotoDocument photoDocument in photoDocumentsToDelete)
 			{
 				await Task.WhenAll(
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.OriginalBlobName)),
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.BlobName)),
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob64Name)),
-					_blobStorage.DeleteFileIfExistsAsync(System.IO.Path.GetFileName(photoDocument.Blob256Name)));
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.OriginalBlobName),
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.BlobName),
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.Blob64Name),
+					_blobStorage.DeleteFileIfExistsAsync(photoDocument.Blob256Name));
 			}
 		}
 	}
