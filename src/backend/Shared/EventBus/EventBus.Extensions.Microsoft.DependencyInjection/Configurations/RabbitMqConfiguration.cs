@@ -1,51 +1,54 @@
 ﻿using RabbitMQ.Client;
 
 using EventBus.Extensions.Microsoft.DependencyInjection.Models;
+using EventBus.Extensions.Microsoft.DependencyInjection.Settings;
+using EventBus.Extensions.Microsoft.DependencyInjection.Settings.Abstract;
+using EventBus.Extensions.Microsoft.DependencyInjection.Configurations.Abstract;
 
 namespace EventBus.Extensions.Microsoft.DependencyInjection.Configurations
 {
-    public class RabbitMqConfiguration
-    {
-        private readonly RabbitMqSettings _rabbitMqSettings;
+	public class RabbitMqConfiguration : IConfiguration
+	{
+		private readonly RabbitMqSettings _settings;
 
-        public RabbitMqConfiguration()
-        {
-            _rabbitMqSettings = new RabbitMqSettings
-            {
-                RetryCount = 5,
-                SubscriptionName = null,
-                ConnectionFactory = new DefaultConnectionFactory(),
-            };
-        }
+		public RabbitMqConfiguration()
+		{
+			_settings = new RabbitMqSettings
+			{
+				RetryCount = 5,
+				SubscriptionName = null,
+				ConnectionFactory = new DefaultConnectionFactory(),
+			};
+		}
 
-        public RabbitMqConfiguration Using<TFactory>(TFactory factory)
-            where TFactory : ConnectionFactory
-        {
-            _rabbitMqSettings.ConnectionFactory = factory;
-            return this;
-        }
+		public RabbitMqConfiguration Using<TFactory>(TFactory factory)
+			where TFactory : ConnectionFactory
+		{
+			_settings.ConnectionFactory = factory;
+			return this;
+		}
 
-        public RabbitMqConfiguration WithRetries(int retryCount)
-        {
-            _rabbitMqSettings.RetryCount = retryCount;
-            return this;
-        }
+		public RabbitMqConfiguration WithRetries(int retryCount)
+		{
+			_settings.RetryCount = retryCount;
+			return this;
+		}
 
-        public RabbitMqConfiguration WithName(string subscriptionName)
-        {
-            _rabbitMqSettings.SubscriptionName = subscriptionName;
-            return this;
-        }
+		public RabbitMqConfiguration WithName(string subscriptionName)
+		{
+			_settings.SubscriptionName = subscriptionName;
+			return this;
+		}
 
-        public RabbitMqConfiguration WithHost(string hostName)
-        {
-            _rabbitMqSettings.ConnectionFactory.HostName = hostName;
-            return this;
-        }
+		public RabbitMqConfiguration WithHost(string hostName)
+		{
+			_settings.ConnectionFactory.HostName = hostName;
+			return this;
+		}
 
-        internal RabbitMqSettings BuildSettings()
-        {
-            return _rabbitMqSettings;
-        }
-    }
+		ISettings IConfiguration.BuildSettings()
+		{
+			return _settings;
+		}
+	}
 }

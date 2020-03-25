@@ -45,9 +45,10 @@ export class PhotosEffects {
       )
     ),
     mergeMap((photos: PhotoToDeleteRestoreDTO[]) =>
-      this.deletedPhotosService
-        .deletePhotosPermanently(photos)
-        .pipe(map(() => new PhotosActions.RestoreDeleteSelectedPhotosSucceed()))
+      this.deletedPhotosService.deletePhotosPermanently(photos).pipe(
+        map(() => new PhotosActions.RestoreDeleteSelectedPhotosSucceed()),
+        catchError(err => of(new PhotosActions.RestoreDeleteSelectedPhotosFailed(err)))
+      )
     )
   );
 
@@ -64,9 +65,10 @@ export class PhotosEffects {
       )
     ),
     mergeMap((photos: PhotoToDeleteRestoreDTO[]) =>
-      this.deletedPhotosService
-        .restoresDeletedPhotos(photos)
-        .pipe(map(() => new PhotosActions.RestoreDeleteSelectedPhotosSucceed()))
+      this.deletedPhotosService.restoresDeletedPhotos(photos).pipe(
+        map(() => new PhotosActions.RestoreDeleteSelectedPhotosSucceed()),
+        catchError(err => of(new PhotosActions.RestoreDeleteSelectedPhotosFailed(err)))
+      )
     )
   );
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -14,6 +15,11 @@ using ApiResponse.ActionResults;
 using ApiResponse.ActionResults.ZipResult;
 using ApiResponse.ActionResults.NotificationResult;
 
+using Events.Photo;
+using EventBus.Abstraction.Interfaces;
+
+using DataAccess.Interfaces;
+
 namespace API.Controllers
 {
 	[Authorize]
@@ -23,11 +29,13 @@ namespace API.Controllers
 	{
 		private readonly IAuthService _authService;
 		private readonly IPhotoService _photoService;
+		private readonly IEventBus _eventBus;
 
-		public PhotosController(IAuthService authService, IPhotoService photoService)
+		public PhotosController(IAuthService authService, IPhotoService photoService, IEventBus eventBus)
 		{
 			_authService = authService;
 			_photoService = photoService;
+			_eventBus = eventBus;
 		}
 
 		[HttpGet("Internal/all")]
@@ -66,9 +74,15 @@ namespace API.Controllers
 		}
 
 		[HttpPost("upload")]
-		public Task<IEnumerable<PhotoListDTO>> Upload(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
+		public async Task<IEnumerable<PhotoListDTO>> Upload(IEnumerable<PhotoToUploadDTO> photosToUploadDTO)
 		{
-			return _photoService.UploadPhotosAsync(photosToUploadDTO);
+			IEnumerable<PhotoListDTO> uploadedPhotos = await _photoService.UploadPhotosAsync(photosToUploadDTO);
+
+			string userId = _authService.GetCurrentUserId();
+			IEnumerable<Guid> uploadedPhotosIds = uploadedPhotos.Select(p => p.Id);
+			_eventBus.Publish(new PhotosModifiedEvent(userId, uploadedPhotosIds));
+
+			return uploadedPhotos;
 		}
 
 		[HttpPost("download")]
@@ -93,6 +107,9 @@ namespace API.Controllers
 		public async Task<PhotoViewDTO> Edit(EditPhotoDTO editPhotoDTO)
 		{
 			await _photoService.EditPhotoAsync(editPhotoDTO);
+
+			string userId = _authService.GetCurrentUserId();
+			_eventBus.Publish(new PhotosModifiedEvent(userId, new[] { editPhotoDTO.Id }));
 
 			return await _photoService.GetPhotoOrDefaultAsync(editPhotoDTO.Id);
 		}

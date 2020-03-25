@@ -11,11 +11,11 @@ using EventBus.RabbitMQ.Interfaces;
 
 namespace EventBus.RabbitMQ
 {
-	public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection, IDisposable
+	public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
 	{
 		// FIELDS
 		private readonly IConnectionFactory _connectionFactory;
-		IConnection _connection;
+		private IConnection _connection;
 		private readonly int _retryCount;
 
 		private bool _disposed;

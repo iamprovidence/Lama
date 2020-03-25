@@ -9,18 +9,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace API.ServicesConfiguration
 {
-    internal static class BlobStorageConfiguration
-    {
-        public static void AddBlobStorage(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
+	internal static class BlobStorageConfiguration
+	{
+		public static void AddBlobStorage(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddScoped<IImageService, ImageService>();
 
-            services.AddScoped<IPhotoBlobStorage>(servicesProvider =>
-            {
-                BlobStorageSettings settings = servicesProvider.GetRequiredService<IOptions<BlobStorageSettings>>().Value;
+			services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
 
-                return new PhotoBlobStorage(settings);
-            });
-        }
-    }
+			services.AddScoped<IPhotoBlobStorage>(servicesProvider =>
+			{
+				BlobStorageSettings settings = servicesProvider.GetRequiredService<IOptions<BlobStorageSettings>>().Value;
+
+				return new PhotoBlobStorage(settings);
+			});
+		}
+	}
 }

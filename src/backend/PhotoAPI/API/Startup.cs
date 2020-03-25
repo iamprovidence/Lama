@@ -33,6 +33,7 @@ namespace API
 			services.AddBussinessLogicServices(Configuration);
 			services.AddCORS(Configuration);
 			services.AddBackgroundJob(Configuration);
+			services.AddSignalR(Configuration);
 
 			return services.BuildServicesProvider();
 		}
@@ -44,8 +45,10 @@ namespace API
 			app.UseCORS();
 			app.UseSwagger();
 			app.UseMvc();
-			app.UseBackgroundJob(Configuration);
+			app.UseSignalR(Configuration);
 			app.UseNotificationResponseMiddleware();
+			app.UseBackgroundJob(Configuration);
+			app.ConfigureEventBus();
 		}
 	}
 }

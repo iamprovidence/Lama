@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { PhotoListDTO } from 'src/app/core/models';
+import { PhotoListDTO, PhotoThumbnailDTO } from 'src/app/core/models';
 import { PhotoViewType } from 'src/app/core/enums';
 
 export enum ActionTypes {
@@ -19,7 +19,9 @@ export enum ActionTypes {
   DeleteSelectedPhotos = '[PHOTOS] DeleteSelectedPhotos',
   DeleteSelectedPhotosSucceed = '[PHOTOS] DeleteSelectedPhotosSucceed',
 
-  DownloadSelectedPhotos = '[PHOTOS] DownloadSelectedPhotos'
+  DownloadSelectedPhotos = '[PHOTOS] DownloadSelectedPhotos',
+
+  UpdateThumbnails = '[PHOTOS] UpdateThumbnails'
 }
 
 export class SetViewType implements Action {
@@ -76,6 +78,11 @@ export class DownloadSelectedPhotos implements Action {
   readonly type = ActionTypes.DownloadSelectedPhotos;
 }
 
+export class UpdateThumbnails implements Action {
+  readonly type = ActionTypes.UpdateThumbnails;
+  constructor(public payload: PhotoThumbnailDTO[]) {}
+}
+
 export type Actions =
   | SetViewType
   | LoadPhotos
@@ -88,4 +95,5 @@ export type Actions =
   | SelectPhoto
   | DeleteSelectedPhotos
   | DeleteSelectedPhotosSucceed
-  | DownloadSelectedPhotos;
+  | DownloadSelectedPhotos
+  | UpdateThumbnails;

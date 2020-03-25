@@ -28,6 +28,9 @@ export function reducer(state: State = InitialState, action: Actions): State {
     case ActionTypes.RestoreDeleteSelectedPhotosSucceed:
       return restoreDeleteSucceed(state);
 
+    case ActionTypes.RestoreDeleteSelectedPhotosFailed:
+      return { ...state, selected: new Set<string>() };
+
     default:
       return state;
   }
@@ -46,11 +49,9 @@ function selectPhoto(state: State, photoId: string): State {
 }
 
 function restoreDeleteSucceed(state: State): State {
-  const selected = state.selected;
+  const deletedPhotos = state.deletedPhotos.filter(p => !state.selected.has(p.id));
 
-  const deletedPhotos = state.deletedPhotos.filter(p => !selected.has(p.id));
-
-  selected.clear();
+  const selected = new Set<string>();
 
   return {
     ...state,
