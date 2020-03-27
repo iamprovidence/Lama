@@ -1,3 +1,2 @@
-call npm --verbose install
-
-ng serve
+call build.bat
+call start.bat

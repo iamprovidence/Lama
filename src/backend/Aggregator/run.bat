@@ -1,3 +1,2 @@
-dotnet build
-
-dotnet run --project Aggregator
+call build.bat
+call start.bat

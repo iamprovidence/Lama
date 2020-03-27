@@ -1,3 +1,2 @@
-dotnet build
-
-dotnet run --project APIGateway
+call build.bat
+call start.bat
