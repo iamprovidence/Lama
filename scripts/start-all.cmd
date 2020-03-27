@@ -1,0 +1,1 @@
+CALL execute-all.cmd start
