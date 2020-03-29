@@ -19,6 +19,7 @@
    * [Запуск сервісів](#Запуск-сервісів)
      * [Backend](#Backend-1)
        * [Azure Storage](#Azure-Storage)
+       * [Redis](#Redis)
        * [ELK](#ELK)
          * [Elasticsearch](#Elasticsearch)
          * [Kibana](#Kibana-optional)
@@ -84,6 +85,11 @@
 
 * перейдіть в папку з AzureStorageEmulator ``C:\Program Files\Microsoft SDKs\Azure\Storage Emulator``
 * запускаємо сервіс ``AzureStorageEmulator.exe start``
+
+##### Redis
+
+* перейдіть в папку з Elasticsearch ``C:\Program Files\Redis``
+* запускаємо файл ``redis-server.exe``
 
 ##### ELK 
 
