@@ -46,6 +46,10 @@
 ||Angular |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-686q0">| SPA веб-клієнт |
 
 
+<p align="center">
+  <img src="/docs/images/microservices.png">
+</p>
+
 ## Технології
 
 - [Docker](https://www.docker.com/get-started)
