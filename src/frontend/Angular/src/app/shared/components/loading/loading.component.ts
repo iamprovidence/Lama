@@ -9,7 +9,7 @@ export class LoadingComponent implements OnInit {
   public loadingImageNumber: number;
 
   constructor() {
-    this.loadingImageNumber = this.getRandomInt(3);
+    this.loadingImageNumber = this.getRandomInt(4);
   }
 
   ngOnInit() {}

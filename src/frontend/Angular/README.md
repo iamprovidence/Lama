@@ -13,3 +13,12 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Architecture
+
+* feature based
+
+<p align="center">
+  <img src="/docs/images/modules.png">
+  <img src="/docs/images/module-structure.png">
+</p>

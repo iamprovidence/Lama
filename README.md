@@ -19,6 +19,7 @@
    * [Запуск сервісів](#Запуск-сервісів)
      * [Backend](#Backend-1)
        * [Azure Storage](#Azure-Storage)
+       * [Redis](#Redis)
        * [ELK](#ELK)
          * [Elasticsearch](#Elasticsearch)
          * [Kibana](#Kibana-optional)
@@ -45,6 +46,10 @@
 |**Frontend**|||||
 ||Angular |<img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/iamprovidence/lama-686q0">| SPA веб-клієнт |
 
+
+<p align="center">
+  <img src="/docs/images/microservices.png">
+</p>
 
 ## Технології
 
@@ -80,6 +85,11 @@
 
 * перейдіть в папку з AzureStorageEmulator ``C:\Program Files\Microsoft SDKs\Azure\Storage Emulator``
 * запускаємо сервіс ``AzureStorageEmulator.exe start``
+
+##### Redis
+
+* перейдіть в папку з Elasticsearch ``C:\Program Files\Redis``
+* запускаємо файл ``redis-server.exe``
 
 ##### ELK 
 
